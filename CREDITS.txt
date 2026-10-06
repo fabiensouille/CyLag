@@ -1,0 +1,10 @@
+This file is the credits list for the CyLag software. 
+
+Major contributions to CyLag have been provided by
+
+Fabien Souillé         (EDF RetD LNHE, Chatou, France)
+
+Other contributors to CyLag include
+
+Fatna Oukaili          (EDF RetD LNHE, Chatou, France)
+Jean-Baptiste Saulnier (EDF RetD LNHE, Chatou, France)
