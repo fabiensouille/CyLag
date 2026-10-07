@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Quick installation &#8212; CYLAG 0.9 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/classic.css?v=51dfc302" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=427e2fde" />
+    
+    <script src="_static/documentation_options.js?v=049aceee"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Mathematical models" href="models.html" />
+    <link rel="prev" title="Presentation" href="index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="models.html" title="Mathematical models"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Presentation"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CYLAG 0.9 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Quick installation</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="quick-installation">
+<span id="get-started"></span><h1>Quick installation<a class="headerlink" href="#quick-installation" title="Link to this heading">¶</a></h1>
+<section id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Link to this heading">¶</a></h2>
+<p>The following packages are required to install and use CyLag:
+<em>cython &gt;= 0.29</em>,
+<em>numpy</em>,
+<em>scipy</em>,
+<em>mpi4py</em>,
+<em>h5py</em>,
+<em>pytest</em>,
+<em>matplotlib</em>,
+<em>setuptools</em>,
+<em>sphinx</em>, and <em>sphinx-gallery</em> (for the documentation).</p>
+<p>If you already use <a class="reference external" href="https://www.opentelemac.org/">openTELEMAC</a>, all Python requirements should already be installed (except Sphinx).
+If not, the recommanded practice is to install a python virtual environment:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>pyenv/cylag
+</pre></div>
+</div>
+<p>After creation, activate venv :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>pyenv/cylag/bin/activate
+</pre></div>
+</div>
+<p>Install all requirements :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>REQUIREMENTS.txt
+</pre></div>
+</div>
+</section>
+<section id="compile-and-import-cylag">
+<h2>Compile and import CyLag<a class="headerlink" href="#compile-and-import-cylag" title="Link to this heading">¶</a></h2>
+<p>CyLag is primarily implemented in <a class="reference external" href="http://cython.org/">Cython</a> and <a class="reference external" href="http://python.org/">Python</a>, combining the performance of compiled code with the flexibility of a high-level scripting language.
+Before using CyLag, the library must be compiled.
+Compilation is performed by executing the <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> script located in the root directory of the repository.
+Once compiled, CyLag can be imported and used as a standard Python package.</p>
+<ul class="simple">
+<li><p>Add CyLag to the Python path by copying the following line into ~/.bashrc:</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">PYTHONPATH</span><span class="o">=</span><span class="nv">$PYTHONPATH</span>:&lt;/path/to/cylag&gt;
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Compile CyLag:</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>setup.py<span class="w"> </span>build_ext<span class="w"> </span>--inplace
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Compile CyLag in debug mode:</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>setup.py<span class="w"> </span>build_ext<span class="w"> </span>--inplace<span class="w"> </span>--debug
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Test importing CyLag:</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3
+import<span class="w"> </span>cylag
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>When recompiling the code, you might want to clean the previously built extensions by using:</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>setup.py<span class="w"> </span>clean
+</pre></div>
+</div>
+</section>
+<section id="repository">
+<h2>Repository<a class="headerlink" href="#repository" title="Link to this heading">¶</a></h2>
+<p>The CyLag repository is organized into several directories, including:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cylag</span></code>: source code of the library;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">examples</span></code>: validation test cases and benchmark simulations;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests</span></code>: unit tests used to verify implementation and non-regression;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">docs</span></code>: Sphinx documentation.</p></li>
+</ul>
+</section>
+<section id="build-documentation">
+<h2>Build documentation<a class="headerlink" href="#build-documentation" title="Link to this heading">¶</a></h2>
+<p>The CyLag repository also includes a dedicated Sphinx-based documentation, providing installation instructions, theoretical background, API references, tutorials, and practical examples to facilitate the use and development of the code.</p>
+<ul class="simple">
+<li><p>Install Sphinx:</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>sphinx<span class="w"> </span>sphinx-gallery<span class="w"> </span>sphinx-autodoc-typehints
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Build the documentation (html):</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>docs
+make<span class="w"> </span>html
+</pre></div>
+</div>
+<p>The documentation should be available in <code class="docutils literal notranslate"><span class="pre">docs/build/html/index.html</span></code>.</p>
+<ul class="simple">
+<li><p>Build the documentation (latex/pdf):</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>docs
+make<span class="w"> </span>latexpdf
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>the gallery of example and API are not included with the latex build of the documentation.</p>
+</div>
+</section>
+<section id="setup-a-simulation-and-run-cylag">
+<h2>Setup a simulation and run CyLag<a class="headerlink" href="#setup-a-simulation-and-run-cylag" title="Link to this heading">¶</a></h2>
+<p>CyLag follows a <strong>component-based architecture</strong> with clear separation of concerns.
+To set up a simulation, the user needs to define three main objects:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet</span></code>: contains the Eulerian fields computed with a 2D or 3D hydrodynamic solver such as TELEMAC,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet</span></code>: contains the particles modeled by CyLag and their physical properties,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Solver</span></code>: solves the Lagrangian Stochastic Models and updates the particle state vector. It takes <code class="docutils literal notranslate"><span class="pre">EulerianFieldSet</span></code> and <code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet</span></code> as inputs, as well as a <code class="docutils literal notranslate"><span class="pre">parameters</span></code> dictionary containing the main solver options.</p></li>
+</ul>
+<p>CyLag is run using its Python API; to launch a simulation, one has to define a Python script in which cylag is imported and cylag objects are defined. The simulation script usually looks like this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">cylag</span>
+<span class="n">fset</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">EulerianFieldSet</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">pset</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">LagrangianParticleSet</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span><span class="o">...</span><span class="p">}</span>
+<span class="n">cylag_solver</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">Solver</span><span class="p">(</span><span class="n">fset</span><span class="p">,</span> <span class="n">pset</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span>
+<span class="n">cylag_solver</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Each object has its own inputs and parameters.
+See the gallery of <code class="docutils literal notranslate"><span class="pre">examples/</span></code> for a more in-depth overview of CyLag’s possibilities.
+Also see <a class="reference internal" href="setup.html#setup"><span class="std std-ref">Setup, inputs and practical informations</span></a> for a complete breakdown of the input parameters (and make sure you read the theoretical aspects to fully understand them).</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/logo_cylag_sb.png" alt="Logo of CYLAG"/>
+            </a></p>
+<h3><a href="index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quick installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#compile-and-import-cylag">Compile and import CyLag</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#repository">Repository</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#build-documentation">Build documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setup-a-simulation-and-run-cylag">Setup a simulation and run CyLag</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Mathematical models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="algo.html">Particle-mesh implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">Setup, inputs and practical informations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html">Gallery of examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="good_practices.html">Good practices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev.html">Developer guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/modules.html">API</a></li>
+</ul>
+
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="index.html"
+                          title="previous chapter">Presentation</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="models.html"
+                          title="next chapter">Mathematical models</a></p>
+  </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="models.html" title="Mathematical models"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Presentation"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CYLAG 0.9 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Quick installation</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2023, Fabien Souillé.
+    </div>
+  </body>
+</html>

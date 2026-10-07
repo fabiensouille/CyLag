@@ -1,0 +1,118 @@
+
+
+.. _sphx_glr_auto_examples_vnv_01_couette_flow:
+
+Couette flow
+------------
+
+This example illustrate the advection of particles in an analytical rotational velocity field known as Couette flow.
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection of a particle in an analytical velocity field with the LSM-1 model without diffusion (material pathlines) solved with the Euler scheme.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_01_couette_flow/images/thumb/sphx_glr_vnv_couette_lsm1_euler_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_01_couette_flow_vnv_couette_lsm1_euler.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Couette flow - LSM-1 advection with Euler scheme</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection of a particle in an analytical velocity field with the LSM-1 model without diffusion (material pathlines) solved with the Euler scheme.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_01_couette_flow/images/thumb/sphx_glr_vnv_couette_lsm2_di_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_01_couette_flow_vnv_couette_lsm2_di.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Couette flow - LSM-2 advection with DI scheme</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection-diffusion of particles in an analytical  velocity field with the LSM-1 model.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_01_couette_flow/images/thumb/sphx_glr_vnv_couette_lsm1_diffusion_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_01_couette_flow_vnv_couette_lsm1_diffusion.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Couette flow - LSM-1 advection-diffusion</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compare the following numerical scheme for the  LSM-1 model without diffusion (material pathlines):">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_01_couette_flow/images/thumb/sphx_glr_vnv_couette_lsm1_comparison_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_01_couette_flow_vnv_couette_lsm1_comparison.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Couette flow - LSM-1 advection with different schemes (comparison)</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we analyse the convergence of the following numerical scheme for the  LSM-1 model without diffusion (material pathlines):">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_01_couette_flow/images/thumb/sphx_glr_vnv_couette_lsm1_convergence_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_01_couette_flow_vnv_couette_lsm1_convergence.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Couette flow - LSM-1 convergence test</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /auto_examples/vnv_01_couette_flow/vnv_couette_lsm1_euler
+   /auto_examples/vnv_01_couette_flow/vnv_couette_lsm2_di
+   /auto_examples/vnv_01_couette_flow/vnv_couette_lsm1_diffusion
+   /auto_examples/vnv_01_couette_flow/vnv_couette_lsm1_comparison
+   /auto_examples/vnv_01_couette_flow/vnv_couette_lsm1_convergence
+

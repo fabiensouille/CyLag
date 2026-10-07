@@ -1,0 +1,208 @@
+
+
+.. _sphx_glr_auto_examples_vnv_05_meander:
+
+Meander
+------------
+
+This example illustrate the advection-diffusion of particles in a meandering channel with different models.
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection of particles in a meandering  channel with the LSM-1 model without diffusion.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_05_meander/images/thumb/sphx_glr_vnv_meander2d_lsm1_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_05_meander_vnv_meander2d_lsm1.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Meander - LSM-1 advection</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection-diffusion of particles in a meandering  channel with the LSM-1 model with constant diffusion.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_05_meander/images/thumb/sphx_glr_vnv_meander2d_lsm1_kcst_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_05_meander_vnv_meander2d_lsm1_kcst.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Meander - LSM-1 advection-diffusion (constant Ki)</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection-diffusion of particles in a meandering  channel with the LSM-1 model with k-eps diffusion.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_05_meander/images/thumb/sphx_glr_vnv_meander2d_lsm1_keps_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_05_meander_vnv_meander2d_lsm1_keps.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Meander - LSM-1 advection-diffusion (k-eps model)</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection-diffusion of particles in a meandering  channel with the LSM-3 model with k-eps diffusion.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_05_meander/images/thumb/sphx_glr_vnv_meander2d_lsm3_keps_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_05_meander_vnv_meander2d_lsm3_keps.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Meander - LSM-3 advection-diffusion (k-eps model)</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection of particles in a meandering  channel with the LSM-2 model without diffusion. ">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_05_meander/images/thumb/sphx_glr_vnv_meander2d_lsm2_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_05_meander_vnv_meander2d_lsm2.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Meander - LSM-2 advection</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection of particles in a meandering  channel with the LSM-3 model without diffusion. In this example we set T_L \to 0 and K=0 so that the diffusion terms vanish. In that configuration the LSM-3 converges towards the deterministic limit where particle velocities  are governed solely by the mean flow and external forces, with no stochastic diffusion (equivalent to LSM-2 without diffusion).">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_05_meander/images/thumb/sphx_glr_vnv_meander2d_lsm3_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_05_meander_vnv_meander2d_lsm3.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Meander - LSM-3 advection</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection-diffusion of particles in a meandering  channel with the LSM-2 model with k-eps diffusion.  We use option 1 for diffusion i.e. diffusion is applied on position.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_05_meander/images/thumb/sphx_glr_vnv_meander2d_lsm2_keps_opt1_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_05_meander_vnv_meander2d_lsm2_keps_opt1.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Meander - LSM-2 advection-diffusion (k-eps model, opt.1)</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection-diffusion of particles in a meandering  channel with the LSM-2 model with k-eps diffusion. We use option 2 for diffusion i.e. diffusion is applied on velocity.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_05_meander/images/thumb/sphx_glr_vnv_meander2d_lsm2_keps_opt2_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_05_meander_vnv_meander2d_lsm2_keps_opt2.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Meander - LSM-2 advection-diffusion (k-eps model, opt.2)</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection-diffusion of particles in a meandering  channel with the LSM-2 model with constant diffusion.  We use option 1 for diffusion i.e. diffusion is applied on position.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_05_meander/images/thumb/sphx_glr_vnv_meander2d_lsm2_kcst_opt1_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_05_meander_vnv_meander2d_lsm2_kcst_opt1.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Meander - LSM-2 advection-diffusion (k-eps model, opt.1)</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection-diffusion of particles in a meandering  channel with the LSM-3 model with constant diffusion.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_05_meander/images/thumb/sphx_glr_vnv_meander2d_lsm3_kcst_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_05_meander_vnv_meander2d_lsm3_kcst.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Meander - LSM-3 advection-diffusion (constant K-TL)</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /auto_examples/vnv_05_meander/vnv_meander2d_lsm1
+   /auto_examples/vnv_05_meander/vnv_meander2d_lsm1_kcst
+   /auto_examples/vnv_05_meander/vnv_meander2d_lsm1_keps
+   /auto_examples/vnv_05_meander/vnv_meander2d_lsm3_keps
+   /auto_examples/vnv_05_meander/vnv_meander2d_lsm2
+   /auto_examples/vnv_05_meander/vnv_meander2d_lsm3
+   /auto_examples/vnv_05_meander/vnv_meander2d_lsm2_keps_opt1
+   /auto_examples/vnv_05_meander/vnv_meander2d_lsm2_keps_opt2
+   /auto_examples/vnv_05_meander/vnv_meander2d_lsm2_kcst_opt1
+   /auto_examples/vnv_05_meander/vnv_meander2d_lsm3_kcst
+

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>cylag &#8212; CYLAG 0.9 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/classic.css?v=51dfc302" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=427e2fde" />
+    
+    <script src="../_static/documentation_options.js?v=049aceee"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="cylag package" href="cylag.html" />
+    <link rel="prev" title="Developer guide" href="../dev.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="cylag.html" title="cylag package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../dev.html" title="Developer guide"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">CYLAG 0.9 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">cylag</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="cylag">
+<h1>cylag<a class="headerlink" href="#cylag" title="Link to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cylag.html">cylag package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cylag.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cylag.boundary_conditions.html">cylag.boundary_conditions package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cylag.boundary_conditions.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.boundary_conditions.html#module-cylag.boundary_conditions.compute_bc">cylag.boundary_conditions.compute_bc module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.boundary_conditions.html#module-cylag.boundary_conditions">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.core.html">cylag.core package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#module-cylag.core.constants">cylag.core.constants module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#module-cylag.core.eulerian_field_set">cylag.core.eulerian_field_set module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#module-cylag.core.lagrangian_particle_set">cylag.core.lagrangian_particle_set module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#module-cylag.core.parameters">cylag.core.parameters module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#module-cylag.core.particle_distribution">cylag.core.particle_distribution module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#module-cylag.core.simutime">cylag.core.simutime module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#module-cylag.core.solver">cylag.core.solver module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#module-cylag.core.solver_parallel">cylag.core.solver_parallel module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#module-cylag.core">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.extra.html">cylag.extra package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#module-cylag.extra.control_shapes">cylag.extra.control_shapes module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#module-cylag.extra.ghost_meshgrid">cylag.extra.ghost_meshgrid module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#module-cylag.extra.initial_conditions">cylag.extra.initial_conditions module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#module-cylag.extra.particle_source">cylag.extra.particle_source module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#module-cylag.extra.plot_utils">cylag.extra.plot_utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#module-cylag.extra.scheduler">cylag.extra.scheduler module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#module-cylag.extra.statistics_from_particles">cylag.extra.statistics_from_particles module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#module-cylag.extra">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.geom.html">cylag.geom package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#module-cylag.geom.intersections">cylag.geom.intersections module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#module-cylag.geom.read_cli">cylag.geom.read_cli module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#module-cylag.geom.triangular_mesh">cylag.geom.triangular_mesh module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#module-cylag.geom.utils">cylag.geom.utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#module-cylag.geom.xylocalizer">cylag.geom.xylocalizer module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#module-cylag.geom.zlocalizer">cylag.geom.zlocalizer module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#module-cylag.geom">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.io.html">cylag.io package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cylag.io.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.io.html#module-cylag.io.converter">cylag.io.converter module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.io.html#module-cylag.io.parallel_tags">cylag.io.parallel_tags module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.io.html#module-cylag.io.particles_io">cylag.io.particles_io module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.io.html#module-cylag.io.write_particles">cylag.io.write_particles module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.io.html#module-cylag.io.write_statistics">cylag.io.write_statistics module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.io.html#module-cylag.io.writer_txt">cylag.io.writer_txt module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.io.html#module-cylag.io.writer_vtk">cylag.io.writer_vtk module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.io.html#module-cylag.io">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.lsm.html">cylag.lsm package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cylag.lsm.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.lsm.html#module-cylag.lsm.init_lsm2_fluctuations">cylag.lsm.init_lsm2_fluctuations module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.lsm.html#module-cylag.lsm.init_lsm3_fluctuations">cylag.lsm.init_lsm3_fluctuations module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.lsm.html#module-cylag.lsm.random_utils">cylag.lsm.random_utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.lsm.html#module-cylag.lsm.update_state_lsm1">cylag.lsm.update_state_lsm1 module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.lsm.html#module-cylag.lsm.update_state_lsm2">cylag.lsm.update_state_lsm2 module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.lsm.html#module-cylag.lsm.update_state_lsm3">cylag.lsm.update_state_lsm3 module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.lsm.html#module-cylag.lsm.update_state_test">cylag.lsm.update_state_test module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.lsm.html#module-cylag.lsm">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.modules.html">cylag.modules package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#module-cylag.modules.algae">cylag.modules.algae module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#module-cylag.modules.custom_particle_set">cylag.modules.custom_particle_set module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#module-cylag.modules.fish">cylag.modules.fish module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#module-cylag.modules.jellyfish">cylag.modules.jellyfish module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#module-cylag.modules.macrophyte">cylag.modules.macrophyte module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#module-cylag.modules.oil_slick">cylag.modules.oil_slick module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#module-cylag.modules">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.html#module-cylag.cylag_dico">cylag.cylag_dico module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.html#module-cylag">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/logo_cylag_sb.png" alt="Logo of CYLAG"/>
+            </a></p>
+<h3><a href="../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../get_started.html">Quick installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models.html">Mathematical models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../algo.html">Particle-mesh implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../setup.html">Setup, inputs and practical informations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html">Gallery of examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../good_practices.html">Good practices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev.html">Developer guide</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cylag.html">cylag package</a></li>
+</ul>
+</li>
+</ul>
+
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="../dev.html"
+                          title="previous chapter">Developer guide</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="cylag.html"
+                          title="next chapter">cylag package</a></p>
+  </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="cylag.html" title="cylag package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../dev.html" title="Developer guide"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">CYLAG 0.9 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">cylag</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2023, Fabien Souillé.
+    </div>
+  </body>
+</html>

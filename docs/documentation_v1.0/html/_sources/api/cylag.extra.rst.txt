@@ -1,0 +1,69 @@
+cylag.extra package
+===================
+
+Submodules
+----------
+
+cylag.extra.control\_shapes module
+----------------------------------
+
+.. automodule:: cylag.extra.control_shapes
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+cylag.extra.ghost\_meshgrid module
+----------------------------------
+
+.. automodule:: cylag.extra.ghost_meshgrid
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+cylag.extra.initial\_conditions module
+--------------------------------------
+
+.. automodule:: cylag.extra.initial_conditions
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+cylag.extra.particle\_source module
+-----------------------------------
+
+.. automodule:: cylag.extra.particle_source
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+cylag.extra.plot\_utils module
+------------------------------
+
+.. automodule:: cylag.extra.plot_utils
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+cylag.extra.scheduler module
+----------------------------
+
+.. automodule:: cylag.extra.scheduler
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+cylag.extra.statistics\_from\_particles module
+----------------------------------------------
+
+.. automodule:: cylag.extra.statistics_from_particles
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: cylag.extra
+   :members:
+   :undoc-members:
+   :show-inheritance:

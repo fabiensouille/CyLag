@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Oil slick advection-diffusion in 2D &#8212; CYLAG 0.9 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/classic.css?v=51dfc302" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=427e2fde" />
+    
+    <script src="../../_static/documentation_options.js?v=049aceee"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Oil slick advection-diffusion in pseudo-3D" href="vnv_oilslick_lsm1_pseudo3d.html" />
+    <link rel="prev" title="Oil slick module" href="index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="vnv_oilslick_lsm1_pseudo3d.html" title="Oil slick advection-diffusion in pseudo-3D"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Oil slick module"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CYLAG 0.9 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Examples</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">Oil slick module</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Oil slick advection-diffusion in 2D</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p><a class="reference internal" href="#sphx-glr-download-auto-examples-vnv-11-oil-slick-vnv-oilslick-lsm1-2d-py"><span class="std std-ref">Go to the end</span></a>
+to download the full example code.</p>
+</div>
+<section class="sphx-glr-example-title" id="oil-slick-advection-diffusion-in-2d">
+<span id="sphx-glr-auto-examples-vnv-11-oil-slick-vnv-oilslick-lsm1-2d-py"></span><h1>Oil slick advection-diffusion in 2D<a class="headerlink" href="#oil-slick-advection-diffusion-in-2d" title="Link to this heading">¶</a></h1>
+<p>In this example we compute the advection-diffusion of oil with the oil slick module of CyLag.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">cylag</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pylab</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.colors</span><span class="w"> </span><span class="kn">import</span> <span class="n">BoundaryNorm</span><span class="p">,</span> <span class="n">ListedColormap</span>
+
+<span class="c1">#sphinx_gallery_thumbnail_number = 2</span>
+</pre></div>
+</div>
+<section id="define-eulerianfieldset">
+<h2>Define EulerianFieldSet<a class="headerlink" href="#define-eulerianfieldset" title="Link to this heading">¶</a></h2>
+<p>The oil slick module requires to load the wind field as an optional field in EulerianFieldSet.
+Also the friction model and friction coefficient used in the Eulerian simulation
+need to be specified so that current velocity correction can be computed.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">'data'</span><span class="p">,</span> <span class="s1">'r2d_tide-jmj_type_wind.slf'</span><span class="p">)</span>
+<span class="n">bnd_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">'data'</span><span class="p">,</span> <span class="s1">'geo_tide.cli'</span><span class="p">)</span>
+<span class="n">opt_fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'BOTTOM'</span><span class="p">,</span> <span class="s1">'WIND X'</span><span class="p">,</span> <span class="s1">'WIND Y'</span><span class="p">]</span>
+
+<span class="n">fset</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">EulerianFieldSet</span><span class="o">.</span><span class="n">from_telemac2d</span><span class="p">(</span>
+    <span class="n">file_name</span><span class="p">,</span>
+    <span class="n">bnd_file</span><span class="o">=</span><span class="n">bnd_file</span><span class="p">,</span>
+    <span class="n">optional_fields</span><span class="o">=</span><span class="n">opt_fields</span><span class="p">,</span>
+    <span class="n">friction_model</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">friction_coefficient</span><span class="o">=</span><span class="mf">50.</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Final time in t2d result file : "</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">fset</span><span class="o">.</span><span class="n">times</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"List of fields     : "</span><span class="p">,</span> <span class="n">fset</span><span class="o">.</span><span class="n">get_field_list</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"List of fields IDs : "</span><span class="p">,</span> <span class="n">fset</span><span class="o">.</span><span class="n">get_field_list</span><span class="p">()[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Final time in t2d result file :  172800.0
+List of fields     :  ['ELEVATION', 'VELOCITY U', 'VELOCITY V', 'VELOCITY W', 'BOTTOM', 'WIND X', 'WIND Y']
+List of fields IDs :  [0, 1, 2, 3, 4, 5, 6]
+</pre></div>
+</div>
+</section>
+<section id="define-lagrangianparticleset">
+<h2>Define LagrangianParticleSet<a class="headerlink" href="#define-lagrangianparticleset" title="Link to this heading">¶</a></h2>
+<p>With the <code class="docutils literal notranslate"><span class="pre">OilslickParticleSet</span></code>
+particles are advected horizontally by the combined effect of current drift,
+wind drift, wave drift (Stokes). The velocity of each drift component
+account for the particle immersion in the water column (vertical velocity profile).
+The vertical displacment of particles is driven by vertical dispersion and buoyancy.
+We consider a polydisperse oil slick defined with a Weibull distribution.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># here we define a single layer of particleq=s on the vertical axis, located in z=8.5</span>
+<span class="c1">#circ = cylag.circle(x0=202235., y0=147700., r=1000., n=360)</span>
+<span class="n">circ</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span><span class="n">x0</span><span class="o">=</span><span class="mf">198000.</span><span class="p">,</span> <span class="n">y0</span><span class="o">=</span><span class="mf">147000.</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mf">1500.</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">360</span><span class="p">)</span>
+
+<span class="n">ini_position</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">init_positions_2d</span><span class="p">(</span>
+    <span class="n">poly</span><span class="o">=</span><span class="n">circ</span><span class="p">,</span>
+    <span class="n">grid_res</span><span class="o">=</span><span class="p">(</span><span class="mi">75</span><span class="p">,</span> <span class="mi">75</span><span class="p">))</span>
+
+<span class="n">npart</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">ini_position</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">pset</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">OilslickParticleSet</span><span class="p">(</span>\
+    <span class="n">ini_position</span><span class="p">,</span>
+    <span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">particle_density</span><span class="o">=</span><span class="mf">995.</span><span class="p">,</span>
+    <span class="n">particle_diameter</span><span class="o">=</span><span class="mf">10.e-3</span><span class="p">,</span>
+    <span class="n">particle_diameter_distribution</span><span class="o">=</span><span class="p">[</span><span class="s2">"weibull"</span><span class="p">,</span> <span class="mf">1.8</span><span class="p">],</span>
+    <span class="n">compute_depth</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">wind_coefficient</span><span class="o">=</span><span class="mf">0.025</span><span class="p">,</span>
+    <span class="n">wind_deviation_calibration_coef</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span>
+    <span class="n">stokes_drift</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="set-general-parameters">
+<h2>Set general parameters<a class="headerlink" href="#set-general-parameters" title="Link to this heading">¶</a></h2>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">'initial_time'</span><span class="p">:</span> <span class="mf">3600.</span><span class="p">,</span>
+    <span class="s1">'final_time'</span><span class="p">:</span> <span class="mf">6.</span><span class="o">*</span><span class="mf">3600.</span><span class="p">,</span>
+    <span class="s1">'time_step'</span><span class="p">:</span> <span class="mf">25.</span><span class="p">,</span>
+    <span class="s1">'model'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">'time_scheme'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">'frozen_eulerian_fields'</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="s1">'diffusion_model'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">'horizontal_diffusivity'</span><span class="p">:</span> <span class="mf">1.e-2</span><span class="p">,</span>
+    <span class="s1">'vertical_diffusivity'</span><span class="p">:</span> <span class="mf">1.e-2</span><span class="p">,</span>
+    <span class="s1">'water_density'</span><span class="p">:</span> <span class="mf">1025.</span><span class="p">,</span>
+    <span class="s1">'rebound_damping_coef'</span><span class="p">:</span> <span class="mf">0.25</span><span class="p">,</span>
+    <span class="s1">'stranding_probability'</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+    <span class="s1">'listing'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s1">'listing_printout_period'</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="s1">'output_file'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s1">'output_printout_period'</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="s1">'output_file_format'</span><span class="p">:</span> <span class="s1">'txt'</span><span class="p">,</span>
+    <span class="s1">'output_rep'</span><span class="p">:</span> <span class="s1">'resu_01'</span><span class="p">,</span>
+    <span class="s1">'output_file_name'</span><span class="p">:</span> <span class="s1">'particles_2d'</span><span class="p">,</span>
+    <span class="s1">'stranding_output'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s1">'stranding_output_file_name'</span><span class="p">:</span> <span class="s1">'stranded_particles'</span><span class="p">,</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="run-cylag">
+<h2>Run cylag<a class="headerlink" href="#run-cylag" title="Link to this heading">¶</a></h2>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">cylag_solver</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">Solver</span><span class="p">(</span><span class="n">fset</span><span class="p">,</span> <span class="n">pset</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span>
+<span class="n">cylag_solver</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>================================================================================
+|                                INITIALIZATION                                |
+================================================================================
+ ~~&gt; Simulation type : 2D
+ ~~&gt; Lagrangian Stochastic Model : LSM-1
+ ~~&gt; Integration method : Euler
+ ~~&gt; Time interval : [3600.000, 21600.000] - dt = 25.000
+ ~~&gt; Diffusion model : Constant horiz. and vert. diffusivity
+ ~~&gt; Particle velocity : Initialized from field set
+ ~~&gt; Wall boundary conditions : Specular rebound
+================================================================================
+|                                 TIME LOOP                                    |
+================================================================================
+Iter =        100 ; Dt = 25.0000s ; Time = 00d 01:41:40 ; [=&gt;.............]  13%
+Iter =        200 ; Dt = 25.0000s ; Time = 00d 02:23:20 ; [===&gt;...........]  27%
+Iter =        300 ; Dt = 25.0000s ; Time = 00d 03:05:00 ; [=====&gt;.........]  41%
+Iter =        400 ; Dt = 25.0000s ; Time = 00d 03:46:40 ; [=======&gt;.......]  55%
+Iter =        500 ; Dt = 25.0000s ; Time = 00d 04:28:20 ; [=========&gt;.....]  69%
+Iter =        600 ; Dt = 25.0000s ; Time = 00d 05:10:00 ; [===========&gt;...]  83%
+Iter =        700 ; Dt = 25.0000s ; Time = 00d 05:51:40 ; [=============&gt;.]  97%
+================================================================================
+|                                    END                                       |
+================================================================================
+Problem.solve() completed in 10.083981275558472s (wall time)
+</pre></div>
+</div>
+</section>
+<section id="post-processing">
+<h2>Post-processing<a class="headerlink" href="#post-processing" title="Link to this heading">¶</a></h2>
+<p>Load particles :</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">part</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">ParticlesIO</span><span class="o">.</span><span class="n">from_cylag_txt</span><span class="p">(</span><span class="s1">'resu_01/particles_2d.txt'</span><span class="p">)</span>
+
+<span class="c1"># recorded times :</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"list of recorded times ="</span><span class="p">,</span> <span class="n">part</span><span class="o">.</span><span class="n">times</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"number of records = "</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">part</span><span class="o">.</span><span class="n">times</span><span class="p">))</span>
+
+<span class="n">max_rec</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">part</span><span class="o">.</span><span class="n">times</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+<span class="n">rec_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">max_rec</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span> <span class="n">max_rec</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">rec_list</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">rec</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">rec_list</span><span class="p">):</span>
+
+    <span class="n">time</span> <span class="o">=</span> <span class="n">part</span><span class="o">.</span><span class="n">times</span><span class="p">[</span><span class="n">rec</span><span class="p">]</span>
+
+    <span class="c1"># Field set from telemac results :</span>
+    <span class="n">tri</span> <span class="o">=</span> <span class="n">fset</span><span class="o">.</span><span class="n">get_mtri_triangulation</span><span class="p">()</span>
+    <span class="n">ux</span> <span class="o">=</span> <span class="n">fset</span><span class="o">.</span><span class="n">get_field</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">time</span><span class="p">)</span>
+    <span class="n">uy</span> <span class="o">=</span> <span class="n">fset</span><span class="o">.</span><span class="n">get_field</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">time</span><span class="p">)</span>
+    <span class="n">velocity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">ux</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">uy</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">wind_ux</span> <span class="o">=</span> <span class="n">fset</span><span class="o">.</span><span class="n">get_field</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">time</span><span class="p">)</span>
+    <span class="n">wind_uy</span> <span class="o">=</span> <span class="n">fset</span><span class="o">.</span><span class="n">get_field</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">time</span><span class="p">)</span>
+    <span class="n">wind_vel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">wind_ux</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">wind_uy</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="c1"># Plot result :</span>
+    <span class="n">cylag</span><span class="o">.</span><span class="n">set_rcparams</span><span class="p">()</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">10.</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">'equal'</span><span class="p">)</span>
+
+    <span class="c1"># plot mesh and velocity</span>
+    <span class="n">levels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">velocity</span><span class="p">)</span><span class="o">+</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+    <span class="n">cs</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">tricontourf</span><span class="p">(</span><span class="n">tri</span><span class="p">,</span> <span class="n">velocity</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">levels</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">'RdBu_r'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.80</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">cs</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"$U_f$ (m/s)"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">triplot</span><span class="p">(</span><span class="n">tri</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">'k'</span><span class="p">)</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="n">tri</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">tri</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">ux</span><span class="p">,</span> <span class="n">uy</span><span class="p">,</span> <span class="n">velocity</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">'RdBu_r'</span><span class="p">)</span>
+    <span class="c1">#img = ax.quiver(tri.x, tri.y, wind_ux, wind_uy, wind_vel, cmap='magma')</span>
+
+    <span class="c1"># plot positions</span>
+    <span class="c1">#ax.plot(part.xp[0][:], part.yp[0][:], c='b', lw=0., marker='o', markersize=1., label="$x_p(0)$")</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">part</span><span class="o">.</span><span class="n">xp</span><span class="p">[</span><span class="n">rec</span><span class="p">][:],</span> <span class="n">part</span><span class="o">.</span><span class="n">yp</span><span class="p">[</span><span class="n">rec</span><span class="p">][:],</span> <span class="n">c</span><span class="o">=</span><span class="s1">'k'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">'o'</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"$x_p(t_f)$"</span><span class="p">)</span>
+
+    <span class="c1"># plot stranded particles</span>
+    <span class="k">if</span> <span class="n">idx</span><span class="o">==</span><span class="nb">len</span><span class="p">(</span><span class="n">rec_list</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="n">stranded_particles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s1">'resu_01/stranded_particles.txt'</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s2">","</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">stranded_particles</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">stranded_particles</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s1">'r'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">'o'</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mf">2.</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Stranded"</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">"$x$ (m)"</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"$y$ (m)"</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">'figs/cylag_tide_lsm1_</span><span class="si">{}</span><span class="s1">.png'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">idx</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">"png"</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<ul class="sphx-glr-horizontal">
+<li><img src="../../_images/sphx_glr_vnv_oilslick_lsm1_2d_001.png" srcset="../../_images/sphx_glr_vnv_oilslick_lsm1_2d_001.png" alt="vnv oilslick lsm1 2d" class = "sphx-glr-multi-img"/></li>
+<li><img src="../../_images/sphx_glr_vnv_oilslick_lsm1_2d_002.png" srcset="../../_images/sphx_glr_vnv_oilslick_lsm1_2d_002.png" alt="vnv oilslick lsm1 2d" class = "sphx-glr-multi-img"/></li>
+</ul>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>list of recorded times = [3600.0, 3850.0, 4100.0, 4350.0, 4600.0, 4850.0, 5100.0, 5350.0, 5600.0, 5850.0, 6100.0, 6350.0, 6600.0, 6850.0, 7100.0, 7350.0, 7600.0, 7850.0, 8100.0, 8350.0, 8600.0, 8850.0, 9100.0, 9350.0, 9600.0, 9850.0, 10100.0, 10350.0, 10600.0, 10850.0, 11100.0, 11350.0, 11600.0, 11850.0, 12100.0, 12350.0, 12600.0, 12850.0, 13100.0, 13350.0, 13600.0, 13850.0, 14100.0, 14350.0, 14600.0, 14850.0, 15100.0, 15350.0, 15600.0, 15850.0, 16100.0, 16350.0, 16600.0, 16850.0, 17100.0, 17350.0, 17600.0, 17850.0, 18100.0, 18350.0, 18600.0, 18850.0, 19100.0, 19350.0, 19600.0, 19850.0, 20100.0, 20350.0, 20600.0, 20850.0, 21100.0, 21350.0, 21600.0]
+number of records =  73
+[36, 72]
+</pre></div>
+</div>
+<p>Clean:</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="k">del</span> <span class="n">fset</span>
+<span class="k">del</span> <span class="n">pset</span>
+<span class="k">del</span> <span class="n">parameters</span>
+<span class="k">del</span> <span class="n">cylag_solver</span>
+<span class="k">del</span> <span class="n">part</span>
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 15.307 seconds)</p>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-vnv-11-oil-slick-vnv-oilslick-lsm1-2d-py">
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/2ba86dd20eb45afebb60a4044b86bf2c/vnv_oilslick_lsm1_2d.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">vnv_oilslick_lsm1_2d.ipynb</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/128aef82d8603618c13e7faa8fffa204/vnv_oilslick_lsm1_2d.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">vnv_oilslick_lsm1_2d.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-zip docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/6af328f1705a728cd194d1fa1f3ebbbc/vnv_oilslick_lsm1_2d.zip"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">zipped:</span> <span class="pre">vnv_oilslick_lsm1_2d.zip</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/logo_cylag_sb.png" alt="Logo of CYLAG"/>
+            </a></p>
+<h3><a href="../../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../get_started.html">Quick installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models.html">Mathematical models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../algo.html">Particle-mesh implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../setup.html">Setup, inputs and practical informations</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Gallery of examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#couette-flow">Couette flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#isotropic-diffusion">Isotropic diffusion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#flume">Flume</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#tide">Tide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#meander">Meander</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#taylor-vortices">Taylor vortices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#settling">Settling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#sources">Sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#statistics">Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#poly-disperse">Poly-disperse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#oil-slick-module">Oil slick module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#algae-module">Algae module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#macrophyte-module">Macrophyte module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#fish-module">Fish module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#jellyfish-module">Jellyfish module</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#online">Online</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../good_practices.html">Good practices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev.html">Developer guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/modules.html">API</a></li>
+</ul>
+
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="index.html"
+                          title="previous chapter">Oil slick module</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="vnv_oilslick_lsm1_pseudo3d.html"
+                          title="next chapter">Oil slick advection-diffusion in pseudo-3D</a></p>
+  </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="vnv_oilslick_lsm1_pseudo3d.html" title="Oil slick advection-diffusion in pseudo-3D"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Oil slick module"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CYLAG 0.9 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Examples</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >Oil slick module</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Oil slick advection-diffusion in 2D</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2023, Fabien Souillé.
+    </div>
+  </body>
+</html>

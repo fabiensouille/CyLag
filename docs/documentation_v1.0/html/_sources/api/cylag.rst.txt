@@ -1,0 +1,35 @@
+cylag package
+=============
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   cylag.boundary_conditions
+   cylag.core
+   cylag.extra
+   cylag.geom
+   cylag.io
+   cylag.lsm
+   cylag.modules
+
+Submodules
+----------
+
+cylag.cylag\_dico module
+------------------------
+
+.. automodule:: cylag.cylag_dico
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: cylag
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,1377 @@
+:orphan:
+
+Examples
+========
+
+This gallery presents validation and verification examples for CyLag.
+
+Select an example below to view its description, source code, and results.
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Couette flow
+------------
+
+This example illustrate the advection of particles in an analytical rotational velocity field known as Couette flow.
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection of a particle in an analytical velocity field with the LSM-1 model without diffusion (material pathlines) solved with the Euler scheme.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_01_couette_flow/images/thumb/sphx_glr_vnv_couette_lsm1_euler_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_01_couette_flow_vnv_couette_lsm1_euler.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Couette flow - LSM-1 advection with Euler scheme</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection of a particle in an analytical velocity field with the LSM-1 model without diffusion (material pathlines) solved with the Euler scheme.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_01_couette_flow/images/thumb/sphx_glr_vnv_couette_lsm2_di_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_01_couette_flow_vnv_couette_lsm2_di.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Couette flow - LSM-2 advection with DI scheme</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection-diffusion of particles in an analytical  velocity field with the LSM-1 model.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_01_couette_flow/images/thumb/sphx_glr_vnv_couette_lsm1_diffusion_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_01_couette_flow_vnv_couette_lsm1_diffusion.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Couette flow - LSM-1 advection-diffusion</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compare the following numerical scheme for the  LSM-1 model without diffusion (material pathlines):">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_01_couette_flow/images/thumb/sphx_glr_vnv_couette_lsm1_comparison_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_01_couette_flow_vnv_couette_lsm1_comparison.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Couette flow - LSM-1 advection with different schemes (comparison)</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we analyse the convergence of the following numerical scheme for the  LSM-1 model without diffusion (material pathlines):">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_01_couette_flow/images/thumb/sphx_glr_vnv_couette_lsm1_convergence_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_01_couette_flow_vnv_couette_lsm1_convergence.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Couette flow - LSM-1 convergence test</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Isotropic diffusion
+-------------------
+
+This example illustrate the isotropic stochastic diffusion of particles.
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This example shows the basic principle of stochastic diffusion in 1D. In this example, we : ">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_02_isotropic_diffusion/images/thumb/sphx_glr_vnv_diffusion_1d_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_02_isotropic_diffusion_vnv_diffusion_1d.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Stochastic diffusion in 1D</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Validation of the LSM-2 model with diffusion on particle velocity ( diffusion_lsm2_option=2) and its stochastic time integration scheme (Direct Integrator difull_lsm2, time_scheme=5) on the reference test case of a point source dispersion in a uniform zero-mean flow.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_02_isotropic_diffusion/images/thumb/sphx_glr_vnv_diffusion_2d_lsm2_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_02_isotropic_diffusion_vnv_diffusion_2d_lsm2.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Homogeneous isotropic turbulence with the LSM-2</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Validation of the LSM-3 model and of its stochastic time integration scheme (Direct Integrator difull_lsm3, time_scheme=5) on the reference test case of a point source dispersion in a stationary homogeneous isotropic turbulent flow, i.e. with uniform mean fields and uniform timescales.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_02_isotropic_diffusion/images/thumb/sphx_glr_vnv_diffusion_2d_lsm3_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_02_isotropic_diffusion_vnv_diffusion_2d_lsm3.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Homogeneous isotropic turbulence with the LSM-3</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Validation of the LSM-1 model (Random Displacement Model) on the reference test case of a point source dispersion in a stationary homogeneous isotropic turbulent flow, i.e. with a zero mean velocity and uniform turbulent fields.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_02_isotropic_diffusion/images/thumb/sphx_glr_vnv_diffusion_2d_lsm1_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_02_isotropic_diffusion_vnv_diffusion_2d_lsm1.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Homogeneous isotropic turbulence with the LSM-1</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Flume
+------------
+
+This example illustrate the advection-diffusion of particles in a simple flume.
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we add settling velocity to particles. We compute the advection-diffusion of particles in an 3D flume with the LSM-1 model.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_03_flume/images/thumb/sphx_glr_vnv_flume3d_lsm1_settling_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_03_flume_vnv_flume3d_lsm1_settling.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Flume 3D - LSM-1 with settling velocity</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection of particles in an 2D flume with the LSM-1 model.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_03_flume/images/thumb/sphx_glr_vnv_flume2d_lsm1_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_03_flume_vnv_flume2d_lsm1.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Flume 2D - LSM-1</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection-diffusion of particles in an 3D flume with the LSM-2 model.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_03_flume/images/thumb/sphx_glr_vnv_flume3d_lsm2_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_03_flume_vnv_flume3d_lsm2.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Flume 3D - LSM-2</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection-diffusion of particles in an 3D flume with the LSM-3 model.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_03_flume/images/thumb/sphx_glr_vnv_flume3d_lsm3_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_03_flume_vnv_flume3d_lsm3.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Flume 3D - LSM-3</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection-diffusion of particles in an 2D flume  with the LSM-1 model for different Peclet numbers.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_03_flume/images/thumb/sphx_glr_vnv_flume2d_lsm1_peclet_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_03_flume_vnv_flume2d_lsm1_peclet.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Flume 2D - LSM-1 sensitivity to Peclet number</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection-diffusion of particles in an 3D flume with the LSM-1 model.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_03_flume/images/thumb/sphx_glr_vnv_flume3d_lsm1_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_03_flume_vnv_flume3d_lsm1.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Flume 3D - LSM-1</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection-diffusion of particles in an flume with the LSM-1 model using a 2D EulerianFieldSet and 3D LagrangianParticleSet.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_03_flume/images/thumb/sphx_glr_vnv_flume2d3d_lsm1_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_03_flume_vnv_flume2d3d_lsm1.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Flume 2D/3D - LSM-1</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Tide
+------------
+
+This example illustrate the advection-diffusion of particles in a coastal environment.
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection-diffusion of particles in a coastal  environment with the LSM-1 model.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_04_tide/images/thumb/sphx_glr_vnv_tide2d_lsm1_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_04_tide_vnv_tide2d_lsm1.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Tide - LSM-1 advection-diffusion</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection-diffusion of particles in a coastal  environment with the LSM-3 model.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_04_tide/images/thumb/sphx_glr_vnv_tide2d_lsm3_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_04_tide_vnv_tide2d_lsm3.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Tide - LSM-3 advection-diffusion</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection-diffusion of particles in a coastal  environment with the LSM-2 model.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_04_tide/images/thumb/sphx_glr_vnv_tide2d_lsm2_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_04_tide_vnv_tide2d_lsm2.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Tide - LSM-2 advection-diffusion</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection-diffusion of particles in a coastal  environment with the LSM-1 model.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_04_tide/images/thumb/sphx_glr_vnv_tide2d_lsm1_parallel_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_04_tide_vnv_tide2d_lsm1_parallel.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Tide - LSM-1 advection-diffusion (parallel)</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection-diffusion of particles in a coastal  environment with the LSM-3 model.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_04_tide/images/thumb/sphx_glr_vnv_tide2d_lsm3_parallel_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_04_tide_vnv_tide2d_lsm3_parallel.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Tide - LSM-3 advection-diffusion (parallel)</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection-diffusion of particles in a coastal  environment with the LSM-2 model.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_04_tide/images/thumb/sphx_glr_vnv_tide2d_lsm2_parallel_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_04_tide_vnv_tide2d_lsm2_parallel.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Tide - LSM-2 advection-diffusion (parallel)</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Meander
+------------
+
+This example illustrate the advection-diffusion of particles in a meandering channel with different models.
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection of particles in a meandering  channel with the LSM-1 model without diffusion.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_05_meander/images/thumb/sphx_glr_vnv_meander2d_lsm1_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_05_meander_vnv_meander2d_lsm1.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Meander - LSM-1 advection</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection-diffusion of particles in a meandering  channel with the LSM-1 model with constant diffusion.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_05_meander/images/thumb/sphx_glr_vnv_meander2d_lsm1_kcst_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_05_meander_vnv_meander2d_lsm1_kcst.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Meander - LSM-1 advection-diffusion (constant Ki)</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection-diffusion of particles in a meandering  channel with the LSM-1 model with k-eps diffusion.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_05_meander/images/thumb/sphx_glr_vnv_meander2d_lsm1_keps_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_05_meander_vnv_meander2d_lsm1_keps.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Meander - LSM-1 advection-diffusion (k-eps model)</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection-diffusion of particles in a meandering  channel with the LSM-3 model with k-eps diffusion.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_05_meander/images/thumb/sphx_glr_vnv_meander2d_lsm3_keps_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_05_meander_vnv_meander2d_lsm3_keps.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Meander - LSM-3 advection-diffusion (k-eps model)</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection of particles in a meandering  channel with the LSM-2 model without diffusion. ">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_05_meander/images/thumb/sphx_glr_vnv_meander2d_lsm2_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_05_meander_vnv_meander2d_lsm2.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Meander - LSM-2 advection</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection of particles in a meandering  channel with the LSM-3 model without diffusion. In this example we set T_L \to 0 and K=0 so that the diffusion terms vanish. In that configuration the LSM-3 converges towards the deterministic limit where particle velocities  are governed solely by the mean flow and external forces, with no stochastic diffusion (equivalent to LSM-2 without diffusion).">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_05_meander/images/thumb/sphx_glr_vnv_meander2d_lsm3_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_05_meander_vnv_meander2d_lsm3.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Meander - LSM-3 advection</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection-diffusion of particles in a meandering  channel with the LSM-2 model with k-eps diffusion.  We use option 1 for diffusion i.e. diffusion is applied on position.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_05_meander/images/thumb/sphx_glr_vnv_meander2d_lsm2_keps_opt1_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_05_meander_vnv_meander2d_lsm2_keps_opt1.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Meander - LSM-2 advection-diffusion (k-eps model, opt.1)</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection-diffusion of particles in a meandering  channel with the LSM-2 model with k-eps diffusion. We use option 2 for diffusion i.e. diffusion is applied on velocity.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_05_meander/images/thumb/sphx_glr_vnv_meander2d_lsm2_keps_opt2_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_05_meander_vnv_meander2d_lsm2_keps_opt2.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Meander - LSM-2 advection-diffusion (k-eps model, opt.2)</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection-diffusion of particles in a meandering  channel with the LSM-2 model with constant diffusion.  We use option 1 for diffusion i.e. diffusion is applied on position.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_05_meander/images/thumb/sphx_glr_vnv_meander2d_lsm2_kcst_opt1_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_05_meander_vnv_meander2d_lsm2_kcst_opt1.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Meander - LSM-2 advection-diffusion (k-eps model, opt.1)</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection-diffusion of particles in a meandering  channel with the LSM-3 model with constant diffusion.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_05_meander/images/thumb/sphx_glr_vnv_meander2d_lsm3_kcst_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_05_meander_vnv_meander2d_lsm3_kcst.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Meander - LSM-3 advection-diffusion (constant K-TL)</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Taylor vortices
+---------------
+
+This example illustrate the advection of particles in an analytical rotational velocity field known as Taylor vortices.
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we illustrate advection of particles in an analytical rotational  velocity field known as Taylor vortices.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_06_taylor_vortices/images/thumb/sphx_glr_vnv_taylor_vortices_lsm1_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_06_taylor_vortices_vnv_taylor_vortices_lsm1.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Taylor vortices - LSM-1</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we illustrate advection of particles in an analytical rotational  velocity field known as Taylor vortices.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_06_taylor_vortices/images/thumb/sphx_glr_vnv_taylor_vortices_lsm2_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_06_taylor_vortices_vnv_taylor_vortices_lsm2.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Taylor vortices - LSM-2</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we illustrate advection of particles in an analytical rotational  velocity field known as Taylor vortices.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_06_taylor_vortices/images/thumb/sphx_glr_vnv_taylor_vortices_lsm2_st_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_06_taylor_vortices_vnv_taylor_vortices_lsm2_st.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Taylor vortices - LSM-2 sensitivity to Strouhal number</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Settling
+------------
+
+This example illustrate how CyLag handles the settling of particles.
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the drag coefficient with the two main models available in CyLag.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_07_settling/images/thumb/sphx_glr_vnv_drag_coefficient_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_07_settling_vnv_drag_coefficient.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Drag coefficient models</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the settling of particle in a simple 3D domain with the LSM-1 model.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_07_settling/images/thumb/sphx_glr_vnv_settling_lsm1_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_07_settling_vnv_settling_lsm1.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Settling with the LSM-1 model</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the settling of particle in a simple 3D domain with the LSM-2 model.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_07_settling/images/thumb/sphx_glr_vnv_settling_lsm2_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_07_settling_vnv_settling_lsm2.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Settling with the LSM-2 model</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the settling of particle in a simple 3D domain with all LSM models without diffusion.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_07_settling/images/thumb/sphx_glr_vnv_settling_comparison_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_07_settling_vnv_settling_comparison.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Settling comparison without diffusion</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Compare LSM-1, LSM-2 and LSM-3 in a zero-mean-flow water column with prescribed, spatially uniform, stationary turbulence. This is an idealized maintained HIT case away from walls. The same long-time, constant-drag diffusivity is used in all three models.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_07_settling/images/thumb/sphx_glr_vnv_settling_comparison_hit_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_07_settling_vnv_settling_comparison_hit.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Settling comparison in weak homogeneous isotropic turbulence</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the settling of particle in a simple 3D domain with the LSM-2 model and compare it to the analytical formulas (used for LSM-1).">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_07_settling/images/thumb/sphx_glr_vnv_settling_vs_analytic_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_07_settling_vnv_settling_vs_analytic.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Settling LSM-2 comparison with analytical solution</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Sources
+------------
+
+This example illustrate how to use sources to add particles.
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we show the different options of the Scheduler class.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_08_sources/images/thumb/sphx_glr_vnv_scheduler_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_08_sources_vnv_scheduler.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Scheduler</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we illustrate how to add particle with sources.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_08_sources/images/thumb/sphx_glr_vnv_sources_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_08_sources_vnv_sources.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Sources</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we illustrate how to add particle with sources.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_08_sources/images/thumb/sphx_glr_vnv_sources_multiple_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_08_sources_vnv_sources_multiple.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Multiple sources</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we illustrate how to add particle with sources.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_08_sources/images/thumb/sphx_glr_vnv_sources_parallel_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_08_sources_vnv_sources_parallel.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Multiple sources (parallel)</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Statistics
+------------
+
+This example illustrate how to compute statistics on boundaries or on control sections.
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we analyse particles going through control sections.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_09_statistics/images/thumb/sphx_glr_vnv_statistics_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_09_statistics_vnv_statistics.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Statistics</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Poly-disperse
+-------------
+
+This example illustrate the capacity of CyLag to model poly-disperse distribution of particles.
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we illustrate the different particle distributions available in CyLag.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_10_polydisperse/images/thumb/sphx_glr_vnv_particle_distribution_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_10_polydisperse_vnv_particle_distribution.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Particle distribution</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection-diffusion of particles in a coastal  environment in pseudo-3D with a poly-dipserse distribution of particles. We use the LSM-1 model.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_10_polydisperse/images/thumb/sphx_glr_vnv_polydisperse_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_10_polydisperse_vnv_polydisperse.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Tide poly-disperse - LSM-1</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Oil slick module
+----------------
+
+This example illustrate the module dedicated to the modelling of oil spill.
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection-diffusion of oil with the oil slick module of CyLag.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_11_oil_slick/images/thumb/sphx_glr_vnv_oilslick_lsm1_2d_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_11_oil_slick_vnv_oilslick_lsm1_2d.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Oil slick advection-diffusion in 2D</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection-diffusion of oil with the oil slick module of CyLag. We use the LSM-1 model.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_11_oil_slick/images/thumb/sphx_glr_vnv_oilslick_lsm1_pseudo3d_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_11_oil_slick_vnv_oilslick_lsm1_pseudo3d.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Oil slick advection-diffusion in pseudo-3D</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Algae module
+-----------------
+
+This example illustrate the module dedicated to the transport of Algae.
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we illustrate the drag force formula used for Algae.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_12_algae/images/thumb/sphx_glr_vnv_algae_drag_force_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_12_algae_vnv_algae_drag_force.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Algae drag force</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection-diffusion of algae in a meandering  channel with the LSM-2 model">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_12_algae/images/thumb/sphx_glr_vnv_algae_lsm2_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_12_algae_vnv_algae_lsm2.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Algae - LSM-2 advection-diffusion</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Macrophyte module
+-----------------
+
+This example illustrate the module dedicated to the transport of marcophytes in rivers (uprooted aquatic vegetation).
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we illustrate the drag force formula used for Macrophytes.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_13_macrophyte/images/thumb/sphx_glr_vnv_macrophytes_drag_force_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_13_macrophyte_vnv_macrophytes_drag_force.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Macrophytes drag force</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection-diffusion of macrophytes in a meandering  channel with the LSM-2 model.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_13_macrophyte/images/thumb/sphx_glr_vnv_macrophytes_lsm2_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_13_macrophyte_vnv_macrophytes_lsm2.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Macrophytes - LSM-2 advection-diffusion</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Fish module
+-----------
+
+This example illustrate the module dedicated to the modeling of aquatic lifeforms like fish.
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we illustrate the Collective Based Model  for fish behavior modelling with the LSM-1 model (added velocity).">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_14_fish/images/thumb/sphx_glr_vnv_fish_cbm_ua_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_14_fish_vnv_fish_cbm_ua.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Fish - CBM example with added velocity (LSM-1)</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we illustrate the Idividual Based Model  for fish behavior modelling with the LSM-1 model (added velocity).">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_14_fish/images/thumb/sphx_glr_vnv_fish_ibm_ua_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_14_fish_vnv_fish_ibm_ua.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Fish - IBM example with added velocity (LSM-1)</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we illustrate the Idividual Based Model  for fish behavior modelling with the LSM-2 model (added trust force).">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_14_fish/images/thumb/sphx_glr_vnv_fish_ibm_fa_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_14_fish_vnv_fish_ibm_fa.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Fish - IBM example with added trust force (LSM-2)</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Jellyfish module
+----------------
+
+This example illustrate the module dedicated to the modeling of Jellyfish.
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we illustrate the drag force formula used for Jellyfish.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_15_jellyfish/images/thumb/sphx_glr_vnv_jellyfish_drag_force_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_15_jellyfish_vnv_jellyfish_drag_force.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Jellyfish drag force</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection-diffusion of Jellyfish in a coastal  environment with the LSM-2 model.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_15_jellyfish/images/thumb/sphx_glr_vnv_jellyfish_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_15_jellyfish_vnv_jellyfish.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Jellyfish</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+Online
+------------
+
+This example illustrate how to run CyLag in online mode with openTELEMAC.
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we illustrate how to run CyLag in online mode with openTELEMAC API (TelAPY).">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_16_online/images/thumb/sphx_glr_vnv_tide_online_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_16_online_vnv_tide_online.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Runing tide example in online mode</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+   :includehidden:
+
+
+   /auto_examples/vnv_01_couette_flow/index.rst
+   /auto_examples/vnv_02_isotropic_diffusion/index.rst
+   /auto_examples/vnv_03_flume/index.rst
+   /auto_examples/vnv_04_tide/index.rst
+   /auto_examples/vnv_05_meander/index.rst
+   /auto_examples/vnv_06_taylor_vortices/index.rst
+   /auto_examples/vnv_07_settling/index.rst
+   /auto_examples/vnv_08_sources/index.rst
+   /auto_examples/vnv_09_statistics/index.rst
+   /auto_examples/vnv_10_polydisperse/index.rst
+   /auto_examples/vnv_11_oil_slick/index.rst
+   /auto_examples/vnv_12_algae/index.rst
+   /auto_examples/vnv_13_macrophyte/index.rst
+   /auto_examples/vnv_14_fish/index.rst
+   /auto_examples/vnv_15_jellyfish/index.rst
+   /auto_examples/vnv_16_online/index.rst
+
+
+
+.. only:: html
+
+ .. rst-class:: sphx-glr-signature
+
+    `Gallery generated by Sphinx-Gallery <https://sphinx-gallery.github.io>`_

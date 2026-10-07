@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Couette flow - LSM-1 advection with different schemes (comparison) &#8212; CYLAG 0.9 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/classic.css?v=51dfc302" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=427e2fde" />
+    
+    <script src="../../_static/documentation_options.js?v=049aceee"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Couette flow - LSM-1 convergence test" href="vnv_couette_lsm1_convergence.html" />
+    <link rel="prev" title="Couette flow - LSM-1 advection-diffusion" href="vnv_couette_lsm1_diffusion.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="vnv_couette_lsm1_convergence.html" title="Couette flow - LSM-1 convergence test"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="vnv_couette_lsm1_diffusion.html" title="Couette flow - LSM-1 advection-diffusion"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CYLAG 0.9 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Examples</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">Couette flow</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Couette flow - LSM-1 advection with different schemes (comparison)</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p><a class="reference internal" href="#sphx-glr-download-auto-examples-vnv-01-couette-flow-vnv-couette-lsm1-comparison-py"><span class="std std-ref">Go to the end</span></a>
+to download the full example code.</p>
+</div>
+<section class="sphx-glr-example-title" id="couette-flow-lsm-1-advection-with-different-schemes-comparison">
+<span id="sphx-glr-auto-examples-vnv-01-couette-flow-vnv-couette-lsm1-comparison-py"></span><h1>Couette flow - LSM-1 advection with different schemes (comparison)<a class="headerlink" href="#couette-flow-lsm-1-advection-with-different-schemes-comparison" title="Link to this heading">¶</a></h1>
+<p>In this example we compare the following numerical scheme for the
+LSM-1 model without diffusion (material pathlines):</p>
+<ul class="simple">
+<li><p><strong>Euler</strong></p></li>
+<li><p><strong>Runge-Kutta 2</strong></p></li>
+<li><p><strong>Runge-Kutta 4</strong></p></li>
+</ul>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">cylag</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pylab</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s2">"../../examples/vnv_01_couette_flow"</span><span class="p">))</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">vnv_01_utils.couette_field_set</span><span class="w"> </span><span class="kn">import</span> <span class="n">couette_field_set</span><span class="p">,</span> <span class="n">couette_flow_period</span><span class="p">,</span> \
+    <span class="n">couette_flow_analytical_solution</span>
+
+<span class="c1">#sphinx_gallery_thumbnail_number = 1</span>
+</pre></div>
+</div>
+<section id="define-function-to-run-cylag">
+<h2>Define function to run CyLag<a class="headerlink" href="#define-function-to-run-cylag" title="Link to this heading">¶</a></h2>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">run_cylag_couette_lsm1</span><span class="p">(</span>\
+        <span class="n">position0</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.</span><span class="p">]]),</span>
+        <span class="n">time_scheme</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">dt</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span>
+        <span class="n">nturn</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>
+        <span class="n">output_file_name</span><span class="o">=</span><span class="s1">'particles_2d_euler'</span><span class="p">,</span>
+        <span class="n">mesh</span><span class="o">=</span><span class="s2">"couette"</span><span class="p">):</span>
+
+    <span class="c1"># define EulerianFieldSet</span>
+    <span class="n">fset</span><span class="p">,</span> <span class="n">tri</span> <span class="o">=</span> <span class="n">couette_field_set</span><span class="p">(</span><span class="n">mesh</span><span class="p">)</span>
+
+    <span class="c1"># define LagrangianParticleSet</span>
+    <span class="n">r0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">position0</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">position0</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">T</span> <span class="o">=</span> <span class="n">couette_flow_period</span><span class="p">(</span><span class="n">r0</span><span class="p">)</span>
+    <span class="n">pset</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">LagrangianParticleSet</span><span class="p">(</span>\
+        <span class="n">position0</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">initial_pool_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># set general parameters</span>
+    <span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">'final_time'</span><span class="p">:</span> <span class="n">nturn</span><span class="o">*</span><span class="n">T</span><span class="p">,</span>
+        <span class="s1">'time_step'</span><span class="p">:</span> <span class="n">dt</span><span class="p">,</span>
+        <span class="s1">'frozen_eulerian_fields'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s1">'model'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s1">'time_scheme'</span><span class="p">:</span> <span class="n">time_scheme</span><span class="p">,</span>
+        <span class="s1">'diffusion_model'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s1">'horizontal_diffusivity'</span><span class="p">:</span> <span class="mf">0.</span><span class="p">,</span>
+        <span class="s1">'vertical_diffusivity'</span><span class="p">:</span> <span class="mf">0.</span><span class="p">,</span>
+        <span class="s1">'boundary_conditions'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s1">'boundary_conditions_debug'</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="s1">'listing'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s1">'listing_printout_period'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s1">'output_file'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s1">'output_printout_period'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s1">'output_file_format'</span><span class="p">:</span> <span class="s1">'txt'</span><span class="p">,</span>
+        <span class="s1">'output_rep'</span><span class="p">:</span> <span class="s1">'resu_02'</span><span class="p">,</span>
+        <span class="s1">'output_file_name'</span><span class="p">:</span> <span class="n">output_file_name</span><span class="p">,</span>
+        <span class="p">}</span>
+
+    <span class="c1"># run</span>
+    <span class="n">cylag_solver</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">Solver</span><span class="p">(</span><span class="n">fset</span><span class="p">,</span> <span class="n">pset</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span>
+    <span class="n">cylag_solver</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="run-model-with-different-schemes-for-comparison">
+<h2>Run model with different schemes for comparison<a class="headerlink" href="#run-model-with-different-schemes-for-comparison" title="Link to this heading">¶</a></h2>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">run_cylag_couette_lsm1</span><span class="p">(</span><span class="n">time_scheme</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">output_file_name</span><span class="o">=</span><span class="s1">'particles_2d_E'</span><span class="p">,</span> <span class="n">nturn</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">run_cylag_couette_lsm1</span><span class="p">(</span><span class="n">time_scheme</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">output_file_name</span><span class="o">=</span><span class="s1">'particles_2d_RK2'</span><span class="p">,</span> <span class="n">nturn</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">run_cylag_couette_lsm1</span><span class="p">(</span><span class="n">time_scheme</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">output_file_name</span><span class="o">=</span><span class="s1">'particles_2d_RK3'</span><span class="p">,</span> <span class="n">nturn</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">run_cylag_couette_lsm1</span><span class="p">(</span><span class="n">time_scheme</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mf">1.6</span><span class="p">,</span> <span class="n">output_file_name</span><span class="o">=</span><span class="s1">'particles_2d_RK4'</span><span class="p">,</span> <span class="n">nturn</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>================================================================================
+|                                INITIALIZATION                                |
+================================================================================
+ ~~&gt; Simulation type : 2D
+ ~~&gt; Lagrangian Stochastic Model : LSM-1
+ ~~&gt; Integration method : Euler
+ ~~&gt; Time interval : [0.000, 37.699] - dt = 0.400
+ ~~&gt; Diffusion model : No diffusion
+ ~~&gt; Particle velocity : Initialized from field set
+ ~~&gt; Wall boundary conditions : Specular rebound
+================================================================================
+|                                 TIME LOOP                                    |
+================================================================================
+Iter =          1 ; Dt = 0.4000s ; Time = 00d 00:00:00 ; [...............]   1%
+Iter =          2 ; Dt = 0.4000s ; Time = 00d 00:00:00 ; [...............]   2%
+Iter =          3 ; Dt = 0.4000s ; Time = 00d 00:00:01 ; [...............]   3%
+Iter =          4 ; Dt = 0.4000s ; Time = 00d 00:00:01 ; [...............]   4%
+Iter =          5 ; Dt = 0.4000s ; Time = 00d 00:00:02 ; [...............]   5%
+Iter =          6 ; Dt = 0.4000s ; Time = 00d 00:00:02 ; [...............]   6%
+Iter =          7 ; Dt = 0.4000s ; Time = 00d 00:00:02 ; [&gt;..............]   7%
+Iter =          8 ; Dt = 0.4000s ; Time = 00d 00:00:03 ; [&gt;..............]   8%
+Iter =          9 ; Dt = 0.4000s ; Time = 00d 00:00:03 ; [&gt;..............]   9%
+Iter =         10 ; Dt = 0.4000s ; Time = 00d 00:00:03 ; [&gt;..............]  10%
+Iter =         11 ; Dt = 0.4000s ; Time = 00d 00:00:04 ; [&gt;..............]  11%
+Iter =         12 ; Dt = 0.4000s ; Time = 00d 00:00:04 ; [&gt;..............]  12%
+Iter =         13 ; Dt = 0.4000s ; Time = 00d 00:00:05 ; [=&gt;.............]  13%
+Iter =         14 ; Dt = 0.4000s ; Time = 00d 00:00:05 ; [=&gt;.............]  14%
+Iter =         15 ; Dt = 0.4000s ; Time = 00d 00:00:06 ; [=&gt;.............]  15%
+Iter =         16 ; Dt = 0.4000s ; Time = 00d 00:00:06 ; [=&gt;.............]  16%
+Iter =         17 ; Dt = 0.4000s ; Time = 00d 00:00:06 ; [=&gt;.............]  18%
+Iter =         18 ; Dt = 0.4000s ; Time = 00d 00:00:07 ; [=&gt;.............]  19%
+Iter =         19 ; Dt = 0.4000s ; Time = 00d 00:00:07 ; [==&gt;............]  20%
+Iter =         20 ; Dt = 0.4000s ; Time = 00d 00:00:08 ; [==&gt;............]  21%
+Iter =         21 ; Dt = 0.4000s ; Time = 00d 00:00:08 ; [==&gt;............]  22%
+Iter =         22 ; Dt = 0.4000s ; Time = 00d 00:00:08 ; [==&gt;............]  23%
+Iter =         23 ; Dt = 0.4000s ; Time = 00d 00:00:09 ; [==&gt;............]  24%
+Iter =         24 ; Dt = 0.4000s ; Time = 00d 00:00:09 ; [==&gt;............]  25%
+Iter =         25 ; Dt = 0.4000s ; Time = 00d 00:00:10 ; [==&gt;............]  26%
+Iter =         26 ; Dt = 0.4000s ; Time = 00d 00:00:10 ; [===&gt;...........]  27%
+Iter =         27 ; Dt = 0.4000s ; Time = 00d 00:00:10 ; [===&gt;...........]  28%
+Iter =         28 ; Dt = 0.4000s ; Time = 00d 00:00:11 ; [===&gt;...........]  29%
+Iter =         29 ; Dt = 0.4000s ; Time = 00d 00:00:11 ; [===&gt;...........]  30%
+Iter =         30 ; Dt = 0.4000s ; Time = 00d 00:00:12 ; [===&gt;...........]  31%
+Iter =         31 ; Dt = 0.4000s ; Time = 00d 00:00:12 ; [===&gt;...........]  32%
+Iter =         32 ; Dt = 0.4000s ; Time = 00d 00:00:12 ; [====&gt;..........]  33%
+Iter =         33 ; Dt = 0.4000s ; Time = 00d 00:00:13 ; [====&gt;..........]  35%
+Iter =         34 ; Dt = 0.4000s ; Time = 00d 00:00:13 ; [====&gt;..........]  36%
+Iter =         35 ; Dt = 0.4000s ; Time = 00d 00:00:14 ; [====&gt;..........]  37%
+Iter =         36 ; Dt = 0.4000s ; Time = 00d 00:00:14 ; [====&gt;..........]  38%
+Iter =         37 ; Dt = 0.4000s ; Time = 00d 00:00:14 ; [====&gt;..........]  39%
+Iter =         38 ; Dt = 0.4000s ; Time = 00d 00:00:15 ; [=====&gt;.........]  40%
+Iter =         39 ; Dt = 0.4000s ; Time = 00d 00:00:15 ; [=====&gt;.........]  41%
+Iter =         40 ; Dt = 0.4000s ; Time = 00d 00:00:16 ; [=====&gt;.........]  42%
+Iter =         41 ; Dt = 0.4000s ; Time = 00d 00:00:16 ; [=====&gt;.........]  43%
+Iter =         42 ; Dt = 0.4000s ; Time = 00d 00:00:16 ; [=====&gt;.........]  44%
+Iter =         43 ; Dt = 0.4000s ; Time = 00d 00:00:17 ; [=====&gt;.........]  45%
+Iter =         44 ; Dt = 0.4000s ; Time = 00d 00:00:17 ; [======&gt;........]  46%
+Iter =         45 ; Dt = 0.4000s ; Time = 00d 00:00:18 ; [======&gt;........]  47%
+Iter =         46 ; Dt = 0.4000s ; Time = 00d 00:00:18 ; [======&gt;........]  48%
+Iter =         47 ; Dt = 0.4000s ; Time = 00d 00:00:18 ; [======&gt;........]  49%
+Iter =         48 ; Dt = 0.4000s ; Time = 00d 00:00:19 ; [======&gt;........]  50%
+Iter =         49 ; Dt = 0.4000s ; Time = 00d 00:00:19 ; [======&gt;........]  51%
+Iter =         50 ; Dt = 0.4000s ; Time = 00d 00:00:19 ; [======&gt;........]  53%
+Iter =         51 ; Dt = 0.4000s ; Time = 00d 00:00:20 ; [=======&gt;.......]  54%
+Iter =         52 ; Dt = 0.4000s ; Time = 00d 00:00:20 ; [=======&gt;.......]  55%
+Iter =         53 ; Dt = 0.4000s ; Time = 00d 00:00:21 ; [=======&gt;.......]  56%
+Iter =         54 ; Dt = 0.4000s ; Time = 00d 00:00:21 ; [=======&gt;.......]  57%
+Iter =         55 ; Dt = 0.4000s ; Time = 00d 00:00:21 ; [=======&gt;.......]  58%
+Iter =         56 ; Dt = 0.4000s ; Time = 00d 00:00:22 ; [=======&gt;.......]  59%
+Iter =         57 ; Dt = 0.4000s ; Time = 00d 00:00:22 ; [========&gt;......]  60%
+Iter =         58 ; Dt = 0.4000s ; Time = 00d 00:00:23 ; [========&gt;......]  61%
+Iter =         59 ; Dt = 0.4000s ; Time = 00d 00:00:23 ; [========&gt;......]  62%
+Iter =         60 ; Dt = 0.4000s ; Time = 00d 00:00:23 ; [========&gt;......]  63%
+Iter =         61 ; Dt = 0.4000s ; Time = 00d 00:00:24 ; [========&gt;......]  64%
+Iter =         62 ; Dt = 0.4000s ; Time = 00d 00:00:24 ; [========&gt;......]  65%
+Iter =         63 ; Dt = 0.4000s ; Time = 00d 00:00:25 ; [=========&gt;.....]  66%
+Iter =         64 ; Dt = 0.4000s ; Time = 00d 00:00:25 ; [=========&gt;.....]  67%
+Iter =         65 ; Dt = 0.4000s ; Time = 00d 00:00:25 ; [=========&gt;.....]  68%
+Iter =         66 ; Dt = 0.4000s ; Time = 00d 00:00:26 ; [=========&gt;.....]  70%
+Iter =         67 ; Dt = 0.4000s ; Time = 00d 00:00:26 ; [=========&gt;.....]  71%
+Iter =         68 ; Dt = 0.4000s ; Time = 00d 00:00:27 ; [=========&gt;.....]  72%
+Iter =         69 ; Dt = 0.4000s ; Time = 00d 00:00:27 ; [=========&gt;.....]  73%
+Iter =         70 ; Dt = 0.4000s ; Time = 00d 00:00:27 ; [==========&gt;....]  74%
+Iter =         71 ; Dt = 0.4000s ; Time = 00d 00:00:28 ; [==========&gt;....]  75%
+Iter =         72 ; Dt = 0.4000s ; Time = 00d 00:00:28 ; [==========&gt;....]  76%
+Iter =         73 ; Dt = 0.4000s ; Time = 00d 00:00:29 ; [==========&gt;....]  77%
+Iter =         74 ; Dt = 0.4000s ; Time = 00d 00:00:29 ; [==========&gt;....]  78%
+Iter =         75 ; Dt = 0.4000s ; Time = 00d 00:00:29 ; [==========&gt;....]  79%
+Iter =         76 ; Dt = 0.4000s ; Time = 00d 00:00:30 ; [===========&gt;...]  80%
+Iter =         77 ; Dt = 0.4000s ; Time = 00d 00:00:30 ; [===========&gt;...]  81%
+Iter =         78 ; Dt = 0.4000s ; Time = 00d 00:00:31 ; [===========&gt;...]  82%
+Iter =         79 ; Dt = 0.4000s ; Time = 00d 00:00:31 ; [===========&gt;...]  83%
+Iter =         80 ; Dt = 0.4000s ; Time = 00d 00:00:31 ; [===========&gt;...]  84%
+Iter =         81 ; Dt = 0.4000s ; Time = 00d 00:00:32 ; [===========&gt;...]  85%
+Iter =         82 ; Dt = 0.4000s ; Time = 00d 00:00:32 ; [============&gt;..]  87%
+Iter =         83 ; Dt = 0.4000s ; Time = 00d 00:00:33 ; [============&gt;..]  88%
+Iter =         84 ; Dt = 0.4000s ; Time = 00d 00:00:33 ; [============&gt;..]  89%
+Iter =         85 ; Dt = 0.4000s ; Time = 00d 00:00:33 ; [============&gt;..]  90%
+Iter =         86 ; Dt = 0.4000s ; Time = 00d 00:00:34 ; [============&gt;..]  91%
+Iter =         87 ; Dt = 0.4000s ; Time = 00d 00:00:34 ; [============&gt;..]  92%
+Iter =         88 ; Dt = 0.4000s ; Time = 00d 00:00:35 ; [=============&gt;.]  93%
+Iter =         89 ; Dt = 0.4000s ; Time = 00d 00:00:35 ; [=============&gt;.]  94%
+Iter =         90 ; Dt = 0.4000s ; Time = 00d 00:00:35 ; [=============&gt;.]  95%
+Iter =         91 ; Dt = 0.4000s ; Time = 00d 00:00:36 ; [=============&gt;.]  96%
+Iter =         92 ; Dt = 0.4000s ; Time = 00d 00:00:36 ; [=============&gt;.]  97%
+Iter =         93 ; Dt = 0.4000s ; Time = 00d 00:00:37 ; [=============&gt;.]  98%
+Iter =         94 ; Dt = 0.4000s ; Time = 00d 00:00:37 ; [=============&gt;.]  99%
+================================================================================
+|                                    END                                       |
+================================================================================
+Problem.solve() completed in 0.004868745803833008s (wall time)
+================================================================================
+|                                INITIALIZATION                                |
+================================================================================
+ ~~&gt; Simulation type : 2D
+ ~~&gt; Lagrangian Stochastic Model : LSM-1
+ ~~&gt; Integration method : Runge-Kutta 2
+ ~~&gt; Time interval : [0.000, 37.699] - dt = 0.800
+ ~~&gt; Diffusion model : No diffusion
+ ~~&gt; Particle velocity : Initialized from field set
+ ~~&gt; Wall boundary conditions : Specular rebound
+================================================================================
+|                                 TIME LOOP                                    |
+================================================================================
+Iter =          1 ; Dt = 0.8000s ; Time = 00d 00:00:00 ; [...............]   2%
+Iter =          2 ; Dt = 0.8000s ; Time = 00d 00:00:01 ; [...............]   4%
+Iter =          3 ; Dt = 0.8000s ; Time = 00d 00:00:02 ; [...............]   6%
+Iter =          4 ; Dt = 0.8000s ; Time = 00d 00:00:03 ; [&gt;..............]   8%
+Iter =          5 ; Dt = 0.8000s ; Time = 00d 00:00:04 ; [&gt;..............]  10%
+Iter =          6 ; Dt = 0.8000s ; Time = 00d 00:00:04 ; [&gt;..............]  12%
+Iter =          7 ; Dt = 0.8000s ; Time = 00d 00:00:05 ; [=&gt;.............]  14%
+Iter =          8 ; Dt = 0.8000s ; Time = 00d 00:00:06 ; [=&gt;.............]  16%
+Iter =          9 ; Dt = 0.8000s ; Time = 00d 00:00:07 ; [=&gt;.............]  19%
+Iter =         10 ; Dt = 0.8000s ; Time = 00d 00:00:07 ; [==&gt;............]  21%
+Iter =         11 ; Dt = 0.8000s ; Time = 00d 00:00:08 ; [==&gt;............]  23%
+Iter =         12 ; Dt = 0.8000s ; Time = 00d 00:00:09 ; [==&gt;............]  25%
+Iter =         13 ; Dt = 0.8000s ; Time = 00d 00:00:10 ; [===&gt;...........]  27%
+Iter =         14 ; Dt = 0.8000s ; Time = 00d 00:00:11 ; [===&gt;...........]  29%
+Iter =         15 ; Dt = 0.8000s ; Time = 00d 00:00:12 ; [===&gt;...........]  31%
+Iter =         16 ; Dt = 0.8000s ; Time = 00d 00:00:12 ; [====&gt;..........]  33%
+Iter =         17 ; Dt = 0.8000s ; Time = 00d 00:00:13 ; [====&gt;..........]  36%
+Iter =         18 ; Dt = 0.8000s ; Time = 00d 00:00:14 ; [====&gt;..........]  38%
+Iter =         19 ; Dt = 0.8000s ; Time = 00d 00:00:15 ; [=====&gt;.........]  40%
+Iter =         20 ; Dt = 0.8000s ; Time = 00d 00:00:16 ; [=====&gt;.........]  42%
+Iter =         21 ; Dt = 0.8000s ; Time = 00d 00:00:16 ; [=====&gt;.........]  44%
+Iter =         22 ; Dt = 0.8000s ; Time = 00d 00:00:17 ; [======&gt;........]  46%
+Iter =         23 ; Dt = 0.8000s ; Time = 00d 00:00:18 ; [======&gt;........]  48%
+Iter =         24 ; Dt = 0.8000s ; Time = 00d 00:00:19 ; [======&gt;........]  50%
+Iter =         25 ; Dt = 0.8000s ; Time = 00d 00:00:20 ; [======&gt;........]  53%
+Iter =         26 ; Dt = 0.8000s ; Time = 00d 00:00:20 ; [=======&gt;.......]  55%
+Iter =         27 ; Dt = 0.8000s ; Time = 00d 00:00:21 ; [=======&gt;.......]  57%
+Iter =         28 ; Dt = 0.8000s ; Time = 00d 00:00:22 ; [=======&gt;.......]  59%
+Iter =         29 ; Dt = 0.8000s ; Time = 00d 00:00:23 ; [========&gt;......]  61%
+Iter =         30 ; Dt = 0.8000s ; Time = 00d 00:00:24 ; [========&gt;......]  63%
+Iter =         31 ; Dt = 0.8000s ; Time = 00d 00:00:24 ; [========&gt;......]  65%
+Iter =         32 ; Dt = 0.8000s ; Time = 00d 00:00:25 ; [=========&gt;.....]  67%
+Iter =         33 ; Dt = 0.8000s ; Time = 00d 00:00:26 ; [=========&gt;.....]  70%
+Iter =         34 ; Dt = 0.8000s ; Time = 00d 00:00:27 ; [=========&gt;.....]  72%
+Iter =         35 ; Dt = 0.8000s ; Time = 00d 00:00:28 ; [==========&gt;....]  74%
+Iter =         36 ; Dt = 0.8000s ; Time = 00d 00:00:28 ; [==========&gt;....]  76%
+Iter =         37 ; Dt = 0.8000s ; Time = 00d 00:00:29 ; [==========&gt;....]  78%
+Iter =         38 ; Dt = 0.8000s ; Time = 00d 00:00:30 ; [===========&gt;...]  80%
+Iter =         39 ; Dt = 0.8000s ; Time = 00d 00:00:31 ; [===========&gt;...]  82%
+Iter =         40 ; Dt = 0.8000s ; Time = 00d 00:00:32 ; [===========&gt;...]  84%
+Iter =         41 ; Dt = 0.8000s ; Time = 00d 00:00:32 ; [============&gt;..]  87%
+Iter =         42 ; Dt = 0.8000s ; Time = 00d 00:00:33 ; [============&gt;..]  89%
+Iter =         43 ; Dt = 0.8000s ; Time = 00d 00:00:34 ; [============&gt;..]  91%
+Iter =         44 ; Dt = 0.8000s ; Time = 00d 00:00:35 ; [=============&gt;.]  93%
+Iter =         45 ; Dt = 0.8000s ; Time = 00d 00:00:36 ; [=============&gt;.]  95%
+Iter =         46 ; Dt = 0.8000s ; Time = 00d 00:00:36 ; [=============&gt;.]  97%
+Iter =         47 ; Dt = 0.8000s ; Time = 00d 00:00:37 ; [=============&gt;.]  99%
+================================================================================
+|                                    END                                       |
+================================================================================
+Problem.solve() completed in 0.002112865447998047s (wall time)
+================================================================================
+|                                INITIALIZATION                                |
+================================================================================
+ ~~&gt; Simulation type : 2D
+ ~~&gt; Lagrangian Stochastic Model : LSM-1
+ ~~&gt; Integration method : Runge-Kutta 3
+ ~~&gt; Time interval : [0.000, 37.699] - dt = 1.200
+ ~~&gt; Diffusion model : No diffusion
+ ~~&gt; Particle velocity : Initialized from field set
+ ~~&gt; Wall boundary conditions : Specular rebound
+================================================================================
+|                                 TIME LOOP                                    |
+================================================================================
+Iter =          1 ; Dt = 1.2000s ; Time = 00d 00:00:01 ; [...............]   3%
+Iter =          2 ; Dt = 1.2000s ; Time = 00d 00:00:02 ; [...............]   6%
+Iter =          3 ; Dt = 1.2000s ; Time = 00d 00:00:03 ; [&gt;..............]   9%
+Iter =          4 ; Dt = 1.2000s ; Time = 00d 00:00:04 ; [&gt;..............]  12%
+Iter =          5 ; Dt = 1.2000s ; Time = 00d 00:00:06 ; [=&gt;.............]  15%
+Iter =          6 ; Dt = 1.2000s ; Time = 00d 00:00:07 ; [=&gt;.............]  19%
+Iter =          7 ; Dt = 1.2000s ; Time = 00d 00:00:08 ; [==&gt;............]  22%
+Iter =          8 ; Dt = 1.2000s ; Time = 00d 00:00:09 ; [==&gt;............]  25%
+Iter =          9 ; Dt = 1.2000s ; Time = 00d 00:00:10 ; [===&gt;...........]  28%
+Iter =         10 ; Dt = 1.2000s ; Time = 00d 00:00:11 ; [===&gt;...........]  31%
+Iter =         11 ; Dt = 1.2000s ; Time = 00d 00:00:13 ; [====&gt;..........]  35%
+Iter =         12 ; Dt = 1.2000s ; Time = 00d 00:00:14 ; [====&gt;..........]  38%
+Iter =         13 ; Dt = 1.2000s ; Time = 00d 00:00:15 ; [=====&gt;.........]  41%
+Iter =         14 ; Dt = 1.2000s ; Time = 00d 00:00:16 ; [=====&gt;.........]  44%
+Iter =         15 ; Dt = 1.2000s ; Time = 00d 00:00:17 ; [======&gt;........]  47%
+Iter =         16 ; Dt = 1.2000s ; Time = 00d 00:00:19 ; [======&gt;........]  50%
+Iter =         17 ; Dt = 1.2000s ; Time = 00d 00:00:20 ; [=======&gt;.......]  54%
+Iter =         18 ; Dt = 1.2000s ; Time = 00d 00:00:21 ; [=======&gt;.......]  57%
+Iter =         19 ; Dt = 1.2000s ; Time = 00d 00:00:22 ; [========&gt;......]  60%
+Iter =         20 ; Dt = 1.2000s ; Time = 00d 00:00:23 ; [========&gt;......]  63%
+Iter =         21 ; Dt = 1.2000s ; Time = 00d 00:00:25 ; [=========&gt;.....]  66%
+Iter =         22 ; Dt = 1.2000s ; Time = 00d 00:00:26 ; [=========&gt;.....]  70%
+Iter =         23 ; Dt = 1.2000s ; Time = 00d 00:00:27 ; [=========&gt;.....]  73%
+Iter =         24 ; Dt = 1.2000s ; Time = 00d 00:00:28 ; [==========&gt;....]  76%
+Iter =         25 ; Dt = 1.2000s ; Time = 00d 00:00:29 ; [==========&gt;....]  79%
+Iter =         26 ; Dt = 1.2000s ; Time = 00d 00:00:31 ; [===========&gt;...]  82%
+Iter =         27 ; Dt = 1.2000s ; Time = 00d 00:00:32 ; [===========&gt;...]  85%
+Iter =         28 ; Dt = 1.2000s ; Time = 00d 00:00:33 ; [============&gt;..]  89%
+Iter =         29 ; Dt = 1.2000s ; Time = 00d 00:00:34 ; [============&gt;..]  92%
+Iter =         30 ; Dt = 1.2000s ; Time = 00d 00:00:36 ; [=============&gt;.]  95%
+Iter =         31 ; Dt = 1.2000s ; Time = 00d 00:00:37 ; [=============&gt;.]  98%
+================================================================================
+|                                    END                                       |
+================================================================================
+Problem.solve() completed in 0.0014591217041015625s (wall time)
+================================================================================
+|                                INITIALIZATION                                |
+================================================================================
+ ~~&gt; Simulation type : 2D
+ ~~&gt; Lagrangian Stochastic Model : LSM-1
+ ~~&gt; Integration method : Runge-Kutta 4
+ ~~&gt; Time interval : [0.000, 37.699] - dt = 1.600
+ ~~&gt; Diffusion model : No diffusion
+ ~~&gt; Particle velocity : Initialized from field set
+ ~~&gt; Wall boundary conditions : Specular rebound
+================================================================================
+|                                 TIME LOOP                                    |
+================================================================================
+Iter =          1 ; Dt = 1.6000s ; Time = 00d 00:00:01 ; [...............]   4%
+Iter =          2 ; Dt = 1.6000s ; Time = 00d 00:00:03 ; [&gt;..............]   8%
+Iter =          3 ; Dt = 1.6000s ; Time = 00d 00:00:04 ; [&gt;..............]  12%
+Iter =          4 ; Dt = 1.6000s ; Time = 00d 00:00:06 ; [=&gt;.............]  16%
+Iter =          5 ; Dt = 1.6000s ; Time = 00d 00:00:08 ; [==&gt;............]  21%
+Iter =          6 ; Dt = 1.6000s ; Time = 00d 00:00:09 ; [==&gt;............]  25%
+Iter =          7 ; Dt = 1.6000s ; Time = 00d 00:00:11 ; [===&gt;...........]  29%
+Iter =          8 ; Dt = 1.6000s ; Time = 00d 00:00:12 ; [====&gt;..........]  33%
+Iter =          9 ; Dt = 1.6000s ; Time = 00d 00:00:14 ; [====&gt;..........]  38%
+Iter =         10 ; Dt = 1.6000s ; Time = 00d 00:00:15 ; [=====&gt;.........]  42%
+Iter =         11 ; Dt = 1.6000s ; Time = 00d 00:00:17 ; [======&gt;........]  46%
+Iter =         12 ; Dt = 1.6000s ; Time = 00d 00:00:19 ; [======&gt;........]  50%
+Iter =         13 ; Dt = 1.6000s ; Time = 00d 00:00:20 ; [=======&gt;.......]  55%
+Iter =         14 ; Dt = 1.6000s ; Time = 00d 00:00:22 ; [=======&gt;.......]  59%
+Iter =         15 ; Dt = 1.6000s ; Time = 00d 00:00:24 ; [========&gt;......]  63%
+Iter =         16 ; Dt = 1.6000s ; Time = 00d 00:00:25 ; [=========&gt;.....]  67%
+Iter =         17 ; Dt = 1.6000s ; Time = 00d 00:00:27 ; [=========&gt;.....]  72%
+Iter =         18 ; Dt = 1.6000s ; Time = 00d 00:00:28 ; [==========&gt;....]  76%
+Iter =         19 ; Dt = 1.6000s ; Time = 00d 00:00:30 ; [===========&gt;...]  80%
+Iter =         20 ; Dt = 1.6000s ; Time = 00d 00:00:32 ; [===========&gt;...]  84%
+Iter =         21 ; Dt = 1.6000s ; Time = 00d 00:00:33 ; [============&gt;..]  89%
+Iter =         22 ; Dt = 1.6000s ; Time = 00d 00:00:35 ; [=============&gt;.]  93%
+Iter =         23 ; Dt = 1.6000s ; Time = 00d 00:00:36 ; [=============&gt;.]  97%
+================================================================================
+|                                    END                                       |
+================================================================================
+Problem.solve() completed in 0.0013880729675292969s (wall time)
+</pre></div>
+</div>
+</section>
+<section id="post-processing">
+<h2>Post-processing<a class="headerlink" href="#post-processing" title="Link to this heading">¶</a></h2>
+<p>get particles</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">part1</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">ParticlesIO</span><span class="o">.</span><span class="n">from_cylag_txt</span><span class="p">(</span><span class="s1">'resu_02/particles_2d_E.txt'</span><span class="p">)</span>
+<span class="n">part2</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">ParticlesIO</span><span class="o">.</span><span class="n">from_cylag_txt</span><span class="p">(</span><span class="s1">'resu_02/particles_2d_RK2.txt'</span><span class="p">)</span>
+<span class="n">part3</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">ParticlesIO</span><span class="o">.</span><span class="n">from_cylag_txt</span><span class="p">(</span><span class="s1">'resu_02/particles_2d_RK3.txt'</span><span class="p">)</span>
+<span class="n">part4</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">ParticlesIO</span><span class="o">.</span><span class="n">from_cylag_txt</span><span class="p">(</span><span class="s1">'resu_02/particles_2d_RK4.txt'</span><span class="p">)</span>
+
+<span class="c1"># time</span>
+<span class="n">rec</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">part1</span><span class="o">.</span><span class="n">times</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span>
+<span class="n">time</span> <span class="o">=</span> <span class="n">part1</span><span class="o">.</span><span class="n">times</span><span class="p">[</span><span class="n">rec</span><span class="p">]</span>
+<span class="n">T</span> <span class="o">=</span> <span class="n">time</span>
+
+<span class="c1"># load particles trajectories</span>
+<span class="n">traj1</span> <span class="o">=</span> <span class="n">part1</span><span class="o">.</span><span class="n">get_trajectories</span><span class="p">([</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">traj2</span> <span class="o">=</span> <span class="n">part2</span><span class="o">.</span><span class="n">get_trajectories</span><span class="p">([</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">traj3</span> <span class="o">=</span> <span class="n">part3</span><span class="o">.</span><span class="n">get_trajectories</span><span class="p">([</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">traj4</span> <span class="o">=</span> <span class="n">part4</span><span class="o">.</span><span class="n">get_trajectories</span><span class="p">([</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">positions1</span> <span class="o">=</span> <span class="n">traj1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">positions2</span> <span class="o">=</span> <span class="n">traj2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">positions3</span> <span class="o">=</span> <span class="n">traj3</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">positions4</span> <span class="o">=</span> <span class="n">traj4</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># analytical trajectory</span>
+<span class="n">times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+<span class="n">r</span><span class="p">,</span> <span class="n">theta</span> <span class="o">=</span> <span class="n">couette_flow_analytical_solution</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.</span><span class="p">])</span>
+<span class="n">exact_pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">times</span><span class="p">),</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">exact_pos</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">r</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+<span class="n">exact_pos</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">r</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+
+<span class="c1"># field set</span>
+<span class="n">fset</span><span class="p">,</span> <span class="n">tri</span> <span class="o">=</span> <span class="n">couette_field_set</span><span class="p">()</span>
+<span class="n">ux</span> <span class="o">=</span> <span class="n">fset</span><span class="o">.</span><span class="n">get_field</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">time</span><span class="p">)</span>
+<span class="n">uy</span> <span class="o">=</span> <span class="n">fset</span><span class="o">.</span><span class="n">get_field</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">time</span><span class="p">)</span>
+<span class="n">velocity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">ux</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">uy</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Um ="</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">velocity</span><span class="p">))</span>
+
+<span class="c1"># Plot</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">7.5</span><span class="p">,</span> <span class="mf">6.5</span><span class="p">))</span>
+<span class="n">cylag</span><span class="o">.</span><span class="n">set_rcparams</span><span class="p">()</span>
+<span class="n">color</span><span class="p">,</span><span class="n">_</span><span class="p">,</span><span class="n">_</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">get_default_color_palette</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">'equal'</span><span class="p">)</span>
+
+<span class="c1"># plot velocity</span>
+<span class="n">cs</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">tricontourf</span><span class="p">(</span><span class="n">tri</span><span class="p">,</span> <span class="n">velocity</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">'RdBu_r'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">cs</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"$|</span><span class="se">\\</span><span class="s2">textbf</span><span class="si">{U}</span><span class="s2">_f|/U_m$"</span><span class="p">)</span>
+
+<span class="c1"># Plots direction of the velocity vector field</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="n">tri</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">tri</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">ux</span><span class="p">,</span> <span class="n">uy</span><span class="p">,</span>
+          <span class="n">units</span><span class="o">=</span><span class="s1">'xy'</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">15.</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'0.5'</span><span class="p">,</span>
+          <span class="n">width</span><span class="o">=</span><span class="mf">0.007</span><span class="p">,</span> <span class="n">headwidth</span><span class="o">=</span><span class="mf">3.</span><span class="p">,</span> <span class="n">headlength</span><span class="o">=</span><span class="mf">4.</span><span class="p">)</span>
+
+<span class="c1"># plot particles</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">positions1</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">positions1</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="n">marker</span><span class="o">=</span><span class="s1">'+'</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>  <span class="n">ls</span><span class="o">=</span><span class="s1">'-'</span><span class="p">,</span>  <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">color</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Euler, $dt=</span><span class="si">{}</span><span class="s2">$"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mf">0.4</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">positions2</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">positions2</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="n">marker</span><span class="o">=</span><span class="s1">'x'</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>  <span class="n">ls</span><span class="o">=</span><span class="s1">'-'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">color</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">"RK2, $dt=</span><span class="si">{}</span><span class="s2">$"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mf">0.8</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">positions3</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">positions3</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="n">marker</span><span class="o">=</span><span class="s1">'s'</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>  <span class="n">ls</span><span class="o">=</span><span class="s1">'-'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">color</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">"RK3, $dt=</span><span class="si">{}</span><span class="s2">$"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mf">1.2</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">positions4</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">positions4</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="n">marker</span><span class="o">=</span><span class="s1">'o'</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>  <span class="n">ls</span><span class="o">=</span><span class="s1">'-'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.25</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">color</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">"RK4, $dt=</span><span class="si">{}</span><span class="s2">$"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mf">1.6</span><span class="p">))</span>
+
+<span class="c1"># plot analytical trajectory</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">exact_pos</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">exact_pos</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">ls</span><span class="o">=</span><span class="s1">'-'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">'k'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Exact"</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">"$x/R_</span><span class="si">{1}</span><span class="s2">$"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"$y/R_</span><span class="si">{1}</span><span class="s2">$"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="o">-</span><span class="mf">1.25</span><span class="p">,</span> <span class="mf">1.25</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="o">-</span><span class="mf">1.25</span><span class="p">,</span> <span class="mf">1.25</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1">#plt.savefig('figs/couette_flow_comparison.pdf', dpi=300, format="pdf")</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">'figs/couette_flow_comparison.png'</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">"png"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<img src="../../_images/sphx_glr_vnv_couette_lsm1_comparison_001.png" srcset="../../_images/sphx_glr_vnv_couette_lsm1_comparison_001.png" alt="vnv couette lsm1 comparison" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Um = 1.0
+</pre></div>
+</div>
+<p>Clean:</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="k">del</span> <span class="n">part1</span>
+<span class="k">del</span> <span class="n">part2</span>
+<span class="k">del</span> <span class="n">part3</span>
+<span class="k">del</span> <span class="n">part4</span>
+<span class="k">del</span> <span class="n">rec</span>
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.521 seconds)</p>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-vnv-01-couette-flow-vnv-couette-lsm1-comparison-py">
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/959b8ffb330c0cc0da9796237503e55f/vnv_couette_lsm1_comparison.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">vnv_couette_lsm1_comparison.ipynb</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/a04914b96b1cf7fb75bd5d15f99a6ff3/vnv_couette_lsm1_comparison.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">vnv_couette_lsm1_comparison.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-zip docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/2e838c5847ec1d4fb7ebe6a76fabb123/vnv_couette_lsm1_comparison.zip"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">zipped:</span> <span class="pre">vnv_couette_lsm1_comparison.zip</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/logo_cylag_sb.png" alt="Logo of CYLAG"/>
+            </a></p>
+<h3><a href="../../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../get_started.html">Quick installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models.html">Mathematical models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../algo.html">Particle-mesh implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../setup.html">Setup, inputs and practical informations</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Gallery of examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#couette-flow">Couette flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#isotropic-diffusion">Isotropic diffusion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#flume">Flume</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#tide">Tide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#meander">Meander</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#taylor-vortices">Taylor vortices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#settling">Settling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#sources">Sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#statistics">Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#poly-disperse">Poly-disperse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#oil-slick-module">Oil slick module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#algae-module">Algae module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#macrophyte-module">Macrophyte module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#fish-module">Fish module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#jellyfish-module">Jellyfish module</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#online">Online</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../good_practices.html">Good practices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev.html">Developer guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/modules.html">API</a></li>
+</ul>
+
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="vnv_couette_lsm1_diffusion.html"
+                          title="previous chapter">Couette flow - LSM-1 advection-diffusion</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="vnv_couette_lsm1_convergence.html"
+                          title="next chapter">Couette flow - LSM-1 convergence test</a></p>
+  </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="vnv_couette_lsm1_convergence.html" title="Couette flow - LSM-1 convergence test"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="vnv_couette_lsm1_diffusion.html" title="Couette flow - LSM-1 advection-diffusion"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CYLAG 0.9 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Examples</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >Couette flow</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Couette flow - LSM-1 advection with different schemes (comparison)</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2023, Fabien Souillé.
+    </div>
+  </body>
+</html>

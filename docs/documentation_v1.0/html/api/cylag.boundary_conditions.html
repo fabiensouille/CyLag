@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>cylag.boundary_conditions package &#8212; CYLAG 0.9 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/classic.css?v=51dfc302" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=427e2fde" />
+    
+    <script src="../_static/documentation_options.js?v=049aceee"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="cylag.core package" href="cylag.core.html" />
+    <link rel="prev" title="cylag package" href="cylag.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="cylag.core.html" title="cylag.core package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="cylag.html" title="cylag package"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">CYLAG 0.9 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >cylag</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="cylag.html" accesskey="U">cylag package</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">cylag.boundary_conditions package</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="cylag-boundary-conditions-package">
+<h1>cylag.boundary_conditions package<a class="headerlink" href="#cylag-boundary-conditions-package" title="Link to this heading">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+</section>
+<section id="module-cylag.boundary_conditions.compute_bc">
+<span id="cylag-boundary-conditions-compute-bc-module"></span><h2>cylag.boundary_conditions.compute_bc module<a class="headerlink" href="#module-cylag.boundary_conditions.compute_bc" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.boundary_conditions.compute_bc.compute_boundary_condition">
+<span class="sig-prename descclassname"><span class="pre">cylag.boundary_conditions.compute_bc.</span></span><span class="sig-name descname"><span class="pre">compute_boundary_condition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">simutime</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bnd_j</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bnd_stats</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.boundary_conditions.compute_bc.compute_boundary_condition" title="Link to this definition">¶</a></dt>
+<dd><p>Compute boundary conditions</p>
+<p>Handles wall rebound, open boundaries, bottom/surface reflections,
+and updates boundary statistics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>simutime</strong> (<em>cylag.SimuTime</em>) – Simulation time manager</p></li>
+<li><p><strong>fset</strong> (<em>cylag.EulerianFieldSet</em>) – Eulerian field set containing mesh and fields</p></li>
+<li><p><strong>pset</strong> (<em>cylag.LagrangianParticleSet</em>) – Lagrangian particle set</p></li>
+<li><p><strong>parameters</strong> (<em>cylag.Parameters</em>) – Model parameters</p></li>
+<li><p><strong>i</strong> (<em>int</em>) – Particle index</p></li>
+<li><p><strong>bnd_j</strong> (<em>int</em>) – Boundary edge index (or -1 if no boundary crossed)</p></li>
+<li><p><strong>bnd_stats</strong> (<em>int</em><em>[</em><em>:</em><em>]</em>) – Array for accumulating boundary crossing statistics</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-cylag.boundary_conditions">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-cylag.boundary_conditions" title="Link to this heading">¶</a></h2>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/logo_cylag_sb.png" alt="Logo of CYLAG"/>
+            </a></p>
+<h3><a href="../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../get_started.html">Quick installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models.html">Mathematical models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../algo.html">Particle-mesh implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../setup.html">Setup, inputs and practical informations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html">Gallery of examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../good_practices.html">Good practices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev.html">Developer guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="cylag.html">cylag package</a></li>
+</ul>
+</li>
+</ul>
+
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="cylag.html"
+                          title="previous chapter">cylag package</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="cylag.core.html"
+                          title="next chapter">cylag.core package</a></p>
+  </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="cylag.core.html" title="cylag.core package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="cylag.html" title="cylag package"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">CYLAG 0.9 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >cylag</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="cylag.html" >cylag package</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">cylag.boundary_conditions package</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2023, Fabien Souillé.
+    </div>
+  </body>
+</html>

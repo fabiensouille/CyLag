@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>cylag package &#8212; CYLAG 0.9 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/classic.css?v=51dfc302" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=427e2fde" />
+    
+    <script src="../_static/documentation_options.js?v=049aceee"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="cylag.boundary_conditions package" href="cylag.boundary_conditions.html" />
+    <link rel="prev" title="cylag" href="modules.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="cylag.boundary_conditions.html" title="cylag.boundary_conditions package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="modules.html" title="cylag"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">CYLAG 0.9 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" accesskey="U">cylag</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">cylag package</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="cylag-package">
+<h1>cylag package<a class="headerlink" href="#cylag-package" title="Link to this heading">¶</a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cylag.boundary_conditions.html">cylag.boundary_conditions package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cylag.boundary_conditions.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.boundary_conditions.html#module-cylag.boundary_conditions.compute_bc">cylag.boundary_conditions.compute_bc module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cylag.boundary_conditions.html#cylag.boundary_conditions.compute_bc.compute_boundary_condition"><code class="docutils literal notranslate"><span class="pre">compute_boundary_condition()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.boundary_conditions.html#module-cylag.boundary_conditions">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cylag.core.html">cylag.core package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cylag.core.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.core.html#module-cylag.core.constants">cylag.core.constants module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.core.html#module-cylag.core.eulerian_field_set">cylag.core.eulerian_field_set module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet.triangular_mesh"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.triangular_mesh</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet.dim"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.dim</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet.npoints"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.npoints</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet.nlayers"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.nlayers</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet.ntimes"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.ntimes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet.times"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.times</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet.elevation"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.elevation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet.velocity_x"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.velocity_x</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet.velocity_y"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.velocity_y</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet.velocity_z"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.velocity_z</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet.opt_fields"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.opt_fields</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet.opt_fields_names"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.opt_fields_names</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet.nopt"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.nopt</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet.field_names"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.field_names</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet.friction_model"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.friction_model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet.friction_coefficient"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.friction_coefficient</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet.frozen_hydro"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.frozen_hydro</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet.record"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.record</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet.time_interp_factor"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.time_interp_factor</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet.trifinder"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.trifinder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet.from_telemac2d"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.from_telemac2d</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet.from_telemac3d"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.from_telemac3d</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet.from_hdf5"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.from_hdf5</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet.save_hdf5"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.save_hdf5</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet.get_field"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.get_field</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet.z_localize"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.z_localize</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet.interpolate_field"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.interpolate_field</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet.interpolate_velocity"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.interpolate_velocity</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet.check_dim"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.check_dim()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet.check_regular_layers"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.check_regular_layers()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id0"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.dim</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id1"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.elevation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet.fid_dissip"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.fid_dissip</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet.fid_turbeng"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.fid_turbeng</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet.fid_ux"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.fid_ux</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet.fid_uy"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.fid_uy</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet.fid_uz"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.fid_uz</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet.fid_windx"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.fid_windx</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet.fid_windy"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.fid_windy</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet.fid_zb"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.fid_zb</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet.fid_zs"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.fid_zs</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id2"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.field_names</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet.friction_calc"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.friction_calc()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id3"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.friction_coefficient</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id4"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.friction_model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id5"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.from_hdf5()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id6"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.from_telemac2d()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id7"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.from_telemac3d()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id8"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.frozen_hydro</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id9"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.get_field()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet.get_field_list"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.get_field_list()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet.get_mtri_triangulation"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.get_mtri_triangulation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id10"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.interpolate_field()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id11"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.interpolate_velocity()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id12"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.nlayers</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id13"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.nopt</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id14"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.npoints</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id15"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.ntimes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id16"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.opt_fields</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id17"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.opt_fields_names</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.eulerian_field_set.EulerianFieldSet.pseudo_3d_velocity_corrections"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.pseudo_3d_velocity_corrections()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id18"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.record</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id19"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.save_hdf5()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id20"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.time_interp_factor</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id21"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.times</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id22"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.triangular_mesh</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id23"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.trifinder</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id24"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.velocity_x</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id25"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.velocity_y</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id26"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.velocity_z</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id27"><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.z_localize()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.core.html#module-cylag.core.lagrangian_particle_set">cylag.core.lagrangian_particle_set module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.density"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.density</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.diameter"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.diameter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.volume"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.volume</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.surface"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.surface</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.position"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.position</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.velocity"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.velocity</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.fluid_velocity_seen"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.fluid_velocity_seen</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.tag"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.tag</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.npart"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.npart</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.npart_active"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.npart_active</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.inactive"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.inactive</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.tri"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.tri</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.lowerlayer"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.lowerlayer</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.last_tri"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.last_tri</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.last_position"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.last_position</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.last_velocity"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.last_velocity</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.dim"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.dim</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.min_pool_size_update"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.min_pool_size_update</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.maxtag"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.maxtag</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.drag_coef_model"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.drag_coef_model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.drag_coef"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.drag_coef</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.added_mass_force"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.added_mass_force</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.added_mass_coef"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.added_mass_coef</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.additional_velocity"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.additional_velocity</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.additional_force"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.additional_force</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.a0c"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.a0c</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.a1c"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.a1c</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.a2c"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.a2c</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.a3c"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.a3c</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.max_stranded"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.max_stranded</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.compute_depth"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.compute_depth</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.depth"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.depth</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.stranded_count"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.stranded_count</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.stranded_positions"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.stranded_positions</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id28"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.a0c</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id29"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.a1c</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id30"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.a2c</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id31"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.a3c</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.add"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.add()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id32"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.added_mass_coef</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id33"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.added_mass_force</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id34"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.additional_force</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id35"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.additional_velocity</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.buoyancy_velocity"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.buoyancy_velocity()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.buoyancy_velocity_model"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.buoyancy_velocity_model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.buoyancy_velocity_value"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.buoyancy_velocity_value</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id36"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.compute_depth</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.delete"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.delete()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.delete_single"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.delete_single()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id37"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.density</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id38"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.depth</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id39"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.diameter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.diameter_distribution"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.diameter_distribution</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.diameter_distribution_param"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.diameter_distribution_param</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id40"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.dim</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id41"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.drag_coef</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id42"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.drag_coef_model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.drag_coefficient"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.drag_coefficient()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id43"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.fluid_velocity_seen</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.get_particle_properties"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.get_particle_properties()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.get_state"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.get_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id44"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.inactive</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id45"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.last_position</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id46"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.last_tri</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id47"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.last_velocity</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id48"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.lowerlayer</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id49"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.max_stranded</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id50"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.maxtag</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id51"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.min_pool_size_update</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id52"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.npart</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id53"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.npart_active</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.particle_diameter"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.particle_diameter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.particle_volume"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.particle_volume</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id54"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.position</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.rho0"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.rho0</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet.show_status"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.show_status()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id55"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.stranded_count</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id56"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.stranded_positions</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id57"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.tag</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id58"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.tri</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id59"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.velocity</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id60"><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet.volume</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.core.html#module-cylag.core.parameters">cylag.core.parameters module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cylag.core.html#cylag.core.parameters.Parameters"><code class="docutils literal notranslate"><span class="pre">Parameters</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.parameters.Parameters.initial_time"><code class="docutils literal notranslate"><span class="pre">Parameters.initial_time</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.parameters.Parameters.final_time"><code class="docutils literal notranslate"><span class="pre">Parameters.final_time</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.parameters.Parameters.time_step"><code class="docutils literal notranslate"><span class="pre">Parameters.time_step</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.parameters.Parameters.frozen_eulerian_fields"><code class="docutils literal notranslate"><span class="pre">Parameters.frozen_eulerian_fields</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.parameters.Parameters.model"><code class="docutils literal notranslate"><span class="pre">Parameters.model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.parameters.Parameters.time_scheme"><code class="docutils literal notranslate"><span class="pre">Parameters.time_scheme</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.parameters.Parameters.particle_velocity_init"><code class="docutils literal notranslate"><span class="pre">Parameters.particle_velocity_init</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.parameters.Parameters.rng_method"><code class="docutils literal notranslate"><span class="pre">Parameters.rng_method</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.parameters.Parameters.water_density"><code class="docutils literal notranslate"><span class="pre">Parameters.water_density</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.parameters.Parameters.diffusion_model"><code class="docutils literal notranslate"><span class="pre">Parameters.diffusion_model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.parameters.Parameters.horizontal_diffusivity"><code class="docutils literal notranslate"><span class="pre">Parameters.horizontal_diffusivity</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.parameters.Parameters.vertical_diffusivity"><code class="docutils literal notranslate"><span class="pre">Parameters.vertical_diffusivity</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.parameters.Parameters.schmidt_number"><code class="docutils literal notranslate"><span class="pre">Parameters.schmidt_number</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.parameters.Parameters.diffusion_lsm2_option"><code class="docutils literal notranslate"><span class="pre">Parameters.diffusion_lsm2_option</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.parameters.Parameters.diffusion_lsm3_tl_horizontal"><code class="docutils literal notranslate"><span class="pre">Parameters.diffusion_lsm3_tl_horizontal</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.parameters.Parameters.diffusion_lsm3_tl_vertical"><code class="docutils literal notranslate"><span class="pre">Parameters.diffusion_lsm3_tl_vertical</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.parameters.Parameters.lsm3_edge_opt"><code class="docutils literal notranslate"><span class="pre">Parameters.lsm3_edge_opt</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.parameters.Parameters.boundary_conditions"><code class="docutils literal notranslate"><span class="pre">Parameters.boundary_conditions</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.parameters.Parameters.boundary_conditions_type"><code class="docutils literal notranslate"><span class="pre">Parameters.boundary_conditions_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.parameters.Parameters.boundary_conditions_debug"><code class="docutils literal notranslate"><span class="pre">Parameters.boundary_conditions_debug</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.parameters.Parameters.max_wall_rebounds"><code class="docutils literal notranslate"><span class="pre">Parameters.max_wall_rebounds</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.parameters.Parameters.rebound_damping_coef"><code class="docutils literal notranslate"><span class="pre">Parameters.rebound_damping_coef</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.parameters.Parameters.wall_roughness_angle"><code class="docutils literal notranslate"><span class="pre">Parameters.wall_roughness_angle</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.parameters.Parameters.stranding_probability"><code class="docutils literal notranslate"><span class="pre">Parameters.stranding_probability</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.parameters.Parameters.listing"><code class="docutils literal notranslate"><span class="pre">Parameters.listing</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.parameters.Parameters.listing_printout_period"><code class="docutils literal notranslate"><span class="pre">Parameters.listing_printout_period</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.parameters.Parameters.output_rep"><code class="docutils literal notranslate"><span class="pre">Parameters.output_rep</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.parameters.Parameters.output_file"><code class="docutils literal notranslate"><span class="pre">Parameters.output_file</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.parameters.Parameters.output_printout_period"><code class="docutils literal notranslate"><span class="pre">Parameters.output_printout_period</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.parameters.Parameters.output_file_format"><code class="docutils literal notranslate"><span class="pre">Parameters.output_file_format</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.parameters.Parameters.output_file_name"><code class="docutils literal notranslate"><span class="pre">Parameters.output_file_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.parameters.Parameters.bnd_statistics"><code class="docutils literal notranslate"><span class="pre">Parameters.bnd_statistics</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.parameters.Parameters.bnd_statistics_file_name"><code class="docutils literal notranslate"><span class="pre">Parameters.bnd_statistics_file_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.parameters.Parameters.control_sections"><code class="docutils literal notranslate"><span class="pre">Parameters.control_sections</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.parameters.Parameters.ncsec"><code class="docutils literal notranslate"><span class="pre">Parameters.ncsec</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.parameters.Parameters.control_sections_file_name"><code class="docutils literal notranslate"><span class="pre">Parameters.control_sections_file_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id61"><code class="docutils literal notranslate"><span class="pre">Parameters.bnd_statistics</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id62"><code class="docutils literal notranslate"><span class="pre">Parameters.bnd_statistics_file_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id63"><code class="docutils literal notranslate"><span class="pre">Parameters.boundary_conditions</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id64"><code class="docutils literal notranslate"><span class="pre">Parameters.boundary_conditions_debug</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id65"><code class="docutils literal notranslate"><span class="pre">Parameters.boundary_conditions_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.parameters.Parameters.check_types"><code class="docutils literal notranslate"><span class="pre">Parameters.check_types()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.parameters.Parameters.check_values"><code class="docutils literal notranslate"><span class="pre">Parameters.check_values()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id66"><code class="docutils literal notranslate"><span class="pre">Parameters.control_sections</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id67"><code class="docutils literal notranslate"><span class="pre">Parameters.control_sections_file_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id68"><code class="docutils literal notranslate"><span class="pre">Parameters.diffusion_lsm2_option</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id69"><code class="docutils literal notranslate"><span class="pre">Parameters.diffusion_lsm3_tl_horizontal</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id70"><code class="docutils literal notranslate"><span class="pre">Parameters.diffusion_lsm3_tl_vertical</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id71"><code class="docutils literal notranslate"><span class="pre">Parameters.diffusion_model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id72"><code class="docutils literal notranslate"><span class="pre">Parameters.final_time</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id73"><code class="docutils literal notranslate"><span class="pre">Parameters.frozen_eulerian_fields</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id74"><code class="docutils literal notranslate"><span class="pre">Parameters.horizontal_diffusivity</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id75"><code class="docutils literal notranslate"><span class="pre">Parameters.initial_time</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id76"><code class="docutils literal notranslate"><span class="pre">Parameters.listing</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id77"><code class="docutils literal notranslate"><span class="pre">Parameters.listing_printout_period</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id78"><code class="docutils literal notranslate"><span class="pre">Parameters.lsm3_edge_opt</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id79"><code class="docutils literal notranslate"><span class="pre">Parameters.max_wall_rebounds</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id80"><code class="docutils literal notranslate"><span class="pre">Parameters.model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id81"><code class="docutils literal notranslate"><span class="pre">Parameters.ncsec</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id82"><code class="docutils literal notranslate"><span class="pre">Parameters.output_file</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id83"><code class="docutils literal notranslate"><span class="pre">Parameters.output_file_format</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id84"><code class="docutils literal notranslate"><span class="pre">Parameters.output_file_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id85"><code class="docutils literal notranslate"><span class="pre">Parameters.output_printout_period</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id86"><code class="docutils literal notranslate"><span class="pre">Parameters.output_rep</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id87"><code class="docutils literal notranslate"><span class="pre">Parameters.particle_velocity_init</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id88"><code class="docutils literal notranslate"><span class="pre">Parameters.rebound_damping_coef</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id89"><code class="docutils literal notranslate"><span class="pre">Parameters.rng_method</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id90"><code class="docutils literal notranslate"><span class="pre">Parameters.schmidt_number</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.parameters.Parameters.stranding_output"><code class="docutils literal notranslate"><span class="pre">Parameters.stranding_output</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.parameters.Parameters.stranding_output_file_name"><code class="docutils literal notranslate"><span class="pre">Parameters.stranding_output_file_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id91"><code class="docutils literal notranslate"><span class="pre">Parameters.stranding_probability</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id92"><code class="docutils literal notranslate"><span class="pre">Parameters.time_scheme</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id93"><code class="docutils literal notranslate"><span class="pre">Parameters.time_step</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id94"><code class="docutils literal notranslate"><span class="pre">Parameters.vertical_diffusivity</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id95"><code class="docutils literal notranslate"><span class="pre">Parameters.wall_roughness_angle</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id96"><code class="docutils literal notranslate"><span class="pre">Parameters.water_density</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.core.html#module-cylag.core.particle_distribution">cylag.core.particle_distribution module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cylag.core.html#cylag.core.particle_distribution.check_particle_distribution"><code class="docutils literal notranslate"><span class="pre">check_particle_distribution()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.core.html#cylag.core.particle_distribution.draw_particle_diameter"><code class="docutils literal notranslate"><span class="pre">draw_particle_diameter()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.core.html#module-cylag.core.simutime">cylag.core.simutime module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cylag.core.html#cylag.core.simutime.SimuTime"><code class="docutils literal notranslate"><span class="pre">SimuTime</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.simutime.SimuTime.time"><code class="docutils literal notranslate"><span class="pre">SimuTime.time</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.simutime.SimuTime.time_step"><code class="docutils literal notranslate"><span class="pre">SimuTime.time_step</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.simutime.SimuTime.final_time"><code class="docutils literal notranslate"><span class="pre">SimuTime.final_time</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.simutime.SimuTime.times"><code class="docutils literal notranslate"><span class="pre">SimuTime.times</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.simutime.SimuTime.nt"><code class="docutils literal notranslate"><span class="pre">SimuTime.nt</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.simutime.SimuTime.iteration"><code class="docutils literal notranslate"><span class="pre">SimuTime.iteration</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.simutime.SimuTime.maxiteration"><code class="docutils literal notranslate"><span class="pre">SimuTime.maxiteration</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.simutime.SimuTime.is_finished"><code class="docutils literal notranslate"><span class="pre">SimuTime.is_finished</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.simutime.SimuTime.print_progress"><code class="docutils literal notranslate"><span class="pre">SimuTime.print_progress</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.simutime.SimuTime.convert_time_to_jjhhmmss"><code class="docutils literal notranslate"><span class="pre">SimuTime.convert_time_to_jjhhmmss()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id97"><code class="docutils literal notranslate"><span class="pre">SimuTime.final_time</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.simutime.SimuTime.increment"><code class="docutils literal notranslate"><span class="pre">SimuTime.increment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.simutime.SimuTime.initial_time"><code class="docutils literal notranslate"><span class="pre">SimuTime.initial_time</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id98"><code class="docutils literal notranslate"><span class="pre">SimuTime.is_finished</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id99"><code class="docutils literal notranslate"><span class="pre">SimuTime.iteration</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id100"><code class="docutils literal notranslate"><span class="pre">SimuTime.maxiteration</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id101"><code class="docutils literal notranslate"><span class="pre">SimuTime.nt</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id102"><code class="docutils literal notranslate"><span class="pre">SimuTime.print_progress</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.simutime.SimuTime.progress"><code class="docutils literal notranslate"><span class="pre">SimuTime.progress()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id103"><code class="docutils literal notranslate"><span class="pre">SimuTime.time</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id104"><code class="docutils literal notranslate"><span class="pre">SimuTime.time_step</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id105"><code class="docutils literal notranslate"><span class="pre">SimuTime.times</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.core.html#module-cylag.core.solver">cylag.core.solver module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cylag.core.html#cylag.core.solver.Solver"><code class="docutils literal notranslate"><span class="pre">Solver</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.solver.Solver.particle_set"><code class="docutils literal notranslate"><span class="pre">Solver.particle_set</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.solver.Solver.field_set"><code class="docutils literal notranslate"><span class="pre">Solver.field_set</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.solver.Solver.parameters"><code class="docutils literal notranslate"><span class="pre">Solver.parameters</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.solver.Solver.sources"><code class="docutils literal notranslate"><span class="pre">Solver.sources</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.solver.Solver.control_sections"><code class="docutils literal notranslate"><span class="pre">Solver.control_sections</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.solver.Solver.simutime"><code class="docutils literal notranslate"><span class="pre">Solver.simutime</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id106"><code class="docutils literal notranslate"><span class="pre">Solver.control_sections</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id107"><code class="docutils literal notranslate"><span class="pre">Solver.field_set</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.solver.Solver.flush_statistics"><code class="docutils literal notranslate"><span class="pre">Solver.flush_statistics()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.solver.Solver.forward"><code class="docutils literal notranslate"><span class="pre">Solver.forward()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.solver.Solver.initialize_particle_state"><code class="docutils literal notranslate"><span class="pre">Solver.initialize_particle_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id108"><code class="docutils literal notranslate"><span class="pre">Solver.parameters</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id109"><code class="docutils literal notranslate"><span class="pre">Solver.particle_set</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.solver.Solver.print_init_str"><code class="docutils literal notranslate"><span class="pre">Solver.print_init_str()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id110"><code class="docutils literal notranslate"><span class="pre">Solver.simutime</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.solver.Solver.solve"><code class="docutils literal notranslate"><span class="pre">Solver.solve()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id111"><code class="docutils literal notranslate"><span class="pre">Solver.sources</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.core.html#module-cylag.core.solver_parallel">cylag.core.solver_parallel module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cylag.core.html#cylag.core.solver_parallel.SolverParallel"><code class="docutils literal notranslate"><span class="pre">SolverParallel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.solver_parallel.SolverParallel.particle_set"><code class="docutils literal notranslate"><span class="pre">SolverParallel.particle_set</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.solver_parallel.SolverParallel.field_set"><code class="docutils literal notranslate"><span class="pre">SolverParallel.field_set</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.solver_parallel.SolverParallel.parameters"><code class="docutils literal notranslate"><span class="pre">SolverParallel.parameters</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.solver_parallel.SolverParallel.sources"><code class="docutils literal notranslate"><span class="pre">SolverParallel.sources</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.solver_parallel.SolverParallel.control_sections"><code class="docutils literal notranslate"><span class="pre">SolverParallel.control_sections</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.solver_parallel.SolverParallel.simutime"><code class="docutils literal notranslate"><span class="pre">SolverParallel.simutime</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.solver_parallel.SolverParallel.comm"><code class="docutils literal notranslate"><span class="pre">SolverParallel.comm</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.solver_parallel.SolverParallel.rank"><code class="docutils literal notranslate"><span class="pre">SolverParallel.rank</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.solver_parallel.SolverParallel.size"><code class="docutils literal notranslate"><span class="pre">SolverParallel.size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id112"><code class="docutils literal notranslate"><span class="pre">SolverParallel.comm</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id113"><code class="docutils literal notranslate"><span class="pre">SolverParallel.control_sections</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id114"><code class="docutils literal notranslate"><span class="pre">SolverParallel.field_set</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.solver_parallel.SolverParallel.flush_statistics"><code class="docutils literal notranslate"><span class="pre">SolverParallel.flush_statistics()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.solver_parallel.SolverParallel.forward"><code class="docutils literal notranslate"><span class="pre">SolverParallel.forward()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.solver_parallel.SolverParallel.initialize_particle_state"><code class="docutils literal notranslate"><span class="pre">SolverParallel.initialize_particle_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.solver_parallel.SolverParallel.merge_results"><code class="docutils literal notranslate"><span class="pre">SolverParallel.merge_results()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id115"><code class="docutils literal notranslate"><span class="pre">SolverParallel.parameters</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id116"><code class="docutils literal notranslate"><span class="pre">SolverParallel.particle_set</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.solver_parallel.SolverParallel.print_init_str"><code class="docutils literal notranslate"><span class="pre">SolverParallel.print_init_str()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id117"><code class="docutils literal notranslate"><span class="pre">SolverParallel.rank</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id118"><code class="docutils literal notranslate"><span class="pre">SolverParallel.simutime</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id119"><code class="docutils literal notranslate"><span class="pre">SolverParallel.size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#cylag.core.solver_parallel.SolverParallel.solve"><code class="docutils literal notranslate"><span class="pre">SolverParallel.solve()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.core.html#id120"><code class="docutils literal notranslate"><span class="pre">SolverParallel.sources</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.core.html#module-cylag.core">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cylag.extra.html">cylag.extra package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cylag.extra.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.extra.html#module-cylag.extra.control_shapes">cylag.extra.control_shapes module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cylag.extra.html#cylag.extra.control_shapes.ControlSection"><code class="docutils literal notranslate"><span class="pre">ControlSection</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.control_shapes.ControlSection.cross"><code class="docutils literal notranslate"><span class="pre">ControlSection.cross()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.control_shapes.ControlSection.file_name"><code class="docutils literal notranslate"><span class="pre">ControlSection.file_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.control_shapes.ControlSection.nseg"><code class="docutils literal notranslate"><span class="pre">ControlSection.nseg</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.control_shapes.ControlSection.poly"><code class="docutils literal notranslate"><span class="pre">ControlSection.poly</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.extra.html#module-cylag.extra.ghost_meshgrid">cylag.extra.ghost_meshgrid module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cylag.extra.html#cylag.extra.ghost_meshgrid.GhostMeshGrid1D"><code class="docutils literal notranslate"><span class="pre">GhostMeshGrid1D</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.ghost_meshgrid.GhostMeshGrid1D.cellid_filled"><code class="docutils literal notranslate"><span class="pre">GhostMeshGrid1D.cellid_filled</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.ghost_meshgrid.GhostMeshGrid1D.cellid_jump"><code class="docutils literal notranslate"><span class="pre">GhostMeshGrid1D.cellid_jump</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.ghost_meshgrid.GhostMeshGrid1D.get_ghostcell_id"><code class="docutils literal notranslate"><span class="pre">GhostMeshGrid1D.get_ghostcell_id()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.ghost_meshgrid.GhostMeshGrid1D.ghost_to_primal"><code class="docutils literal notranslate"><span class="pre">GhostMeshGrid1D.ghost_to_primal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.ghost_meshgrid.GhostMeshGrid1D.ng"><code class="docutils literal notranslate"><span class="pre">GhostMeshGrid1D.ng</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.ghost_meshgrid.GhostMeshGrid1D.primal_to_ghost"><code class="docutils literal notranslate"><span class="pre">GhostMeshGrid1D.primal_to_ghost()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.ghost_meshgrid.GhostMeshGrid1D.set_lookup_tables"><code class="docutils literal notranslate"><span class="pre">GhostMeshGrid1D.set_lookup_tables()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.ghost_meshgrid.GhostMeshGrid1D.sort_table"><code class="docutils literal notranslate"><span class="pre">GhostMeshGrid1D.sort_table()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.ghost_meshgrid.GhostMeshGrid1D.sorting_idx"><code class="docutils literal notranslate"><span class="pre">GhostMeshGrid1D.sorting_idx</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.ghost_meshgrid.GhostMeshGrid1D.transform"><code class="docutils literal notranslate"><span class="pre">GhostMeshGrid1D.transform</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.extra.html#cylag.extra.ghost_meshgrid.GhostMeshGrid2D"><code class="docutils literal notranslate"><span class="pre">GhostMeshGrid2D</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.ghost_meshgrid.GhostMeshGrid2D.cellid_filled"><code class="docutils literal notranslate"><span class="pre">GhostMeshGrid2D.cellid_filled</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.ghost_meshgrid.GhostMeshGrid2D.cellid_jump"><code class="docutils literal notranslate"><span class="pre">GhostMeshGrid2D.cellid_jump</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.ghost_meshgrid.GhostMeshGrid2D.get_ghostcell_id"><code class="docutils literal notranslate"><span class="pre">GhostMeshGrid2D.get_ghostcell_id()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.ghost_meshgrid.GhostMeshGrid2D.get_ghostcell_idx"><code class="docutils literal notranslate"><span class="pre">GhostMeshGrid2D.get_ghostcell_idx()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.ghost_meshgrid.GhostMeshGrid2D.get_ghostcell_idy"><code class="docutils literal notranslate"><span class="pre">GhostMeshGrid2D.get_ghostcell_idy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.ghost_meshgrid.GhostMeshGrid2D.ghost_to_primal"><code class="docutils literal notranslate"><span class="pre">GhostMeshGrid2D.ghost_to_primal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.ghost_meshgrid.GhostMeshGrid2D.grid_ij_from_id"><code class="docutils literal notranslate"><span class="pre">GhostMeshGrid2D.grid_ij_from_id()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.ghost_meshgrid.GhostMeshGrid2D.id_from_grid_ij"><code class="docutils literal notranslate"><span class="pre">GhostMeshGrid2D.id_from_grid_ij()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.ghost_meshgrid.GhostMeshGrid2D.ng"><code class="docutils literal notranslate"><span class="pre">GhostMeshGrid2D.ng</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.ghost_meshgrid.GhostMeshGrid2D.ngx"><code class="docutils literal notranslate"><span class="pre">GhostMeshGrid2D.ngx</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.ghost_meshgrid.GhostMeshGrid2D.ngy"><code class="docutils literal notranslate"><span class="pre">GhostMeshGrid2D.ngy</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.ghost_meshgrid.GhostMeshGrid2D.primal_to_ghost"><code class="docutils literal notranslate"><span class="pre">GhostMeshGrid2D.primal_to_ghost()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.ghost_meshgrid.GhostMeshGrid2D.set_lookup_tables"><code class="docutils literal notranslate"><span class="pre">GhostMeshGrid2D.set_lookup_tables()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.ghost_meshgrid.GhostMeshGrid2D.sort_table"><code class="docutils literal notranslate"><span class="pre">GhostMeshGrid2D.sort_table()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.ghost_meshgrid.GhostMeshGrid2D.sorting_idx"><code class="docutils literal notranslate"><span class="pre">GhostMeshGrid2D.sorting_idx</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.ghost_meshgrid.GhostMeshGrid2D.transform"><code class="docutils literal notranslate"><span class="pre">GhostMeshGrid2D.transform</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.extra.html#module-cylag.extra.initial_conditions">cylag.extra.initial_conditions module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cylag.extra.html#cylag.extra.initial_conditions.circle"><code class="docutils literal notranslate"><span class="pre">circle()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.extra.html#cylag.extra.initial_conditions.init_positions_2d"><code class="docutils literal notranslate"><span class="pre">init_positions_2d()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.extra.html#cylag.extra.initial_conditions.init_positions_3d"><code class="docutils literal notranslate"><span class="pre">init_positions_3d()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.extra.html#module-cylag.extra.particle_source">cylag.extra.particle_source module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cylag.extra.html#cylag.extra.particle_source.ParticleSource"><code class="docutils literal notranslate"><span class="pre">ParticleSource</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.particle_source.ParticleSource.grid_res"><code class="docutils literal notranslate"><span class="pre">ParticleSource.grid_res</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.particle_source.ParticleSource.init_positions"><code class="docutils literal notranslate"><span class="pre">ParticleSource.init_positions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.particle_source.ParticleSource.poly"><code class="docutils literal notranslate"><span class="pre">ParticleSource.poly</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.particle_source.ParticleSource.poly_area"><code class="docutils literal notranslate"><span class="pre">ParticleSource.poly_area</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.particle_source.ParticleSource.release_condition"><code class="docutils literal notranslate"><span class="pre">ParticleSource.release_condition()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.particle_source.ParticleSource.scheduler"><code class="docutils literal notranslate"><span class="pre">ParticleSource.scheduler</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.particle_source.ParticleSource.xy_density"><code class="docutils literal notranslate"><span class="pre">ParticleSource.xy_density</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.particle_source.ParticleSource.xy_method"><code class="docutils literal notranslate"><span class="pre">ParticleSource.xy_method</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.particle_source.ParticleSource.xy_npart"><code class="docutils literal notranslate"><span class="pre">ParticleSource.xy_npart</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.particle_source.ParticleSource.z_density"><code class="docutils literal notranslate"><span class="pre">ParticleSource.z_density</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.particle_source.ParticleSource.z_method"><code class="docutils literal notranslate"><span class="pre">ParticleSource.z_method</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.particle_source.ParticleSource.z_npart"><code class="docutils literal notranslate"><span class="pre">ParticleSource.z_npart</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.particle_source.ParticleSource.zmax"><code class="docutils literal notranslate"><span class="pre">ParticleSource.zmax</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.particle_source.ParticleSource.zmin"><code class="docutils literal notranslate"><span class="pre">ParticleSource.zmin</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.extra.html#cylag.extra.particle_source.ParticleSourceFromField"><code class="docutils literal notranslate"><span class="pre">ParticleSourceFromField</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.particle_source.ParticleSourceFromField.criteria"><code class="docutils literal notranslate"><span class="pre">ParticleSourceFromField.criteria</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.particle_source.ParticleSourceFromField.field_id_criteria"><code class="docutils literal notranslate"><span class="pre">ParticleSourceFromField.field_id_criteria</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.particle_source.ParticleSourceFromField.field_id_density"><code class="docutils literal notranslate"><span class="pre">ParticleSourceFromField.field_id_density</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.particle_source.ParticleSourceFromField.init_positions"><code class="docutils literal notranslate"><span class="pre">ParticleSourceFromField.init_positions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.particle_source.ParticleSourceFromField.loc"><code class="docutils literal notranslate"><span class="pre">ParticleSourceFromField.loc</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.particle_source.ParticleSourceFromField.release_condition"><code class="docutils literal notranslate"><span class="pre">ParticleSourceFromField.release_condition()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.particle_source.ParticleSourceFromField.release_rec"><code class="docutils literal notranslate"><span class="pre">ParticleSourceFromField.release_rec</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.particle_source.ParticleSourceFromField.scheduler"><code class="docutils literal notranslate"><span class="pre">ParticleSourceFromField.scheduler</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.particle_source.ParticleSourceFromField.single_release"><code class="docutils literal notranslate"><span class="pre">ParticleSourceFromField.single_release</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.particle_source.ParticleSourceFromField.threshold"><code class="docutils literal notranslate"><span class="pre">ParticleSourceFromField.threshold</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.particle_source.ParticleSourceFromField.virtual_mass"><code class="docutils literal notranslate"><span class="pre">ParticleSourceFromField.virtual_mass</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.extra.html#module-cylag.extra.plot_utils">cylag.extra.plot_utils module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cylag.extra.html#cylag.extra.plot_utils.define_custom_marker"><code class="docutils literal notranslate"><span class="pre">define_custom_marker()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.extra.html#cylag.extra.plot_utils.ffmpeg_img_to_video"><code class="docutils literal notranslate"><span class="pre">ffmpeg_img_to_video()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.extra.html#cylag.extra.plot_utils.get_default_color_palette"><code class="docutils literal notranslate"><span class="pre">get_default_color_palette()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.extra.html#cylag.extra.plot_utils.get_default_markers"><code class="docutils literal notranslate"><span class="pre">get_default_markers()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.extra.html#cylag.extra.plot_utils.plot_cylag_adjacent_triangles"><code class="docutils literal notranslate"><span class="pre">plot_cylag_adjacent_triangles()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.extra.html#cylag.extra.plot_utils.plot_cylag_boundary_edges"><code class="docutils literal notranslate"><span class="pre">plot_cylag_boundary_edges()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.extra.html#cylag.extra.plot_utils.plot_cylag_boundary_points"><code class="docutils literal notranslate"><span class="pre">plot_cylag_boundary_points()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.extra.html#cylag.extra.plot_utils.plot_cylag_edges"><code class="docutils literal notranslate"><span class="pre">plot_cylag_edges()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.extra.html#cylag.extra.plot_utils.plot_cylag_edgetri_map"><code class="docutils literal notranslate"><span class="pre">plot_cylag_edgetri_map()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.extra.html#cylag.extra.plot_utils.plot_cylag_neighbor_triangles"><code class="docutils literal notranslate"><span class="pre">plot_cylag_neighbor_triangles()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.extra.html#cylag.extra.plot_utils.plot_cylag_triangle"><code class="docutils literal notranslate"><span class="pre">plot_cylag_triangle()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.extra.html#cylag.extra.plot_utils.plot_cylag_triedge_map"><code class="docutils literal notranslate"><span class="pre">plot_cylag_triedge_map()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.extra.html#cylag.extra.plot_utils.read_i2s_polygon"><code class="docutils literal notranslate"><span class="pre">read_i2s_polygon()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.extra.html#cylag.extra.plot_utils.set_rcparams"><code class="docutils literal notranslate"><span class="pre">set_rcparams()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.extra.html#module-cylag.extra.scheduler">cylag.extra.scheduler module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cylag.extra.html#cylag.extra.scheduler.AlwaysScheduler"><code class="docutils literal notranslate"><span class="pre">AlwaysScheduler</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.scheduler.AlwaysScheduler.now"><code class="docutils literal notranslate"><span class="pre">AlwaysScheduler.now()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.extra.html#cylag.extra.scheduler.CountScheduler"><code class="docutils literal notranslate"><span class="pre">CountScheduler</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.scheduler.CountScheduler.count"><code class="docutils literal notranslate"><span class="pre">CountScheduler.count</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.scheduler.CountScheduler.is_ready"><code class="docutils literal notranslate"><span class="pre">CountScheduler.is_ready</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.scheduler.CountScheduler.now"><code class="docutils literal notranslate"><span class="pre">CountScheduler.now()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.scheduler.CountScheduler.times"><code class="docutils literal notranslate"><span class="pre">CountScheduler.times</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.extra.html#cylag.extra.scheduler.IterationDeltaScheduler"><code class="docutils literal notranslate"><span class="pre">IterationDeltaScheduler</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.scheduler.IterationDeltaScheduler.iteration_delta"><code class="docutils literal notranslate"><span class="pre">IterationDeltaScheduler.iteration_delta</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.scheduler.IterationDeltaScheduler.now"><code class="docutils literal notranslate"><span class="pre">IterationDeltaScheduler.now()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.extra.html#cylag.extra.scheduler.IterationScheduler"><code class="docutils literal notranslate"><span class="pre">IterationScheduler</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.scheduler.IterationScheduler.iterations"><code class="docutils literal notranslate"><span class="pre">IterationScheduler.iterations</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.scheduler.IterationScheduler.now"><code class="docutils literal notranslate"><span class="pre">IterationScheduler.now()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.extra.html#cylag.extra.scheduler.NeverScheduler"><code class="docutils literal notranslate"><span class="pre">NeverScheduler</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.extra.html#cylag.extra.scheduler.Scheduler"><code class="docutils literal notranslate"><span class="pre">Scheduler</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.scheduler.Scheduler.iteration"><code class="docutils literal notranslate"><span class="pre">Scheduler.iteration</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.scheduler.Scheduler.now"><code class="docutils literal notranslate"><span class="pre">Scheduler.now()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.extra.html#cylag.extra.scheduler.TimeDeltaScheduler"><code class="docutils literal notranslate"><span class="pre">TimeDeltaScheduler</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.scheduler.TimeDeltaScheduler.now"><code class="docutils literal notranslate"><span class="pre">TimeDeltaScheduler.now()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.extra.html#cylag.extra.scheduler.TimeScheduler"><code class="docutils literal notranslate"><span class="pre">TimeScheduler</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.scheduler.TimeScheduler.now"><code class="docutils literal notranslate"><span class="pre">TimeScheduler.now()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.scheduler.TimeScheduler.ntimes"><code class="docutils literal notranslate"><span class="pre">TimeScheduler.ntimes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.extra.html#cylag.extra.scheduler.TimeScheduler.times"><code class="docutils literal notranslate"><span class="pre">TimeScheduler.times</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.extra.html#cylag.extra.scheduler.schedules"><code class="docutils literal notranslate"><span class="pre">schedules()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.extra.html#module-cylag.extra.statistics_from_particles">cylag.extra.statistics_from_particles module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cylag.extra.html#cylag.extra.statistics_from_particles.compute_density_1D_CIC"><code class="docutils literal notranslate"><span class="pre">compute_density_1D_CIC()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.extra.html#cylag.extra.statistics_from_particles.compute_density_1D_KS"><code class="docutils literal notranslate"><span class="pre">compute_density_1D_KS()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.extra.html#cylag.extra.statistics_from_particles.compute_density_1D_KS_GM"><code class="docutils literal notranslate"><span class="pre">compute_density_1D_KS_GM()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.extra.html#cylag.extra.statistics_from_particles.compute_density_1D_NGP"><code class="docutils literal notranslate"><span class="pre">compute_density_1D_NGP()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.extra.html#cylag.extra.statistics_from_particles.compute_density_2D_KS"><code class="docutils literal notranslate"><span class="pre">compute_density_2D_KS()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.extra.html#cylag.extra.statistics_from_particles.compute_density_2D_KS_GM"><code class="docutils literal notranslate"><span class="pre">compute_density_2D_KS_GM()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.extra.html#cylag.extra.statistics_from_particles.compute_density_3D_KS"><code class="docutils literal notranslate"><span class="pre">compute_density_3D_KS()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.extra.html#cylag.extra.statistics_from_particles.compute_density_3D_KS_GM"><code class="docutils literal notranslate"><span class="pre">compute_density_3D_KS_GM()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.extra.html#cylag.extra.statistics_from_particles.initialize_particles_from_pdf_1D"><code class="docutils literal notranslate"><span class="pre">initialize_particles_from_pdf_1D()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.extra.html#cylag.extra.statistics_from_particles.sph_smoothing_kernel"><code class="docutils literal notranslate"><span class="pre">sph_smoothing_kernel()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.extra.html#module-cylag.extra">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cylag.geom.html">cylag.geom package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cylag.geom.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.geom.html#module-cylag.geom.intersections">cylag.geom.intersections module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cylag.geom.html#cylag.geom.intersections.MT_intersec3d_triangle_ray"><code class="docutils literal notranslate"><span class="pre">MT_intersec3d_triangle_ray()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.geom.html#cylag.geom.intersections.compute_symetric_point2d"><code class="docutils literal notranslate"><span class="pre">compute_symetric_point2d()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.geom.html#cylag.geom.intersections.compute_symetric_point3d"><code class="docutils literal notranslate"><span class="pre">compute_symetric_point3d()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.geom.html#cylag.geom.intersections.intersec2d_get_intersection_point"><code class="docutils literal notranslate"><span class="pre">intersec2d_get_intersection_point()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.geom.html#cylag.geom.intersections.intersec2d_segment_segment"><code class="docutils literal notranslate"><span class="pre">intersec2d_segment_segment()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.geom.html#cylag.geom.intersections.intersec3d_triangle_segment"><code class="docutils literal notranslate"><span class="pre">intersec3d_triangle_segment()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.geom.html#module-cylag.geom.read_cli">cylag.geom.read_cli module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cylag.geom.html#cylag.geom.read_cli.read_cli"><code class="docutils literal notranslate"><span class="pre">read_cli()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.geom.html#module-cylag.geom.triangular_mesh">cylag.geom.triangular_mesh module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cylag.geom.html#cylag.geom.triangular_mesh.TriangularMesh"><code class="docutils literal notranslate"><span class="pre">TriangularMesh</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#cylag.geom.triangular_mesh.TriangularMesh.trivtx"><code class="docutils literal notranslate"><span class="pre">TriangularMesh.trivtx</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#cylag.geom.triangular_mesh.TriangularMesh.edges"><code class="docutils literal notranslate"><span class="pre">TriangularMesh.edges</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#cylag.geom.triangular_mesh.TriangularMesh.vertex_adjacency"><code class="docutils literal notranslate"><span class="pre">TriangularMesh.vertex_adjacency</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#cylag.geom.triangular_mesh.TriangularMesh.triangle_adjacency"><code class="docutils literal notranslate"><span class="pre">TriangularMesh.triangle_adjacency</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#cylag.geom.triangular_mesh.TriangularMesh.triangle_neighbors"><code class="docutils literal notranslate"><span class="pre">TriangularMesh.triangle_neighbors</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#cylag.geom.triangular_mesh.TriangularMesh.boundary_points"><code class="docutils literal notranslate"><span class="pre">TriangularMesh.boundary_points</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#cylag.geom.triangular_mesh.TriangularMesh.boundary_edges"><code class="docutils literal notranslate"><span class="pre">TriangularMesh.boundary_edges</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#cylag.geom.triangular_mesh.TriangularMesh.vertex_labels"><code class="docutils literal notranslate"><span class="pre">TriangularMesh.vertex_labels</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#cylag.geom.triangular_mesh.TriangularMesh.edges_labels"><code class="docutils literal notranslate"><span class="pre">TriangularMesh.edges_labels</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#cylag.geom.triangular_mesh.TriangularMesh.signed_area"><code class="docutils literal notranslate"><span class="pre">TriangularMesh.signed_area</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#cylag.geom.triangular_mesh.TriangularMesh.det"><code class="docutils literal notranslate"><span class="pre">TriangularMesh.det</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#cylag.geom.triangular_mesh.TriangularMesh.triangle_centroids"><code class="docutils literal notranslate"><span class="pre">TriangularMesh.triangle_centroids</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#id0"><code class="docutils literal notranslate"><span class="pre">TriangularMesh.boundary_edges</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#id1"><code class="docutils literal notranslate"><span class="pre">TriangularMesh.boundary_points</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#id2"><code class="docutils literal notranslate"><span class="pre">TriangularMesh.det</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#id3"><code class="docutils literal notranslate"><span class="pre">TriangularMesh.edges</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#id4"><code class="docutils literal notranslate"><span class="pre">TriangularMesh.edges_labels</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#cylag.geom.triangular_mesh.TriangularMesh.edgetri_map"><code class="docutils literal notranslate"><span class="pre">TriangularMesh.edgetri_map</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#cylag.geom.triangular_mesh.TriangularMesh.from_hdf5"><code class="docutils literal notranslate"><span class="pre">TriangularMesh.from_hdf5()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#cylag.geom.triangular_mesh.TriangularMesh.from_matplotlib"><code class="docutils literal notranslate"><span class="pre">TriangularMesh.from_matplotlib()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#cylag.geom.triangular_mesh.TriangularMesh.gradx"><code class="docutils literal notranslate"><span class="pre">TriangularMesh.gradx</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#cylag.geom.triangular_mesh.TriangularMesh.grady"><code class="docutils literal notranslate"><span class="pre">TriangularMesh.grady</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#cylag.geom.triangular_mesh.TriangularMesh.kdtree"><code class="docutils literal notranslate"><span class="pre">TriangularMesh.kdtree</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#cylag.geom.triangular_mesh.TriangularMesh.ne"><code class="docutils literal notranslate"><span class="pre">TriangularMesh.ne</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#cylag.geom.triangular_mesh.TriangularMesh.nopen"><code class="docutils literal notranslate"><span class="pre">TriangularMesh.nopen</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#cylag.geom.triangular_mesh.TriangularMesh.nt"><code class="docutils literal notranslate"><span class="pre">TriangularMesh.nt</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#cylag.geom.triangular_mesh.TriangularMesh.nv"><code class="docutils literal notranslate"><span class="pre">TriangularMesh.nv</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#cylag.geom.triangular_mesh.TriangularMesh.nvb"><code class="docutils literal notranslate"><span class="pre">TriangularMesh.nvb</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#cylag.geom.triangular_mesh.TriangularMesh.save_mesh_hdf5"><code class="docutils literal notranslate"><span class="pre">TriangularMesh.save_mesh_hdf5()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#id5"><code class="docutils literal notranslate"><span class="pre">TriangularMesh.signed_area</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#id6"><code class="docutils literal notranslate"><span class="pre">TriangularMesh.triangle_adjacency</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#id7"><code class="docutils literal notranslate"><span class="pre">TriangularMesh.triangle_centroids</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#id8"><code class="docutils literal notranslate"><span class="pre">TriangularMesh.triangle_neighbors</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#cylag.geom.triangular_mesh.TriangularMesh.triangles"><code class="docutils literal notranslate"><span class="pre">TriangularMesh.triangles</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#cylag.geom.triangular_mesh.TriangularMesh.triedge_map"><code class="docutils literal notranslate"><span class="pre">TriangularMesh.triedge_map</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#id9"><code class="docutils literal notranslate"><span class="pre">TriangularMesh.vertex_adjacency</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#id10"><code class="docutils literal notranslate"><span class="pre">TriangularMesh.vertex_labels</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#cylag.geom.triangular_mesh.TriangularMesh.x"><code class="docutils literal notranslate"><span class="pre">TriangularMesh.x</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.geom.html#cylag.geom.triangular_mesh.TriangularMesh.y"><code class="docutils literal notranslate"><span class="pre">TriangularMesh.y</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.geom.html#module-cylag.geom.utils">cylag.geom.utils module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cylag.geom.html#cylag.geom.utils.polygon_area"><code class="docutils literal notranslate"><span class="pre">polygon_area()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.geom.html#module-cylag.geom.xylocalizer">cylag.geom.xylocalizer module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cylag.geom.html#cylag.geom.xylocalizer.xy_localize"><code class="docutils literal notranslate"><span class="pre">xy_localize()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.geom.html#cylag.geom.xylocalizer.xy_localize_point"><code class="docutils literal notranslate"><span class="pre">xy_localize_point()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.geom.html#cylag.geom.xylocalizer.xy_localize_point_from_path"><code class="docutils literal notranslate"><span class="pre">xy_localize_point_from_path()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.geom.html#cylag.geom.xylocalizer.xy_localize_point_in_neighbourhood"><code class="docutils literal notranslate"><span class="pre">xy_localize_point_in_neighbourhood()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.geom.html#cylag.geom.xylocalizer.xy_localize_point_kdtree"><code class="docutils literal notranslate"><span class="pre">xy_localize_point_kdtree()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.geom.html#module-cylag.geom.zlocalizer">cylag.geom.zlocalizer module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cylag.geom.html#cylag.geom.zlocalizer.c_compute_lower_index"><code class="docutils literal notranslate"><span class="pre">c_compute_lower_index()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.geom.html#cylag.geom.zlocalizer.c_compute_lower_layer_index"><code class="docutils literal notranslate"><span class="pre">c_compute_lower_layer_index()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.geom.html#cylag.geom.zlocalizer.c_compute_lower_layer_index_array"><code class="docutils literal notranslate"><span class="pre">c_compute_lower_layer_index_array()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.geom.html#cylag.geom.zlocalizer.compute_lower_index"><code class="docutils literal notranslate"><span class="pre">compute_lower_index()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.geom.html#cylag.geom.zlocalizer.compute_lower_layer_index"><code class="docutils literal notranslate"><span class="pre">compute_lower_layer_index()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.geom.html#module-cylag.geom">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cylag.io.html">cylag.io package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cylag.io.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.io.html#module-cylag.io.converter">cylag.io.converter module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cylag.io.html#cylag.io.converter.convert_fset2d_from_slf_to_h5"><code class="docutils literal notranslate"><span class="pre">convert_fset2d_from_slf_to_h5()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.io.html#cylag.io.converter.convert_fset3d_from_slf_to_h5"><code class="docutils literal notranslate"><span class="pre">convert_fset3d_from_slf_to_h5()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.io.html#module-cylag.io.parallel_tags">cylag.io.parallel_tags module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cylag.io.html#cylag.io.parallel_tags.get_seq_from_par_tag"><code class="docutils literal notranslate"><span class="pre">get_seq_from_par_tag()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.io.html#cylag.io.parallel_tags.set_parallel_tag"><code class="docutils literal notranslate"><span class="pre">set_parallel_tag()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.io.html#module-cylag.io.particles_io">cylag.io.particles_io module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cylag.io.html#cylag.io.particles_io.ParticlesIO"><code class="docutils literal notranslate"><span class="pre">ParticlesIO</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cylag.io.html#cylag.io.particles_io.ParticlesIO.ntimes"><code class="docutils literal notranslate"><span class="pre">ParticlesIO.ntimes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.io.html#cylag.io.particles_io.ParticlesIO.times"><code class="docutils literal notranslate"><span class="pre">ParticlesIO.times</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.io.html#cylag.io.particles_io.ParticlesIO.iterations"><code class="docutils literal notranslate"><span class="pre">ParticlesIO.iterations</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.io.html#cylag.io.particles_io.ParticlesIO.npart"><code class="docutils literal notranslate"><span class="pre">ParticlesIO.npart</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.io.html#cylag.io.particles_io.ParticlesIO.compute_density"><code class="docutils literal notranslate"><span class="pre">ParticlesIO.compute_density()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.io.html#cylag.io.particles_io.ParticlesIO.compute_density_at_given_rec"><code class="docutils literal notranslate"><span class="pre">ParticlesIO.compute_density_at_given_rec()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.io.html#cylag.io.particles_io.ParticlesIO.from_cylag_txt"><code class="docutils literal notranslate"><span class="pre">ParticlesIO.from_cylag_txt()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.io.html#cylag.io.particles_io.ParticlesIO.from_telemac3d"><code class="docutils literal notranslate"><span class="pre">ParticlesIO.from_telemac3d()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.io.html#cylag.io.particles_io.ParticlesIO.get_mean_trajectory"><code class="docutils literal notranslate"><span class="pre">ParticlesIO.get_mean_trajectory()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.io.html#cylag.io.particles_io.ParticlesIO.get_mean_trajectory_2d"><code class="docutils literal notranslate"><span class="pre">ParticlesIO.get_mean_trajectory_2d()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.io.html#cylag.io.particles_io.ParticlesIO.get_trajectories"><code class="docutils literal notranslate"><span class="pre">ParticlesIO.get_trajectories()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.io.html#cylag.io.particles_io.ParticlesIO.get_trajectory"><code class="docutils literal notranslate"><span class="pre">ParticlesIO.get_trajectory()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.io.html#cylag.io.particles_io.ParticlesIO.write_cylag_txt"><code class="docutils literal notranslate"><span class="pre">ParticlesIO.write_cylag_txt()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.io.html#module-cylag.io.write_particles">cylag.io.write_particles module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cylag.io.html#cylag.io.write_particles.merge_results"><code class="docutils literal notranslate"><span class="pre">merge_results()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.io.html#cylag.io.write_particles.merge_stranded_results"><code class="docutils literal notranslate"><span class="pre">merge_stranded_results()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.io.html#cylag.io.write_particles.prepare_output"><code class="docutils literal notranslate"><span class="pre">prepare_output()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.io.html#cylag.io.write_particles.write_particles"><code class="docutils literal notranslate"><span class="pre">write_particles()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.io.html#cylag.io.write_particles.write_stranded_particles_txt_2d"><code class="docutils literal notranslate"><span class="pre">write_stranded_particles_txt_2d()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.io.html#module-cylag.io.write_statistics">cylag.io.write_statistics module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cylag.io.html#cylag.io.write_statistics.merge_secstats_results"><code class="docutils literal notranslate"><span class="pre">merge_secstats_results()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.io.html#cylag.io.write_statistics.prepare_secstats_output"><code class="docutils literal notranslate"><span class="pre">prepare_secstats_output()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.io.html#cylag.io.write_statistics.write_secstats"><code class="docutils literal notranslate"><span class="pre">write_secstats()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.io.html#cylag.io.write_statistics.write_secstats_buffer"><code class="docutils literal notranslate"><span class="pre">write_secstats_buffer()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.io.html#module-cylag.io.writer_txt">cylag.io.writer_txt module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cylag.io.html#cylag.io.writer_txt.write_txt_2d"><code class="docutils literal notranslate"><span class="pre">write_txt_2d()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.io.html#cylag.io.writer_txt.write_txt_3d"><code class="docutils literal notranslate"><span class="pre">write_txt_3d()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.io.html#module-cylag.io.writer_vtk">cylag.io.writer_vtk module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cylag.io.html#cylag.io.writer_vtk.write_vtk_2d"><code class="docutils literal notranslate"><span class="pre">write_vtk_2d()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.io.html#cylag.io.writer_vtk.write_vtk_3d"><code class="docutils literal notranslate"><span class="pre">write_vtk_3d()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.io.html#module-cylag.io">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cylag.lsm.html">cylag.lsm package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cylag.lsm.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.lsm.html#module-cylag.lsm.init_lsm2_fluctuations">cylag.lsm.init_lsm2_fluctuations module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cylag.lsm.html#cylag.lsm.init_lsm2_fluctuations.update_lsm2_fluctuations"><code class="docutils literal notranslate"><span class="pre">update_lsm2_fluctuations()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.lsm.html#module-cylag.lsm.init_lsm3_fluctuations">cylag.lsm.init_lsm3_fluctuations module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cylag.lsm.html#cylag.lsm.init_lsm3_fluctuations.update_lsm3_fluctuations"><code class="docutils literal notranslate"><span class="pre">update_lsm3_fluctuations()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.lsm.html#module-cylag.lsm.random_utils">cylag.lsm.random_utils module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cylag.lsm.html#cylag.lsm.random_utils.generate_random_pair"><code class="docutils literal notranslate"><span class="pre">generate_random_pair()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.lsm.html#cylag.lsm.random_utils.generate_random_single"><code class="docutils literal notranslate"><span class="pre">generate_random_single()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.lsm.html#cylag.lsm.random_utils.pcg32_advance"><code class="docutils literal notranslate"><span class="pre">pcg32_advance()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.lsm.html#cylag.lsm.random_utils.pcg32_seed"><code class="docutils literal notranslate"><span class="pre">pcg32_seed()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.lsm.html#cylag.lsm.random_utils.random_gaussian"><code class="docutils literal notranslate"><span class="pre">random_gaussian()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.lsm.html#cylag.lsm.random_utils.random_gaussian_pair"><code class="docutils literal notranslate"><span class="pre">random_gaussian_pair()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.lsm.html#cylag.lsm.random_utils.random_gaussian_ziggurat"><code class="docutils literal notranslate"><span class="pre">random_gaussian_ziggurat()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.lsm.html#cylag.lsm.random_utils.random_gaussian_ziggurat_pair"><code class="docutils literal notranslate"><span class="pre">random_gaussian_ziggurat_pair()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cylag.lsm.html#cylag.lsm.random_utils.random_uniform"><code class="docutils literal notranslate"><span class="pre">random_uniform()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.lsm.html#module-cylag.lsm.update_state_lsm1">cylag.lsm.update_state_lsm1 module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.lsm.html#module-cylag.lsm.update_state_lsm2">cylag.lsm.update_state_lsm2 module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cylag.lsm.html#cylag.lsm.update_state_lsm2.lsm2_direct_coefficients"><code class="docutils literal notranslate"><span class="pre">lsm2_direct_coefficients()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.lsm.html#module-cylag.lsm.update_state_lsm3">cylag.lsm.update_state_lsm3 module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cylag.lsm.html#cylag.lsm.update_state_lsm3.lsm3_direct_coefficients"><code class="docutils literal notranslate"><span class="pre">lsm3_direct_coefficients()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.lsm.html#module-cylag.lsm.update_state_test">cylag.lsm.update_state_test module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.lsm.html#module-cylag.lsm">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cylag.modules.html">cylag.modules package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cylag.modules.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.modules.html#module-cylag.modules.algae">cylag.modules.algae module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cylag.modules.html#cylag.modules.algae.AlgaeParticleSet"><code class="docutils literal notranslate"><span class="pre">AlgaeParticleSet</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#cylag.modules.algae.AlgaeParticleSet.Cd_a"><code class="docutils literal notranslate"><span class="pre">AlgaeParticleSet.Cd_a</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#cylag.modules.algae.AlgaeParticleSet.Cd_b"><code class="docutils literal notranslate"><span class="pre">AlgaeParticleSet.Cd_b</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#cylag.modules.algae.AlgaeParticleSet.drag_coefficient"><code class="docutils literal notranslate"><span class="pre">AlgaeParticleSet.drag_coefficient()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.modules.html#module-cylag.modules.custom_particle_set">cylag.modules.custom_particle_set module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cylag.modules.html#cylag.modules.custom_particle_set.CustomParticleSet"><code class="docutils literal notranslate"><span class="pre">CustomParticleSet</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#cylag.modules.custom_particle_set.CustomParticleSet.addforce"><code class="docutils literal notranslate"><span class="pre">CustomParticleSet.addforce</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#cylag.modules.custom_particle_set.CustomParticleSet.addvelocity"><code class="docutils literal notranslate"><span class="pre">CustomParticleSet.addvelocity</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.modules.html#module-cylag.modules.fish">cylag.modules.fish module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cylag.modules.html#cylag.modules.fish.FishParticleSet"><code class="docutils literal notranslate"><span class="pre">FishParticleSet</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#cylag.modules.fish.FishParticleSet.addforce"><code class="docutils literal notranslate"><span class="pre">FishParticleSet.addforce</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#cylag.modules.fish.FishParticleSet.addvelocity"><code class="docutils literal notranslate"><span class="pre">FishParticleSet.addvelocity</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#cylag.modules.fish.FishParticleSet.attraction_radius"><code class="docutils literal notranslate"><span class="pre">FishParticleSet.attraction_radius</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#cylag.modules.fish.FishParticleSet.blind_angle"><code class="docutils literal notranslate"><span class="pre">FishParticleSet.blind_angle</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#cylag.modules.fish.FishParticleSet.orientation_radius"><code class="docutils literal notranslate"><span class="pre">FishParticleSet.orientation_radius</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#cylag.modules.fish.FishParticleSet.repulsion_radius"><code class="docutils literal notranslate"><span class="pre">FishParticleSet.repulsion_radius</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#cylag.modules.fish.FishParticleSet.swimming_dispersion"><code class="docutils literal notranslate"><span class="pre">FishParticleSet.swimming_dispersion</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#cylag.modules.fish.FishParticleSet.swimming_model"><code class="docutils literal notranslate"><span class="pre">FishParticleSet.swimming_model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#cylag.modules.fish.FishParticleSet.swimming_threshold_fluid_velocity"><code class="docutils literal notranslate"><span class="pre">FishParticleSet.swimming_threshold_fluid_velocity</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#cylag.modules.fish.FishParticleSet.swimming_thrust_forces"><code class="docutils literal notranslate"><span class="pre">FishParticleSet.swimming_thrust_forces</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#cylag.modules.fish.FishParticleSet.swimming_velocity_states"><code class="docutils literal notranslate"><span class="pre">FishParticleSet.swimming_velocity_states</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.modules.html#module-cylag.modules.jellyfish">cylag.modules.jellyfish module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cylag.modules.html#cylag.modules.jellyfish.JellyfishParticleSet"><code class="docutils literal notranslate"><span class="pre">JellyfishParticleSet</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#cylag.modules.jellyfish.JellyfishParticleSet.Cd_a"><code class="docutils literal notranslate"><span class="pre">JellyfishParticleSet.Cd_a</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#cylag.modules.jellyfish.JellyfishParticleSet.Cd_b"><code class="docutils literal notranslate"><span class="pre">JellyfishParticleSet.Cd_b</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#cylag.modules.jellyfish.JellyfishParticleSet.Cd_c1"><code class="docutils literal notranslate"><span class="pre">JellyfishParticleSet.Cd_c1</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#cylag.modules.jellyfish.JellyfishParticleSet.Cd_c2"><code class="docutils literal notranslate"><span class="pre">JellyfishParticleSet.Cd_c2</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#cylag.modules.jellyfish.JellyfishParticleSet.Cd_d1"><code class="docutils literal notranslate"><span class="pre">JellyfishParticleSet.Cd_d1</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#cylag.modules.jellyfish.JellyfishParticleSet.Cd_d2"><code class="docutils literal notranslate"><span class="pre">JellyfishParticleSet.Cd_d2</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#cylag.modules.jellyfish.JellyfishParticleSet.bdr"><code class="docutils literal notranslate"><span class="pre">JellyfishParticleSet.bdr</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#cylag.modules.jellyfish.JellyfishParticleSet.drag_coefficient"><code class="docutils literal notranslate"><span class="pre">JellyfishParticleSet.drag_coefficient()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#cylag.modules.jellyfish.JellyfishParticleSet.tlr"><code class="docutils literal notranslate"><span class="pre">JellyfishParticleSet.tlr</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.modules.html#module-cylag.modules.macrophyte">cylag.modules.macrophyte module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cylag.modules.html#cylag.modules.macrophyte.MacrophyteParticleSet"><code class="docutils literal notranslate"><span class="pre">MacrophyteParticleSet</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#cylag.modules.macrophyte.MacrophyteParticleSet.Cd_c"><code class="docutils literal notranslate"><span class="pre">MacrophyteParticleSet.Cd_c</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#cylag.modules.macrophyte.MacrophyteParticleSet.Cd_d"><code class="docutils literal notranslate"><span class="pre">MacrophyteParticleSet.Cd_d</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#cylag.modules.macrophyte.MacrophyteParticleSet.Cd_e"><code class="docutils literal notranslate"><span class="pre">MacrophyteParticleSet.Cd_e</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#cylag.modules.macrophyte.MacrophyteParticleSet.Cd_f"><code class="docutils literal notranslate"><span class="pre">MacrophyteParticleSet.Cd_f</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#cylag.modules.macrophyte.MacrophyteParticleSet.biomass"><code class="docutils literal notranslate"><span class="pre">MacrophyteParticleSet.biomass</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#cylag.modules.macrophyte.MacrophyteParticleSet.drag_coefficient"><code class="docutils literal notranslate"><span class="pre">MacrophyteParticleSet.drag_coefficient()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.modules.html#module-cylag.modules.oil_slick">cylag.modules.oil_slick module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cylag.modules.html#cylag.modules.oil_slick.OilslickParticleSet"><code class="docutils literal notranslate"><span class="pre">OilslickParticleSet</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#cylag.modules.oil_slick.OilslickParticleSet.addforce"><code class="docutils literal notranslate"><span class="pre">OilslickParticleSet.addforce</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#cylag.modules.oil_slick.OilslickParticleSet.addvelocity"><code class="docutils literal notranslate"><span class="pre">OilslickParticleSet.addvelocity</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#cylag.modules.oil_slick.OilslickParticleSet.dp"><code class="docutils literal notranslate"><span class="pre">OilslickParticleSet.dp</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#cylag.modules.oil_slick.OilslickParticleSet.stokes_drift"><code class="docutils literal notranslate"><span class="pre">OilslickParticleSet.stokes_drift</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#cylag.modules.oil_slick.OilslickParticleSet.wave_induced_vertical_dispersion"><code class="docutils literal notranslate"><span class="pre">OilslickParticleSet.wave_induced_vertical_dispersion</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#cylag.modules.oil_slick.OilslickParticleSet.wind_attenuation_coef"><code class="docutils literal notranslate"><span class="pre">OilslickParticleSet.wind_attenuation_coef</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#cylag.modules.oil_slick.OilslickParticleSet.wind_coefficient"><code class="docutils literal notranslate"><span class="pre">OilslickParticleSet.wind_coefficient</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cylag.modules.html#cylag.modules.oil_slick.OilslickParticleSet.wind_dev_coef"><code class="docutils literal notranslate"><span class="pre">OilslickParticleSet.wind_dev_coef</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cylag.modules.html#module-cylag.modules">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+</section>
+<section id="module-cylag.cylag_dico">
+<span id="cylag-cylag-dico-module"></span><h2>cylag.cylag_dico module<a class="headerlink" href="#module-cylag.cylag_dico" title="Link to this heading">¶</a></h2>
+<p>List of all parameters and options for CyLag and default values.</p>
+<p>The user can modify the default values by providing a dictionary with the same keys and new values to the Solver.
+See the documentation for more details on each parameter and option.</p>
+</section>
+<section id="module-cylag">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-cylag" title="Link to this heading">¶</a></h2>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/logo_cylag_sb.png" alt="Logo of CYLAG"/>
+            </a></p>
+<h3><a href="../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../get_started.html">Quick installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models.html">Mathematical models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../algo.html">Particle-mesh implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../setup.html">Setup, inputs and practical informations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html">Gallery of examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../good_practices.html">Good practices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev.html">Developer guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">cylag package</a></li>
+</ul>
+</li>
+</ul>
+
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="modules.html"
+                          title="previous chapter">cylag</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="cylag.boundary_conditions.html"
+                          title="next chapter">cylag.boundary_conditions package</a></p>
+  </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="cylag.boundary_conditions.html" title="cylag.boundary_conditions package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="modules.html" title="cylag"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">CYLAG 0.9 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >cylag</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">cylag package</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2023, Fabien Souillé.
+    </div>
+  </body>
+</html>

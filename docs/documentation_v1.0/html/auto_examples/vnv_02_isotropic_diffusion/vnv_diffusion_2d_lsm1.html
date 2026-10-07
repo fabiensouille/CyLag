@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Homogeneous isotropic turbulence with the LSM-1 &#8212; CYLAG 0.9 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/classic.css?v=51dfc302" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=427e2fde" />
+    
+    <script src="../../_static/documentation_options.js?v=049aceee"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Flume" href="../vnv_03_flume/index.html" />
+    <link rel="prev" title="Homogeneous isotropic turbulence with the LSM-3" href="vnv_diffusion_2d_lsm3.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../vnv_03_flume/index.html" title="Flume"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="vnv_diffusion_2d_lsm3.html" title="Homogeneous isotropic turbulence with the LSM-3"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CYLAG 0.9 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Examples</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">Isotropic diffusion</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Homogeneous isotropic turbulence with the LSM-1</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p><a class="reference internal" href="#sphx-glr-download-auto-examples-vnv-02-isotropic-diffusion-vnv-diffusion-2d-lsm1-py"><span class="std std-ref">Go to the end</span></a>
+to download the full example code.</p>
+</div>
+<section class="sphx-glr-example-title" id="homogeneous-isotropic-turbulence-with-the-lsm-1">
+<span id="sphx-glr-auto-examples-vnv-02-isotropic-diffusion-vnv-diffusion-2d-lsm1-py"></span><h1>Homogeneous isotropic turbulence with the LSM-1<a class="headerlink" href="#homogeneous-isotropic-turbulence-with-the-lsm-1" title="Link to this heading">¶</a></h1>
+<p>Validation of the LSM-1 model (Random Displacement Model) on the reference
+test case of a point source dispersion in a stationary homogeneous isotropic
+turbulent flow, i.e. with a zero mean velocity and uniform turbulent fields.</p>
+<p>The Monte-Carlo statistics extracted from the particle set are compared with
+the exact second-order moment of the particle position and with the exact
+concentration field of a point source.</p>
+<p><strong>Model equations</strong> (zero mean fluid velocity, uniform diffusivity, 2D):</p>
+<div class="math">
+<p><img src="../../_images/math/da1c0443898c023acb5593176d3a351647e80606.png" alt="dx_{p,i} = \sqrt{2K}\, dW_i,"/></p>
+</div><p>where <img class="math" src="../../_images/math/52ddc0cde6d632f631533173562fe3ca375b1f32.png" alt="K"/> is the turbulent diffusivity. The LSM-1 only resolves the
+particle position: it is the diffusive limit (<img class="math" src="../../_images/math/29f2cf753b2f9b6dfdbbfe8a31d94fbcd1c80a91.png" alt="t \gg T_L"/>) of the
+LSM-3, and is therefore only meaningful at time scales much larger than the
+Lagrangian timescale <img class="math" src="../../_images/math/1fe5515694c595aca4fffe10239a2e3bf5896dc0.png" alt="T_L"/>. Only the <strong>diffusive regime</strong> is thus
+validated here.</p>
+<p><strong>Exact solution</strong>: with the deterministic initial condition
+<img class="math" src="../../_images/math/de20d4e1b831a815e9eadfd03a9777da35438782.png" alt="x_p = 0"/> (point source), <img class="math" src="../../_images/math/a774aaf4bc7610b4872e8a36701549a10a52b91b.png" alt="x_p"/> is a Gaussian random variable
+with zero mean and</p>
+<div class="math">
+<p><img src="../../_images/math/a61c8db26cee4575988ff8abff4ae46acf95ee97.png" alt="\langle x_p^2 \rangle = 2 K t,"/></p>
+</div><p>and the concentration generated by a point source of mass <img class="math" src="../../_images/math/4abba779877abb276b98ccb2b4ba9bf2e41947ab.png" alt="M"/> is</p>
+<div class="math">
+<p><img src="../../_images/math/4a0a2f6dd17da8fcf08eb1631d1e3308b97ddc70.png" alt="c(r, t) = \dfrac{M}{4 \pi K t} \exp \left( -\dfrac{r^2}{4 K t} \right)."/></p>
+</div><p>Two closures of the diffusivity are tested:</p>
+<ul class="simple">
+<li><p><strong>constant diffusivity</strong> (<code class="docutils literal notranslate"><span class="pre">diffusion_model=1</span></code>), with
+<img class="math" src="../../_images/math/0ad012bb186aa5c9a1d2e2e1d3993467020b4895.png" alt="K = U_\alpha^2 T_L"/>, i.e. the diffusive limit of the LSM-3,
+so that the LSM-1 and LSM-3 examples share the same long-time dispersion coefficient,</p></li>
+<li><p><strong>k-epsilon closure</strong> (<code class="docutils literal notranslate"><span class="pre">diffusion_model=2</span></code>), with
+<img class="math" src="../../_images/math/5284e3aaf55f1865a6393ebed0c124e789199353.png" alt="K_t = C_\mu k^2/(\sigma_c \varepsilon)"/> computed from the uniform
+turbulent fields.</p></li>
+</ul>
+<p>Both cases use <img class="math" src="../../_images/math/c26e81aa996f9ef0cf49c8115a578539dc9ce3e6.png" alt="\Delta t = 200\,T_L"/> and <img class="math" src="../../_images/math/80b26e30482a15cf90abd4e702a36d770bbbbe4b.png" alt="t_f = 24000\,T_L"/>, as
+in the diffusive cases of the LSM-2 and LSM-3 examples.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The two closures do not give the same diffusivity. With the CyLag
+definitions of <img class="math" src="../../_images/math/1fe5515694c595aca4fffe10239a2e3bf5896dc0.png" alt="T_L"/> and <img class="math" src="../../_images/math/ea77e5ab3b54e21d4bfa07d567bd62c6fb3653ff.png" alt="U_\alpha^2"/>, the Langevin model
+gives <img class="math" src="../../_images/math/f74379ec4f42e0be72bc9471fa179bf57c18f4c7.png" alt="U_\alpha^2 T_L = C_0/(2(1/2+3C_0/4)^2)\, k^2/\varepsilon
+\approx 0.31\, k^2/\varepsilon"/>, while the k-epsilon closure gives
+<img class="math" src="../../_images/math/4132888c9614f1ac14e7d21766a67156a4e5ffa4.png" alt="C_\mu/\sigma_c\, k^2/\varepsilon = 0.125\, k^2/\varepsilon"/>.</p>
+</div>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pylab</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.tri</span><span class="w"> </span><span class="kn">import</span> <span class="n">Triangulation</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">cylag</span>
+
+<span class="c1">#sphinx_gallery_thumbnail_number = 3</span>
+</pre></div>
+</div>
+<section id="physical-parameters">
+<h2>Physical parameters<a class="headerlink" href="#physical-parameters" title="Link to this heading">¶</a></h2>
+<p>The turbulence is homogeneous, isotropic and stationary, with the same
+parameters as in the LSM-3 example: the Lagrangian timescale is 1 s and the
+turbulent velocity scale is 1 m/s, using the CyLag definitions
+<img class="math" src="../../_images/math/cebd71495bc3c8964f961ea28e095df28d907466.png" alt="T_L = (k/\varepsilon)/(1/2 + 3C_0/4)"/> and
+<img class="math" src="../../_images/math/529d5843d13e6ddbf59e8cfd0bc51d97651afa68.png" alt="U_\alpha^2 = C_0 \varepsilon T_L/2"/>.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">C0KOLM</span> <span class="o">=</span> <span class="mf">1.2</span>   <span class="c1"># Kolmogorov constant (cylag/core/constants.pyx)</span>
+<span class="n">CMU</span> <span class="o">=</span> <span class="mf">0.09</span>     <span class="c1"># k-epsilon constant (cylag/core/constants.pyx)</span>
+<span class="n">SIGC</span> <span class="o">=</span> <span class="mf">0.72</span>    <span class="c1"># turbulent Schmidt number (cylag/cylag_dico.py)</span>
+
+<span class="n">UALPHA</span> <span class="o">=</span> <span class="mf">1.0</span>                       <span class="c1"># turbulent velocity scale (m/s)</span>
+<span class="n">TL</span> <span class="o">=</span> <span class="mf">1.0</span>                           <span class="c1"># Lagrangian timescale (s)</span>
+<span class="n">EPS</span> <span class="o">=</span> <span class="mf">2.</span><span class="o">*</span><span class="n">UALPHA</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="n">C0KOLM</span><span class="o">*</span><span class="n">TL</span><span class="p">)</span>     <span class="c1"># dissipation rate (m2/s3)</span>
+<span class="n">TKE</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">+</span> <span class="mf">0.75</span><span class="o">*</span><span class="n">C0KOLM</span><span class="p">)</span><span class="o">*</span><span class="n">TL</span><span class="o">*</span><span class="n">EPS</span>   <span class="c1"># turbulent kinetic energy (m2/s2)</span>
+
+<span class="c1"># diffusivities of the two closures</span>
+<span class="n">K_LSM3</span> <span class="o">=</span> <span class="n">UALPHA</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">TL</span>              <span class="c1"># diffusive limit of the LSM-3 (m2/s)</span>
+<span class="n">K_KEPS</span> <span class="o">=</span> <span class="p">(</span><span class="n">CMU</span><span class="o">/</span><span class="n">SIGC</span><span class="p">)</span><span class="o">*</span><span class="n">TKE</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="n">EPS</span>     <span class="c1"># k-epsilon closure (m2/s)</span>
+
+<span class="c1"># Number of stochastic particles released from the point source</span>
+<span class="n">NPART</span> <span class="o">=</span> <span class="mi">20000</span>
+
+<span class="c1"># Number of trajectories stored for illustration</span>
+<span class="n">NTRAJ</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">" ~~&gt; dissipation     = </span><span class="si">{:.4f}</span><span class="s2"> m2/s3"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">EPS</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">" ~~&gt; turbulent energ = </span><span class="si">{:.4f}</span><span class="s2"> m2/s2"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">TKE</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">" ~~&gt; T_L             = </span><span class="si">{:.4e}</span><span class="s2"> s"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">TL</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">" ~~&gt; K (U_a^2 T_L)   = </span><span class="si">{:.4f}</span><span class="s2"> m2/s"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">K_LSM3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">" ~~&gt; K_t (k-eps)     = </span><span class="si">{:.4f}</span><span class="s2"> m2/s"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">K_KEPS</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>~~&gt; dissipation     = 1.6667 m2/s3
+~~&gt; turbulent energ = 2.3333 m2/s2
+~~&gt; T_L             = 1.0000e+00 s
+~~&gt; K (U_a^2 T_L)   = 1.0000 m2/s
+~~&gt; K_t (k-eps)     = 0.4083 m2/s
+</pre></div>
+</div>
+</section>
+<section id="exact-solution-of-the-lsm-1-system">
+<h2>Exact solution of the LSM-1 system<a class="headerlink" href="#exact-solution-of-the-lsm-1-system" title="Link to this heading">¶</a></h2>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">lsm1_moments</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">kdiff</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">""" Exact second-order moment &lt;xp^2&gt; = 2*K*t of a point source """</span>
+    <span class="k">return</span> <span class="mf">2.</span><span class="o">*</span><span class="n">kdiff</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">'d'</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">lsm1_concentration</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">kdiff</span><span class="p">,</span> <span class="n">mass</span><span class="o">=</span><span class="mf">1.</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">""" Exact concentration of a 2D point source of mass M """</span>
+    <span class="k">return</span> <span class="n">mass</span><span class="o">/</span><span class="p">(</span><span class="mf">4.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">kdiff</span><span class="o">*</span><span class="n">t</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">r</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="mf">4.</span><span class="o">*</span><span class="n">kdiff</span><span class="o">*</span><span class="n">t</span><span class="p">))</span>
+</pre></div>
+</div>
+</section>
+<section id="eulerian-field-set">
+<h2>Eulerian field set<a class="headerlink" href="#eulerian-field-set" title="Link to this heading">¶</a></h2>
+<p>A coarse triangulation of a square domain is used: the mean velocity is zero
+and the turbulent fields are uniform, so the mesh only has to be large enough
+to contain the particle cloud during the whole simulation.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">build_field_set</span><span class="p">(</span><span class="n">domain_size</span><span class="p">,</span> <span class="n">npts</span><span class="o">=</span><span class="mi">21</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">""" Uniform (zero velocity, constant k and epsilon) 2D field set """</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="mf">2.</span><span class="o">*</span><span class="n">domain_size</span><span class="o">/</span><span class="p">(</span><span class="n">npts</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># the point source at (0, 0) lies neither on a mesh node nor on an edge</span>
+    <span class="n">xg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">domain_size</span><span class="p">,</span> <span class="n">domain_size</span><span class="p">,</span> <span class="n">npts</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.137</span><span class="o">*</span><span class="n">dx</span>
+    <span class="n">yg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">domain_size</span><span class="p">,</span> <span class="n">domain_size</span><span class="p">,</span> <span class="n">npts</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.271</span><span class="o">*</span><span class="n">dx</span>
+    <span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">xg</span><span class="p">,</span> <span class="n">yg</span><span class="p">)</span>
+
+    <span class="n">meshx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">xx</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">'d'</span><span class="p">)</span>
+    <span class="n">meshy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">yy</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">'d'</span><span class="p">)</span>
+
+    <span class="n">tri</span> <span class="o">=</span> <span class="n">Triangulation</span><span class="p">(</span><span class="n">meshx</span><span class="p">,</span> <span class="n">meshy</span><span class="p">)</span>
+    <span class="n">triangles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">tri</span><span class="o">.</span><span class="n">triangles</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">'int32'</span><span class="p">)</span>
+    <span class="n">cylagtri</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">TriangularMesh</span><span class="p">(</span><span class="n">meshx</span><span class="p">,</span> <span class="n">meshy</span><span class="p">,</span> <span class="n">triangles</span><span class="p">)</span>
+
+    <span class="n">nnodes</span> <span class="o">=</span> <span class="n">meshx</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">elevation</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="n">nnodes</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">'d'</span><span class="p">)</span>
+    <span class="n">velocity_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="n">nnodes</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">'d'</span><span class="p">)</span>
+    <span class="n">velocity_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="n">nnodes</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">'d'</span><span class="p">)</span>
+
+    <span class="c1"># k-epsilon fields, required by the k-epsilon closure</span>
+    <span class="n">opt_fields</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">nnodes</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">'d'</span><span class="p">)</span>
+    <span class="n">opt_fields</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">TKE</span>
+    <span class="n">opt_fields</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">EPS</span>
+
+    <span class="n">fset</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">EulerianFieldSet</span><span class="p">(</span>
+        <span class="n">triangular_mesh</span><span class="o">=</span><span class="n">cylagtri</span><span class="p">,</span>
+        <span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">nlayers</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">times</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+        <span class="n">elevation</span><span class="o">=</span><span class="n">elevation</span><span class="p">,</span>
+        <span class="n">velocity_x</span><span class="o">=</span><span class="n">velocity_x</span><span class="p">,</span>
+        <span class="n">velocity_y</span><span class="o">=</span><span class="n">velocity_y</span><span class="p">,</span>
+        <span class="n">opt_fields</span><span class="o">=</span><span class="n">opt_fields</span><span class="p">,</span>
+        <span class="n">opt_fields_names</span><span class="o">=</span><span class="p">[</span><span class="s1">'TURBULENT ENERG.'</span><span class="p">,</span> <span class="s1">'DISSIPATION'</span><span class="p">],</span>
+        <span class="n">trifinder</span><span class="o">=</span><span class="n">tri</span><span class="o">.</span><span class="n">get_trifinder</span><span class="p">())</span>
+
+    <span class="k">return</span> <span class="n">fset</span>
+</pre></div>
+</div>
+</section>
+<section id="monte-carlo-simulation">
+<h2>Monte-Carlo simulation<a class="headerlink" href="#monte-carlo-simulation" title="Link to this heading">¶</a></h2>
+<p>All the particles are released at the origin. The moment is averaged over
+the particles and over the two directions x and y, since the turbulence is
+isotropic. The first <code class="docutils literal notranslate"><span class="pre">NTRAJ</span></code> trajectories are stored for illustration.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">run_case</span><span class="p">(</span><span class="n">time_step</span><span class="p">,</span> <span class="n">final_time</span><span class="p">,</span> <span class="n">domain_size</span><span class="p">,</span> <span class="n">diffusion_model</span><span class="p">,</span>
+             <span class="n">npart</span><span class="o">=</span><span class="n">NPART</span><span class="p">,</span> <span class="n">ntraj</span><span class="o">=</span><span class="n">NTRAJ</span><span class="p">,</span> <span class="n">npts</span><span class="o">=</span><span class="mi">21</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">""" Run CyLag LSM-1 and return &lt;xp^2&gt;, trajectories and final positions """</span>
+    <span class="n">fset</span> <span class="o">=</span> <span class="n">build_field_set</span><span class="p">(</span><span class="n">domain_size</span><span class="p">,</span> <span class="n">npts</span><span class="o">=</span><span class="n">npts</span><span class="p">)</span>
+
+    <span class="c1"># point source: all the particles are released at the origin</span>
+    <span class="n">position</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">npart</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">'d'</span><span class="p">)</span>
+    <span class="n">pset</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">LagrangianParticleSet</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">'final_time'</span><span class="p">:</span> <span class="n">final_time</span><span class="p">,</span>
+        <span class="s1">'time_step'</span><span class="p">:</span> <span class="n">time_step</span><span class="p">,</span>
+        <span class="s1">'frozen_eulerian_fields'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s1">'model'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s1">'time_scheme'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s1">'diffusion_model'</span><span class="p">:</span> <span class="n">diffusion_model</span><span class="p">,</span>
+        <span class="s1">'horizontal_diffusivity'</span><span class="p">:</span> <span class="n">K_LSM3</span><span class="p">,</span>
+        <span class="s1">'vertical_diffusivity'</span><span class="p">:</span> <span class="mf">0.</span><span class="p">,</span>
+        <span class="s1">'schmidt_number'</span><span class="p">:</span> <span class="n">SIGC</span><span class="p">,</span>
+        <span class="s1">'boundary_conditions'</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="s1">'listing'</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="s1">'output_file'</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="p">}</span>
+
+    <span class="n">solver</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">Solver</span><span class="p">(</span><span class="n">fset</span><span class="p">,</span> <span class="n">pset</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span>
+
+    <span class="n">nt</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">simutime</span><span class="o">.</span><span class="n">nt</span>
+    <span class="n">times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nt</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nt</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">traj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nt</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ntraj</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">ite</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nt</span><span class="p">):</span>
+        <span class="n">solver</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">time_step</span><span class="p">)</span>
+        <span class="n">xp</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">pset</span><span class="o">.</span><span class="n">get_state</span><span class="p">()</span>
+        <span class="c1"># get_state sorts the particles, tags restore the initial ordering</span>
+        <span class="n">order</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">pset</span><span class="o">.</span><span class="n">tag</span><span class="p">)[:</span><span class="n">pset</span><span class="o">.</span><span class="n">npart_active</span><span class="p">])</span>
+        <span class="n">times</span><span class="p">[</span><span class="n">ite</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">simutime</span><span class="o">.</span><span class="n">time</span>
+        <span class="n">xx</span><span class="p">[</span><span class="n">ite</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">xp</span><span class="o">*</span><span class="n">xp</span><span class="p">)</span>
+        <span class="n">traj</span><span class="p">[</span><span class="n">ite</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">xp</span><span class="p">[</span><span class="n">order</span><span class="p">[:</span><span class="n">ntraj</span><span class="p">]]</span>
+
+    <span class="k">if</span> <span class="n">pset</span><span class="o">.</span><span class="n">npart_active</span> <span class="o">!=</span> <span class="n">npart</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"WARNING: </span><span class="si">{}</span><span class="s2"> particles left the domain"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">npart</span> <span class="o">-</span> <span class="n">pset</span><span class="o">.</span><span class="n">npart_active</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">times</span><span class="p">,</span> <span class="n">xx</span><span class="p">,</span> <span class="n">traj</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">xp</span><span class="p">[</span><span class="n">order</span><span class="p">])</span>
+</pre></div>
+</div>
+</section>
+<section id="post-processing-utilities">
+<h2>Post-processing utilities<a class="headerlink" href="#post-processing-utilities" title="Link to this heading">¶</a></h2>
+<p>The 99% confidence interval of the Monte-Carlo estimator of
+<img class="math" src="../../_images/math/1f14e682046a8ca2b86b3f2b2b4ef950e5fe3d41.png" alt="\langle x_p^2\rangle"/> is obtained from the Gaussian relation
+<img class="math" src="../../_images/math/e5dee26abc1e3b8c0b3a23ae0f83344df5d0e6f0.png" alt="\text{Var}(x_p^2) = 2\langle x_p^2\rangle^2"/>, with
+<img class="math" src="../../_images/math/00a479758faccc2f73c1897e454aa00843d2ed2f.png" alt="nsample = 2*npart"/> independent samples (npart particles times two
+directions). The same relative half-width applies to the dispersion
+coefficient estimator <img class="math" src="../../_images/math/0f6f2c5cc1035b5ed9ab8cecdff4633419ed02dd.png" alt="K_{MC} = \langle x_p^2\rangle/(2t)"/>.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">confidence_interval</span><span class="p">(</span><span class="n">ana</span><span class="p">,</span> <span class="n">npart</span><span class="p">,</span> <span class="n">quantile</span><span class="o">=</span><span class="mf">2.576</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">""" Half-width of the 99% confidence interval of the MC estimator """</span>
+    <span class="n">nsample</span> <span class="o">=</span> <span class="mf">2.</span><span class="o">*</span><span class="n">npart</span>
+    <span class="k">return</span> <span class="n">quantile</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.</span><span class="o">/</span><span class="n">nsample</span><span class="p">)</span><span class="o">*</span><span class="n">ana</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_case</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">xx</span><span class="p">,</span> <span class="n">ana</span><span class="p">,</span> <span class="n">half</span><span class="p">,</span> <span class="n">kdiff</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">""" Plot &lt;xp^2&gt; and K_MC = &lt;xp^2&gt;/(2t) against the analytical solution """</span>
+    <span class="n">cylag</span><span class="o">.</span><span class="n">set_rcparams</span><span class="p">()</span>
+    <span class="n">colors</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">get_default_color_palette</span><span class="p">()</span>
+    <span class="n">tstar</span> <span class="o">=</span> <span class="n">times</span><span class="o">/</span><span class="n">TL</span>
+    <span class="n">kmc</span> <span class="o">=</span> <span class="n">xx</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">/</span><span class="p">(</span><span class="mf">2.</span><span class="o">*</span><span class="n">times</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+    <span class="n">khalf</span> <span class="o">=</span> <span class="n">half</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">/</span><span class="p">(</span><span class="mf">2.</span><span class="o">*</span><span class="n">times</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">11.</span><span class="p">,</span> <span class="mf">4.2</span><span class="p">))</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">scale</span> <span class="o">=</span> <span class="n">UALPHA</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">TL</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tstar</span><span class="p">,</span> <span class="n">ana</span><span class="o">/</span><span class="n">scale</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">'k'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Analytical"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tstar</span><span class="p">,</span> <span class="p">(</span><span class="n">ana</span> <span class="o">+</span> <span class="n">half</span><span class="p">)</span><span class="o">/</span><span class="n">scale</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">'0.6'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">'--'</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="s2">"$99</span><span class="se">\\</span><span class="s2">%$ confidence interval"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tstar</span><span class="p">,</span> <span class="p">(</span><span class="n">ana</span> <span class="o">-</span> <span class="n">half</span><span class="p">)</span><span class="o">/</span><span class="n">scale</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">'0.6'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">'--'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tstar</span><span class="p">,</span> <span class="n">xx</span><span class="o">/</span><span class="n">scale</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">'x'</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="s2">"CyLag (LSM-1)"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"$t/T_L$"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"$</span><span class="se">\\</span><span class="s2">langle x_p^2 </span><span class="se">\\</span><span class="s2">rangle / (U_</span><span class="se">\\</span><span class="s2">alpha T_L)^2$"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">'best'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tstar</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">kmc</span><span class="p">),</span> <span class="n">c</span><span class="o">=</span><span class="s1">'k'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tstar</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="mf">1.</span> <span class="o">+</span> <span class="n">khalf</span><span class="o">/</span><span class="n">kdiff</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">'0.6'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">'--'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tstar</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="mf">1.</span> <span class="o">-</span> <span class="n">khalf</span><span class="o">/</span><span class="n">kdiff</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">'0.6'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">'--'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tstar</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">kmc</span><span class="o">/</span><span class="n">kdiff</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">'x'</span><span class="p">,</span>
+            <span class="n">markersize</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"$t/T_L$"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"$</span><span class="se">\\</span><span class="s2">langle x_p^2 </span><span class="se">\\</span><span class="s2">rangle / (2 K t)$"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mf">0.97</span><span class="p">,</span> <span class="mf">1.03</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s2">"figs"</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">"figs"</span><span class="p">,</span> <span class="n">fname</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">"png"</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">print_errors</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">xx</span><span class="p">,</span> <span class="n">ana</span><span class="p">,</span> <span class="n">half</span><span class="p">,</span> <span class="n">kdiff</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">""" Print the relative error on &lt;xp^2&gt; and the dispersion coefficient """</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">times</span> <span class="o">&gt;</span> <span class="mf">0.</span>
+    <span class="n">err</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">xx</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">-</span> <span class="n">ana</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span><span class="o">/</span><span class="n">ana</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+    <span class="n">inside</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">xx</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">-</span> <span class="n">ana</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="n">half</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">" ~~&gt; &lt;xx&gt; : mean = </span><span class="si">{:8.2e}</span><span class="s2"> ; max = </span><span class="si">{:8.2e}</span><span class="s2"> ; "</span>
+          <span class="s2">"within 99% CI : </span><span class="si">{:5.1f}</span><span class="s2">%"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+              <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">err</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">err</span><span class="p">),</span> <span class="mf">100.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">inside</span><span class="p">)))</span>
+    <span class="n">kmc</span> <span class="o">=</span> <span class="n">xx</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="mf">2.</span><span class="o">*</span><span class="n">times</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">" ~~&gt; dispersion coefficient K = </span><span class="si">{:.4f}</span><span class="s2"> m2/s "</span>
+          <span class="s2">"(theory: </span><span class="si">{:.4f}</span><span class="s2"> m2/s)"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">kmc</span><span class="p">),</span> <span class="n">kdiff</span><span class="p">))</span>
+</pre></div>
+</div>
+</section>
+<section id="case-1-constant-diffusivity-k-u-alpha-2-t-l">
+<h2>Case 1 : constant diffusivity, K = U_alpha^2 T_L<a class="headerlink" href="#case-1-constant-diffusivity-k-u-alpha-2-t-l" title="Link to this heading">¶</a></h2>
+<p>The diffusivity is set to the diffusive limit of the LSM-3,
+<img class="math" src="../../_images/math/0ad012bb186aa5c9a1d2e2e1d3993467020b4895.png" alt="K = U_\alpha^2 T_L"/>, so that the dispersion coefficient is the same
+as in the diffusive case of the LSM-3 example.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">dt_dif</span> <span class="o">=</span> <span class="mf">200.</span><span class="o">*</span><span class="n">TL</span>
+<span class="n">tf_dif</span> <span class="o">=</span> <span class="mf">24000.</span><span class="o">*</span><span class="n">TL</span>
+
+<span class="n">times_cst</span><span class="p">,</span> <span class="n">xx_cst</span><span class="p">,</span> <span class="n">traj_cst</span><span class="p">,</span> <span class="n">pos_cst</span> <span class="o">=</span> <span class="n">run_case</span><span class="p">(</span>
+    <span class="n">dt_dif</span><span class="p">,</span> <span class="n">tf_dif</span><span class="p">,</span> <span class="n">domain_size</span><span class="o">=</span><span class="mf">2000.</span><span class="p">,</span> <span class="n">diffusion_model</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ana_cst</span> <span class="o">=</span> <span class="n">lsm1_moments</span><span class="p">(</span><span class="n">times_cst</span><span class="p">,</span> <span class="n">K_LSM3</span><span class="p">)</span>
+<span class="n">half_cst</span> <span class="o">=</span> <span class="n">confidence_interval</span><span class="p">(</span><span class="n">ana_cst</span><span class="p">,</span> <span class="n">NPART</span><span class="p">)</span>
+
+<span class="n">plot_case</span><span class="p">(</span><span class="n">times_cst</span><span class="p">,</span> <span class="n">xx_cst</span><span class="p">,</span> <span class="n">ana_cst</span><span class="p">,</span> <span class="n">half_cst</span><span class="p">,</span> <span class="n">K_LSM3</span><span class="p">,</span>
+          <span class="s2">"cylag_lsm1_hit_constant.png"</span><span class="p">,</span>
+          <span class="s2">"LSM-1, constant diffusivity - $</span><span class="se">\\</span><span class="s2">Delta t = 200</span><span class="se">\\</span><span class="s2">,T_L$"</span><span class="p">)</span>
+
+<span class="n">print_errors</span><span class="p">(</span><span class="n">times_cst</span><span class="p">,</span> <span class="n">xx_cst</span><span class="p">,</span> <span class="n">ana_cst</span><span class="p">,</span> <span class="n">half_cst</span><span class="p">,</span> <span class="n">K_LSM3</span><span class="p">)</span>
+</pre></div>
+</div>
+<img src="../../_images/sphx_glr_vnv_diffusion_2d_lsm1_001.png" srcset="../../_images/sphx_glr_vnv_diffusion_2d_lsm1_001.png" alt="LSM-1, constant diffusivity - $\Delta t = 200\,T_L$" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>~~&gt; &lt;xx&gt; : mean = 2.86e-03 ; max = 1.36e-02 ; within 99% CI : 100.0%
+~~&gt; dispersion coefficient K = 0.9981 m2/s (theory: 1.0000 m2/s)
+</pre></div>
+</div>
+</section>
+<section id="case-2-k-epsilon-closure">
+<h2>Case 2 : k-epsilon closure<a class="headerlink" href="#case-2-k-epsilon-closure" title="Link to this heading">¶</a></h2>
+<p>The diffusivity is now computed from the uniform turbulent fields with the
+k-epsilon closure <img class="math" src="../../_images/math/5284e3aaf55f1865a6393ebed0c124e789199353.png" alt="K_t = C_\mu k^2/(\sigma_c \varepsilon)"/>.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">times_ke</span><span class="p">,</span> <span class="n">xx_ke</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">run_case</span><span class="p">(</span>
+    <span class="n">dt_dif</span><span class="p">,</span> <span class="n">tf_dif</span><span class="p">,</span> <span class="n">domain_size</span><span class="o">=</span><span class="mf">2000.</span><span class="p">,</span> <span class="n">diffusion_model</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ana_ke</span> <span class="o">=</span> <span class="n">lsm1_moments</span><span class="p">(</span><span class="n">times_ke</span><span class="p">,</span> <span class="n">K_KEPS</span><span class="p">)</span>
+<span class="n">half_ke</span> <span class="o">=</span> <span class="n">confidence_interval</span><span class="p">(</span><span class="n">ana_ke</span><span class="p">,</span> <span class="n">NPART</span><span class="p">)</span>
+
+<span class="n">plot_case</span><span class="p">(</span><span class="n">times_ke</span><span class="p">,</span> <span class="n">xx_ke</span><span class="p">,</span> <span class="n">ana_ke</span><span class="p">,</span> <span class="n">half_ke</span><span class="p">,</span> <span class="n">K_KEPS</span><span class="p">,</span>
+          <span class="s2">"cylag_lsm1_hit_keps.png"</span><span class="p">,</span>
+          <span class="s2">"LSM-1, k-epsilon closure - $</span><span class="se">\\</span><span class="s2">Delta t = 200</span><span class="se">\\</span><span class="s2">,T_L$"</span><span class="p">)</span>
+
+<span class="n">print_errors</span><span class="p">(</span><span class="n">times_ke</span><span class="p">,</span> <span class="n">xx_ke</span><span class="p">,</span> <span class="n">ana_ke</span><span class="p">,</span> <span class="n">half_ke</span><span class="p">,</span> <span class="n">K_KEPS</span><span class="p">)</span>
+</pre></div>
+</div>
+<img src="../../_images/sphx_glr_vnv_diffusion_2d_lsm1_002.png" srcset="../../_images/sphx_glr_vnv_diffusion_2d_lsm1_002.png" alt="LSM-1, k-epsilon closure - $\Delta t = 200\,T_L$" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>~~&gt; &lt;xx&gt; : mean = 9.06e-03 ; max = 1.69e-02 ; within 99% CI : 100.0%
+~~&gt; dispersion coefficient K = 0.4116 m2/s (theory: 0.4083 m2/s)
+</pre></div>
+</div>
+</section>
+<section id="illustration-particle-trajectories">
+<h2>Illustration : particle trajectories<a class="headerlink" href="#illustration-particle-trajectories" title="Link to this heading">¶</a></h2>
+<p>Trajectories of the first particles of case 1 and final positions of the
+particle cloud. The circles are the iso-lines <img class="math" src="../../_images/math/ba39efd8a75d7e5edd7506c53e7c5141bde36eb2.png" alt="r = \sigma, 2\sigma,
+3\sigma"/> of the exact Gaussian distribution, with
+<img class="math" src="../../_images/math/f9b9595be15e38b5e8ad89283a34675d1137b205.png" alt="\sigma^2 = 2 K t_f"/>.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">sigf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.</span><span class="o">*</span><span class="n">K_LSM3</span><span class="o">*</span><span class="n">times_cst</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">2.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">361</span><span class="p">)</span>
+
+<span class="n">cylag</span><span class="o">.</span><span class="n">set_rcparams</span><span class="p">()</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">8.</span><span class="p">,</span> <span class="mf">8.</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">'equal'</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">pos_cst</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">pos_cst</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s1">'0.5'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">'o'</span><span class="p">,</span>
+        <span class="n">markersize</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"$x_p(t_f)$"</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">NTRAJ</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">traj_cst</span><span class="p">[:,</span> <span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">traj_cst</span><span class="p">[:,</span> <span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">'b'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">'o'</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mf">5.</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"$x_p(0)$"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">sigf</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="n">n</span><span class="o">*</span><span class="n">sigf</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="n">c</span><span class="o">=</span><span class="s1">'r'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span>
+            <span class="n">ls</span><span class="o">=</span><span class="s1">'--'</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"$x$ (m)"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"$y$ (m)"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="o">-</span><span class="mf">4.</span><span class="o">*</span><span class="n">sigf</span><span class="p">,</span> <span class="mf">4.</span><span class="o">*</span><span class="n">sigf</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="o">-</span><span class="mf">4.</span><span class="o">*</span><span class="n">sigf</span><span class="p">,</span> <span class="mf">4.</span><span class="o">*</span><span class="n">sigf</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">'upper right'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">"figs"</span><span class="p">,</span> <span class="s2">"cylag_lsm1_hit_traj.png"</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+            <span class="nb">format</span><span class="o">=</span><span class="s2">"png"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<img src="../../_images/sphx_glr_vnv_diffusion_2d_lsm1_003.png" srcset="../../_images/sphx_glr_vnv_diffusion_2d_lsm1_003.png" alt="vnv diffusion 2d lsm1" class = "sphx-glr-single-img"/></section>
+<section id="density-estimate-at-final-time">
+<h2>Density estimate at final time<a class="headerlink" href="#density-estimate-at-final-time" title="Link to this heading">¶</a></h2>
+<p>The particle concentration at final time is estimated with the Gaussian
+kernel smoothing (<code class="docutils literal notranslate"><span class="pre">kernel=5</span></code>) on a regular grid, with a total mass
+<img class="math" src="../../_images/math/dabb61ecc4da8df35c00e765a39fd383714b573a.png" alt="M = 1"/>. This kernel adds a variance <img class="math" src="../../_images/math/24d60147cb4fb83c34871085189b0f69999dadff.png" alt="h^2/8"/> per direction, so
+the expected estimate is the exact Gaussian with
+<img class="math" src="../../_images/math/2ad9944c217a2ddb02e4206f6815f84840ce88c5.png" alt="\sigma^2 \to \sigma^2 + h^2/8"/> (up to a ~2% kernel truncation).</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">h</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">sigf</span>
+<span class="n">massp</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="n">pos_cst</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">xg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">4.</span><span class="o">*</span><span class="n">sigf</span><span class="p">,</span> <span class="mf">4.</span><span class="o">*</span><span class="n">sigf</span><span class="p">,</span> <span class="mi">61</span><span class="p">)</span>
+<span class="n">xx_g</span><span class="p">,</span> <span class="n">yy_g</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">xg</span><span class="p">,</span> <span class="n">xg</span><span class="p">)</span>
+<span class="n">rr_g</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">xx_g</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">yy_g</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># the ghost mesh estimator sorts the positions in place: pass a copy</span>
+<span class="n">density</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">compute_density_2D_KS_GM</span><span class="p">(</span>
+    <span class="n">xx_g</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">yy_g</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">pos_cst</span><span class="o">.</span><span class="n">copy</span><span class="p">()),</span>
+    <span class="n">massp</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">density</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">density</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">xx_g</span><span class="p">))</span>
+
+<span class="n">tf</span> <span class="o">=</span> <span class="n">times_cst</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">exact</span> <span class="o">=</span> <span class="n">lsm1_concentration</span><span class="p">(</span><span class="n">rr_g</span><span class="p">,</span> <span class="n">tf</span><span class="p">,</span> <span class="n">K_LSM3</span><span class="p">)</span>
+
+<span class="n">rr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">4.</span><span class="o">*</span><span class="n">sigf</span><span class="p">,</span> <span class="mi">201</span><span class="p">)</span>
+<span class="n">exact_r</span> <span class="o">=</span> <span class="n">lsm1_concentration</span><span class="p">(</span><span class="n">rr</span><span class="p">,</span> <span class="n">tf</span><span class="p">,</span> <span class="n">K_LSM3</span><span class="p">)</span>
+<span class="n">smooth_r</span> <span class="o">=</span> <span class="n">lsm1_concentration</span><span class="p">(</span><span class="n">rr</span><span class="p">,</span> <span class="n">tf</span> <span class="o">+</span> <span class="n">h</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="mf">16.</span><span class="o">*</span><span class="n">K_LSM3</span><span class="p">),</span> <span class="n">K_LSM3</span><span class="p">)</span>
+
+<span class="n">cylag</span><span class="o">.</span><span class="n">set_rcparams</span><span class="p">()</span>
+<span class="n">colors</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">get_default_color_palette</span><span class="p">()</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">13.</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">))</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">'equal'</span><span class="p">)</span>
+<span class="n">levels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">exact</span><span class="p">),</span> <span class="mi">11</span><span class="p">)</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xg</span><span class="p">,</span> <span class="n">xg</span><span class="p">,</span> <span class="n">density</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">"coolwarm"</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">levels</span><span class="p">,</span>
+                  <span class="n">extend</span><span class="o">=</span><span class="s2">"max"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">xg</span><span class="p">,</span> <span class="n">xg</span><span class="p">,</span> <span class="n">density</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="s1">'k'</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">levels</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">xg</span><span class="p">,</span> <span class="n">xg</span><span class="p">,</span> <span class="n">exact</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="s1">'w'</span><span class="p">,</span> <span class="n">linestyles</span><span class="o">=</span><span class="s1">'--'</span><span class="p">,</span>
+           <span class="n">levels</span><span class="o">=</span><span class="n">levels</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"$c$ (m$^{-2}$)"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"$x$ (m)"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"$y$ (m)"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">"CyLag (filled) and exact (dashed)"</span><span class="p">)</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">rr_g</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span><span class="o">/</span><span class="n">sigf</span><span class="p">,</span> <span class="n">density</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">c</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span>
+        <span class="n">marker</span><span class="o">=</span><span class="s1">'x'</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"CyLag (LSM-1, KS)"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">rr</span><span class="o">/</span><span class="n">sigf</span><span class="p">,</span> <span class="n">exact_r</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">'k'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Analytical"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">rr</span><span class="o">/</span><span class="n">sigf</span><span class="p">,</span> <span class="n">smooth_r</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">'0.4'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">'--'</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">"Analytical smoothed by the kernel"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"$r/</span><span class="se">\\</span><span class="s2">sigma$"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"$c$ (m$^{-2}$)"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">'best'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">"figs"</span><span class="p">,</span> <span class="s2">"cylag_lsm1_hit_density.png"</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+            <span class="nb">format</span><span class="o">=</span><span class="s2">"png"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">ic</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">rr_g</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">" ~~&gt; peak concentration: CyLag = </span><span class="si">{:.4e}</span><span class="s2"> ; smoothed exact = </span><span class="si">{:.4e}</span><span class="s2"> ; "</span>
+      <span class="s2">"exact = </span><span class="si">{:.4e}</span><span class="s2"> m-2"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">density</span><span class="o">.</span><span class="n">flatten</span><span class="p">()[</span><span class="n">ic</span><span class="p">],</span> <span class="n">smooth_r</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                  <span class="n">exact_r</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+</pre></div>
+</div>
+<img src="../../_images/sphx_glr_vnv_diffusion_2d_lsm1_004.png" srcset="../../_images/sphx_glr_vnv_diffusion_2d_lsm1_004.png" alt="CyLag (filled) and exact (dashed)" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>~~&gt; peak concentration: CyLag = 3.3584e-06 ; smoothed exact = 3.2153e-06 ; exact = 3.3157e-06 m-2
+</pre></div>
+</div>
+<p>Clean:</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="k">del</span> <span class="n">times_cst</span><span class="p">,</span> <span class="n">xx_cst</span><span class="p">,</span> <span class="n">traj_cst</span><span class="p">,</span> <span class="n">pos_cst</span><span class="p">,</span> <span class="n">ana_cst</span><span class="p">,</span> <span class="n">half_cst</span>
+<span class="k">del</span> <span class="n">times_ke</span><span class="p">,</span> <span class="n">xx_ke</span><span class="p">,</span> <span class="n">ana_ke</span><span class="p">,</span> <span class="n">half_ke</span>
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 8.878 seconds)</p>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-vnv-02-isotropic-diffusion-vnv-diffusion-2d-lsm1-py">
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/7864ac4ce5e59840b2a11471a1d3d2a7/vnv_diffusion_2d_lsm1.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">vnv_diffusion_2d_lsm1.ipynb</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/edf5c97f4a870c22ec00c6901b804684/vnv_diffusion_2d_lsm1.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">vnv_diffusion_2d_lsm1.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-zip docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/2ca99a138876ab074becb472493668fe/vnv_diffusion_2d_lsm1.zip"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">zipped:</span> <span class="pre">vnv_diffusion_2d_lsm1.zip</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/logo_cylag_sb.png" alt="Logo of CYLAG"/>
+            </a></p>
+<h3><a href="../../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../get_started.html">Quick installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models.html">Mathematical models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../algo.html">Particle-mesh implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../setup.html">Setup, inputs and practical informations</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Gallery of examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#couette-flow">Couette flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#isotropic-diffusion">Isotropic diffusion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#flume">Flume</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#tide">Tide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#meander">Meander</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#taylor-vortices">Taylor vortices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#settling">Settling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#sources">Sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#statistics">Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#poly-disperse">Poly-disperse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#oil-slick-module">Oil slick module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#algae-module">Algae module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#macrophyte-module">Macrophyte module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#fish-module">Fish module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#jellyfish-module">Jellyfish module</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#online">Online</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../good_practices.html">Good practices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev.html">Developer guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/modules.html">API</a></li>
+</ul>
+
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="vnv_diffusion_2d_lsm3.html"
+                          title="previous chapter">Homogeneous isotropic turbulence with the LSM-3</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="../vnv_03_flume/index.html"
+                          title="next chapter">Flume</a></p>
+  </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../vnv_03_flume/index.html" title="Flume"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="vnv_diffusion_2d_lsm3.html" title="Homogeneous isotropic turbulence with the LSM-3"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CYLAG 0.9 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Examples</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >Isotropic diffusion</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Homogeneous isotropic turbulence with the LSM-1</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2023, Fabien Souillé.
+    </div>
+  </body>
+</html>

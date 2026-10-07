@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>cylag.lsm package &#8212; CYLAG 0.9 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/classic.css?v=51dfc302" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=427e2fde" />
+    
+    <script src="../_static/documentation_options.js?v=049aceee"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="cylag.modules package" href="cylag.modules.html" />
+    <link rel="prev" title="cylag.io package" href="cylag.io.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="cylag.modules.html" title="cylag.modules package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="cylag.io.html" title="cylag.io package"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">CYLAG 0.9 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >cylag</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="cylag.html" accesskey="U">cylag package</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">cylag.lsm package</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="cylag-lsm-package">
+<h1>cylag.lsm package<a class="headerlink" href="#cylag-lsm-package" title="Link to this heading">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+</section>
+<section id="module-cylag.lsm.init_lsm2_fluctuations">
+<span id="cylag-lsm-init-lsm2-fluctuations-module"></span><h2>cylag.lsm.init_lsm2_fluctuations module<a class="headerlink" href="#module-cylag.lsm.init_lsm2_fluctuations" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.lsm.init_lsm2_fluctuations.update_lsm2_fluctuations">
+<span class="sig-prename descclassname"><span class="pre">cylag.lsm.init_lsm2_fluctuations.</span></span><span class="sig-name descname"><span class="pre">update_lsm2_fluctuations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.lsm.init_lsm2_fluctuations.update_lsm2_fluctuations" title="Link to this definition">¶</a></dt>
+<dd><p>Draw an initial fluctuation for Up from its Ornstein-Uhlenbeck stationary distribution.
+Designed for LSM2 diffusion-on-velocity variant.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>simutime</strong> (<em>cylag.SimuTime</em>)</p></li>
+<li><p><strong>field_set</strong> (<em>cylag.EulerianFieldSet</em>)</p></li>
+<li><p><strong>particle_set</strong> (<em>cylag.LagrangianParticleSet</em>)</p></li>
+<li><p><strong>parameters</strong> (<em>cylag.Parameters</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-cylag.lsm.init_lsm3_fluctuations">
+<span id="cylag-lsm-init-lsm3-fluctuations-module"></span><h2>cylag.lsm.init_lsm3_fluctuations module<a class="headerlink" href="#module-cylag.lsm.init_lsm3_fluctuations" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.lsm.init_lsm3_fluctuations.update_lsm3_fluctuations">
+<span class="sig-prename descclassname"><span class="pre">cylag.lsm.init_lsm3_fluctuations.</span></span><span class="sig-name descname"><span class="pre">update_lsm3_fluctuations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.lsm.init_lsm3_fluctuations.update_lsm3_fluctuations" title="Link to this definition">¶</a></dt>
+<dd><p>Draw initial Us fluctuations from its Ornstein-Uhlenbeck stationary law.</p>
+<p>Constant diffusivity K gives variance K/TL. Model 2 uses k-epsilon
+horizontally and constant K vertically; model 3 uses isotropic k-epsilon.
+Up and Xp are not initialized here.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>field_set</strong> (<em>cylag.EulerianFieldSet</em>)</p></li>
+<li><p><strong>particle_set</strong> (<em>cylag.LagrangianParticleSet</em>)</p></li>
+<li><p><strong>parameters</strong> (<em>cylag.Parameters</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-cylag.lsm.random_utils">
+<span id="cylag-lsm-random-utils-module"></span><h2>cylag.lsm.random_utils module<a class="headerlink" href="#module-cylag.lsm.random_utils" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.lsm.random_utils.generate_random_pair">
+<span class="sig-prename descclassname"><span class="pre">cylag.lsm.random_utils.</span></span><span class="sig-name descname"><span class="pre">generate_random_pair</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.lsm.random_utils.generate_random_pair" title="Link to this definition">¶</a></dt>
+<dd><p>Generate a pair of random numbers for stochastic processes.
+- ranked from faster to lower raw computational performance.
+- Accuracy for Brownian increments: Ziggurat~Marsaglia &gt; Rectangular</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Two independent random numbers</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple of (double, double)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.lsm.random_utils.generate_random_single">
+<span class="sig-prename descclassname"><span class="pre">cylag.lsm.random_utils.</span></span><span class="sig-name descname"><span class="pre">generate_random_single</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.lsm.random_utils.generate_random_single" title="Link to this definition">¶</a></dt>
+<dd><p>Generate a single random number for stochastic processes.
+- ranked from faster to lower raw computational performance.
+- Accuracy for Brownian increments: Ziggurat~Marsaglia &gt; Rectangular</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A random number</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>double</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.lsm.random_utils.pcg32_advance">
+<span class="sig-prename descclassname"><span class="pre">cylag.lsm.random_utils.</span></span><span class="sig-name descname"><span class="pre">pcg32_advance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">delta</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.lsm.random_utils.pcg32_advance" title="Link to this definition">¶</a></dt>
+<dd><p>Jump the global PCG32 stream ahead by delta steps in O(log delta).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.lsm.random_utils.pcg32_seed">
+<span class="sig-prename descclassname"><span class="pre">cylag.lsm.random_utils.</span></span><span class="sig-name descname"><span class="pre">pcg32_seed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stream</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.lsm.random_utils.pcg32_seed" title="Link to this definition">¶</a></dt>
+<dd><p>Seed the global PCG32 state.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.lsm.random_utils.random_gaussian">
+<span class="sig-prename descclassname"><span class="pre">cylag.lsm.random_utils.</span></span><span class="sig-name descname"><span class="pre">random_gaussian</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cylag.lsm.random_utils.random_gaussian" title="Link to this definition">¶</a></dt>
+<dd><p>Generate a Gaussian random number using the Marsaglia polar method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Random number from a standard normal distribution (mean=0, std=1).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>double</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.lsm.random_utils.random_gaussian_pair">
+<span class="sig-prename descclassname"><span class="pre">cylag.lsm.random_utils.</span></span><span class="sig-name descname"><span class="pre">random_gaussian_pair</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cylag.lsm.random_utils.random_gaussian_pair" title="Link to this definition">¶</a></dt>
+<dd><p>Generate a pair of Gaussian random numbers using the Marsaglia polar method.</p>
+<p>(This is more efficient than calling random_gaussian() twice).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Two independent random numbers from a standard normal distribution.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple of (double, double)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.lsm.random_utils.random_gaussian_ziggurat">
+<span class="sig-prename descclassname"><span class="pre">cylag.lsm.random_utils.</span></span><span class="sig-name descname"><span class="pre">random_gaussian_ziggurat</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cylag.lsm.random_utils.random_gaussian_ziggurat" title="Link to this definition">¶</a></dt>
+<dd><p>Generate Gaussian random number using Ziggurat algorithm.</p>
+<p>Based on Marsaglia &amp; Tsang (2000) with 128 layers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Random number from standard normal distribution.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>double</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.lsm.random_utils.random_gaussian_ziggurat_pair">
+<span class="sig-prename descclassname"><span class="pre">cylag.lsm.random_utils.</span></span><span class="sig-name descname"><span class="pre">random_gaussian_ziggurat_pair</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cylag.lsm.random_utils.random_gaussian_ziggurat_pair" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.lsm.random_utils.random_uniform">
+<span class="sig-prename descclassname"><span class="pre">cylag.lsm.random_utils.</span></span><span class="sig-name descname"><span class="pre">random_uniform</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cylag.lsm.random_utils.random_uniform" title="Link to this definition">¶</a></dt>
+<dd><p>Generate a uniform random number in [0, 1).</p>
+<p>Uses global PCG32 state with better statistical properties than libc rand().</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Random number uniformly distributed between 0 and 1.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>double</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-cylag.lsm.update_state_lsm1">
+<span id="cylag-lsm-update-state-lsm1-module"></span><h2>cylag.lsm.update_state_lsm1 module<a class="headerlink" href="#module-cylag.lsm.update_state_lsm1" title="Link to this heading">¶</a></h2>
+</section>
+<section id="module-cylag.lsm.update_state_lsm2">
+<span id="cylag-lsm-update-state-lsm2-module"></span><h2>cylag.lsm.update_state_lsm2 module<a class="headerlink" href="#module-cylag.lsm.update_state_lsm2" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.lsm.update_state_lsm2.lsm2_direct_coefficients">
+<span class="sig-prename descclassname"><span class="pre">cylag.lsm.update_state_lsm2.</span></span><span class="sig-name descname"><span class="pre">lsm2_direct_coefficients</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.lsm.update_state_lsm2.lsm2_direct_coefficients" title="Link to this definition">¶</a></dt>
+<dd><p>Return frozen-step coefficients for one LSM-2 spatial component.</p>
+<p>The direct integrator freezes the scalar SDE over one time step:</p>
+<p>du = [a1*(U - u) + F]*dt + B*dW and dx = u*dt,</p>
+<p>where u is particle velocity, x is particle position, U is
+the interpolated mean-fluid velocity, a1 = 1/taup is the drag
+relaxation rate, F = A0*g + A2*af + A3*Fa is the constant
+acceleration/force contribution, B is the velocity-noise amplitude,
+and dW is a Wiener increment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><strong>beta</strong> (<em>double</em>) – exp(-a1*dt), the velocity transition coefficient.</p></li>
+<li><p><strong>D1</strong> (<em>double</em>) – dt*phi1(-a1*dt) = (1-beta)/a1. This multiplies the initial velocity
+in the position mean and the force in the velocity mean.</p></li>
+<li><p><strong>D2</strong> (<em>double</em>) – dt - D1 = a1*dt**2*phi2(-a1*dt). This multiplies U in the
+position mean.</p></li>
+<li><p><strong>force_x</strong> (<em>double</em>) – dt**2*phi2(-a1*dt) = D2/a1. This multiplies F in the position
+mean.</p></li>
+<li><p><strong>Q_uu, Q_xu, Q_xx</strong> (<em>double</em>) – Entries of the conditional covariance for unit noise amplitude
+B=1: velocity variance, position-velocity covariance, and
+position variance. The physical covariance is B**2 * Q.</p></li>
+<li><p><em>Here phi1(z) = (exp(z)-1)/z and phi2(z) = (exp(z)-1-z)/z**2,</em></p></li>
+<li><p><em>using their continuous limits at zero.</em></p></li>
+<li><p><strong>Thus no reciprocal damping is needed when a1=0</strong> (<em>the coefficients</em>)</p></li>
+<li><p><em>recover the ballistic integrated-Brownian-motion limit exactly.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-cylag.lsm.update_state_lsm3">
+<span id="cylag-lsm-update-state-lsm3-module"></span><h2>cylag.lsm.update_state_lsm3 module<a class="headerlink" href="#module-cylag.lsm.update_state_lsm3" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.lsm.update_state_lsm3.lsm3_direct_coefficients">
+<span class="sig-prename descclassname"><span class="pre">cylag.lsm.update_state_lsm3.</span></span><span class="sig-name descname"><span class="pre">lsm3_direct_coefficients</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tl</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_opt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.lsm.update_state_lsm3.lsm3_direct_coefficients" title="Link to this definition">¶</a></dt>
+<dd><p>Return frozen-step coefficients for one LSM-3 spatial component.</p>
+<p>The direct integrator freezes the simplified scalar LSM-3 SDE over one
+time step h = dt:</p>
+<p>ds = (U - s)/TL <a href="#id1"><span class="problematic" id="id2">*</span></a>dt + Bs*dW,
+du = [a1*(s - u) + F]*dt + a2*ds, and dx = u*dt,</p>
+<p>where s is fluid velocity seen by the particle, u is particle
+velocity, x is particle position, U is mean-fluid velocity,
+a1 = A1 = 1/taup is the particle drag-relaxation rate,
+a2 = A2 is the added-mass/pressure-gradient coefficient,
+tl = TL is the seen-fluid Lagrangian time scale,
+F = A0*g + A3*Fa is the constant acceleration/force term,
+Bs is the seen-fluid noise amplitude, and dW is a Wiener
+increment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><strong>transition</strong> (<em>ndarray, shape (3, 3)</em>) – Homogeneous transition Phi = exp(dt*A) in state order
+(Us, Up, Xp), where
+A = [[-1/tl, 0, 0], [a1 - a2/tl, -a1, 0], [0, 1, 0]].</p></li>
+<li><p><strong>covariance</strong> (<em>ndarray, shape (3, 3)</em>) – Conditional covariance in the same state order for unit noise
+amplitude Bs=1 (noise vector (1, a2, 0)). For physical Bs, use
+Bs**2 * covariance.</p></li>
+<li><p><strong>response</strong> (<em>ndarray, shape (3,)</em>) – Response to unit constant F applied to the Up equation: (0, D, E),
+with D = dt*phi1(-a1*dt) and E = dt**2*phi2(-a1*dt).</p></li>
+<li><p><em>Here phi1(z) = (exp(z)-1)/z and phi2(z) = (exp(z)-1-z)/z**2, using their</em></p></li>
+<li><p><em>continuous limits at zero. Inputs must be finite with a1 &gt;= 0, tl &gt; 0,</em></p></li>
+<li><p><em>and dt &gt;= 0. The returned transition and covariance remain continuous at</em></p></li>
+<li><p><em>a1=0.</em></p></li>
+<li><p><em>edge_opt selects the edge-case treatment (parameter lsm3_edge_opt)</em></p></li>
+<li><p><em>- 1 for normalized Taylor series,</em></p></li>
+<li><p><em>- 2 for closed forms with clipping of a1 = 1/tl and of the covariance.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-cylag.lsm.update_state_test">
+<span id="cylag-lsm-update-state-test-module"></span><h2>cylag.lsm.update_state_test module<a class="headerlink" href="#module-cylag.lsm.update_state_test" title="Link to this heading">¶</a></h2>
+</section>
+<section id="module-cylag.lsm">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-cylag.lsm" title="Link to this heading">¶</a></h2>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/logo_cylag_sb.png" alt="Logo of CYLAG"/>
+            </a></p>
+<h3><a href="../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../get_started.html">Quick installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models.html">Mathematical models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../algo.html">Particle-mesh implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../setup.html">Setup, inputs and practical informations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html">Gallery of examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../good_practices.html">Good practices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev.html">Developer guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="cylag.html">cylag package</a></li>
+</ul>
+</li>
+</ul>
+
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="cylag.io.html"
+                          title="previous chapter">cylag.io package</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="cylag.modules.html"
+                          title="next chapter">cylag.modules package</a></p>
+  </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="cylag.modules.html" title="cylag.modules package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="cylag.io.html" title="cylag.io package"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">CYLAG 0.9 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >cylag</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="cylag.html" >cylag package</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">cylag.lsm package</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2023, Fabien Souillé.
+    </div>
+  </body>
+</html>

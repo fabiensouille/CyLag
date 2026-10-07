@@ -1,0 +1,52 @@
+
+:orphan:
+
+.. _sphx_glr_auto_examples_vnv_07_settling_sg_execution_times:
+
+
+Computation times
+=================
+**00:06.310** total execution time for 6 files **from auto_examples/vnv_07_settling**:
+
+.. container::
+
+  .. raw:: html
+
+    <style scoped>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+    </style>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script type="text/javascript" class="init">
+    $(document).ready( function () {
+        $('table.sg-datatable').DataTable({order: [[1, 'desc']]});
+    } );
+    </script>
+
+  .. list-table::
+   :header-rows: 1
+   :class: table table-striped sg-datatable
+
+   * - Example
+     - Time
+     - Mem (MB)
+   * - :ref:`sphx_glr_auto_examples_vnv_07_settling_vnv_settling_comparison_hit.py` (``vnv_settling_comparison_hit.py``)
+     - 00:02.664
+     - 0.0
+   * - :ref:`sphx_glr_auto_examples_vnv_07_settling_vnv_settling_vs_analytic.py` (``vnv_settling_vs_analytic.py``)
+     - 00:01.747
+     - 0.0
+   * - :ref:`sphx_glr_auto_examples_vnv_07_settling_vnv_settling_comparison.py` (``vnv_settling_comparison.py``)
+     - 00:00.753
+     - 0.0
+   * - :ref:`sphx_glr_auto_examples_vnv_07_settling_vnv_drag_coefficient.py` (``vnv_drag_coefficient.py``)
+     - 00:00.558
+     - 0.0
+   * - :ref:`sphx_glr_auto_examples_vnv_07_settling_vnv_settling_lsm2.py` (``vnv_settling_lsm2.py``)
+     - 00:00.301
+     - 0.0
+   * - :ref:`sphx_glr_auto_examples_vnv_07_settling_vnv_settling_lsm1.py` (``vnv_settling_lsm1.py``)
+     - 00:00.287
+     - 0.0

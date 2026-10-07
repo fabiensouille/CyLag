@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Setup, inputs and practical informations &#8212; CYLAG 0.9 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/classic.css?v=51dfc302" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=427e2fde" />
+    
+    <script src="_static/documentation_options.js?v=049aceee"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Examples" href="auto_examples/index.html" />
+    <link rel="prev" title="Particle-mesh implementation" href="algo.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="auto_examples/index.html" title="Examples"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="algo.html" title="Particle-mesh implementation"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CYLAG 0.9 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Setup, inputs and practical informations</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="setup-inputs-and-practical-informations">
+<span id="setup"></span><h1>Setup, inputs and practical informations<a class="headerlink" href="#setup-inputs-and-practical-informations" title="Link to this heading">¶</a></h1>
+<section id="setup-philosophy">
+<h2>Setup philosophy<a class="headerlink" href="#setup-philosophy" title="Link to this heading">¶</a></h2>
+<p>CyLag is run using its Python API; to launch a simulation, one has to define a Python script in which cylag is imported and cylag objects are defined.
+Each object has its own inputs and parameters:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet</span></code>: requires either a 2D or 3D hydrodynamic result file or NumPy arrays containing the Eulerian fields,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet</span></code>: requires parameters related to the physical properties and initialization of particles,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Solver</span></code>: takes <code class="docutils literal notranslate"><span class="pre">EulerianFieldSet</span></code> and <code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet</span></code> as inputs, as well as a <code class="docutils literal notranslate"><span class="pre">parameters</span></code> dictionary containing the main solver options.</p></li>
+</ol>
+<figure class="align-center">
+<a class="reference internal image-reference" href="_images/cylag_archi.png"><img alt="_images/cylag_archi.png" src="_images/cylag_archi.png" style="width: 600px;" />
+</a>
+</figure>
+<p>The simulation script usually looks like this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">cylag</span>
+
+<span class="c1"># 1. define EulerianFieldSet from TELEMAC-2D results:</span>
+<span class="n">fset</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">EulerianFieldSet</span><span class="o">.</span><span class="n">from_telemac2d</span><span class="p">(</span>
+    <span class="s1">'telemac_result_2d.slf'</span><span class="p">,</span>
+    <span class="n">bnd_file</span><span class="o">=</span><span class="s1">'telemac_geo.cli'</span><span class="p">)</span>
+
+<span class="c1"># 2. define LagrangianParticleSet:</span>
+<span class="n">ini_position</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span>
+    <span class="p">[</span><span class="mf">5000.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">5000.</span><span class="p">,</span> <span class="mf">500.</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">1000.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">1000.</span><span class="p">,</span> <span class="mf">500.</span><span class="p">]])</span>
+
+<span class="n">pset</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">LagrangianParticleSet</span><span class="p">(</span>
+    <span class="n">position</span><span class="o">=</span><span class="n">ini_position</span><span class="p">,</span>
+    <span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">initial_pool_size</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="c1"># 3. define the solver:</span>
+<span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">'final_time'</span><span class="p">:</span> <span class="mf">43200.</span><span class="p">,</span>
+    <span class="s1">'time_step'</span><span class="p">:</span> <span class="mf">1.</span><span class="p">,</span>
+    <span class="s1">'model'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">'time_scheme'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">'listing'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s1">'listing_printout_period'</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="s1">'output_file'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s1">'output_printout_period'</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="s1">'output_file_format'</span><span class="p">:</span> <span class="s1">'txt'</span><span class="p">,</span>
+    <span class="s1">'output_file_name'</span><span class="p">:</span> <span class="s1">'particles_2d'</span><span class="p">,</span>
+    <span class="p">}</span>
+
+<span class="n">cylag_solver</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">Solver</span><span class="p">(</span><span class="n">fset</span><span class="p">,</span> <span class="n">pset</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span>
+
+<span class="c1"># 4. run CyLag</span>
+<span class="n">cylag_solver</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The distinction between 2D and 3D is made based on the <code class="docutils literal notranslate"><span class="pre">dim</span></code> parameter of the <code class="docutils literal notranslate"><span class="pre">EulerianFieldSet</span></code> and <code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet</span></code> objects.</p>
+</div>
+</section>
+<section id="overview-of-input-parameters">
+<h2>Overview of input parameters<a class="headerlink" href="#overview-of-input-parameters" title="Link to this heading">¶</a></h2>
+<p>In this section we provide a simple description of the main input parameters for each class.
+Users can also refer to CyLag’s API for a more complete description of inputs (types, array size, default values, etc.).</p>
+<section id="eulerianfieldset-inputs">
+<h3>1 - EulerianFieldSet inputs<a class="headerlink" href="#eulerianfieldset-inputs" title="Link to this heading">¶</a></h3>
+<p>There are two ways to define the <code class="docutils literal notranslate"><span class="pre">EulerianFieldSet</span></code> object.
+The first one is to use the built in methods, in which case input parameters are automattically filled with imported values:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.from_telemac2d()</span></code>,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.from_telemac3d()</span></code> or</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">EulerianFieldSet.from_hdf5()</span></code>.</p></li>
+</ul>
+<p>When initialize from TELEMAC, the main informations to provide are a result file (in .slf format) and a boundary condition file (in .cli format). Also optional fields can be added with a list name provided that they are save in the corresponding result file. An example is given here after:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">'data'</span><span class="p">,</span> <span class="s1">'r2d_meander.slf'</span><span class="p">)</span>
+<span class="n">bnd_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">'data'</span><span class="p">,</span> <span class="s1">'geo_meander.cli'</span><span class="p">)</span>
+
+<span class="n">fset</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">EulerianFieldSet</span><span class="o">.</span><span class="n">from_telemac2d</span><span class="p">(</span>
+    <span class="n">file_name</span><span class="p">,</span>
+    <span class="n">bnd_file</span><span class="o">=</span><span class="n">bnd_file</span><span class="p">,</span>
+    <span class="n">optional_fields</span><span class="o">=</span><span class="p">[</span><span class="s1">'TURBULENT ENERG.'</span><span class="p">,</span> <span class="s1">'DISSIPATION'</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Make sure the optional fields listed are saved in the <code class="docutils literal notranslate"><span class="pre">.slf</span></code> result file.</p>
+</div>
+<p>The second option is to pass inputs directly to <code class="docutils literal notranslate"><span class="pre">EulerianFieldSet</span></code>, which are as follows:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">triangular_mesh</span></code> : Triangular mesh containing geometry and connectivity</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dim</span></code> : Dimension of the mesh and fields (2 or 3, default: 2)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nlayers</span></code> : Number of layers for 3D mesh (default: 1)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">times</span></code> : Times at which fields were recorded</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">elevation</span></code> : Elevation field for each point of the mesh</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">velocity_x</span></code> : X-coordinate of the velocity field</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">velocity_y</span></code> : Y-coordinate of the velocity field</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">velocity_z</span></code> : Z-coordinate of the velocity field (3D only)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">opt_fields</span></code> : Optional fields (default: None)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">opt_fields_names</span></code> : Names of the optional fields (default: None)</p></li>
+</ul>
+</section>
+<section id="lagrangianparticleset-inputs">
+<h3>2 - LagrangianParticleSet inputs<a class="headerlink" href="#lagrangianparticleset-inputs" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">position</span></code> : initial particle coordinates x,y,z (default: None)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">velocity</span></code> : initial particle velocity up,vp,wp (default: None)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fluid_velocity_seen</span></code> : initial fluid velocity seen us,vs,ws (default: None)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dim</span></code> : dimension 2 or 3 (default: 2)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">initial_pool_size</span></code> : initial size of particle pool (default: size(position))</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">min_pool_size_update</span></code> : minimum size increment for pool expansion (default: 1000)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">particle_density</span></code> : particle density (default: 1000.)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">particle_diameter</span></code> : mean particle diameter (default: 0.01)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">particle_diameter_distribution</span></code> : particle diameter distribution (default: None)</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">None</span></code>: constant diameter, monodisperse</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">['uniform',</span> <span class="pre">delta]</span></code>: U(<code class="docutils literal notranslate"><span class="pre">particle_diameter-delta</span></code>, <code class="docutils literal notranslate"><span class="pre">particle_diameter+delta</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">['normal',</span> <span class="pre">std]</span></code>: N(<code class="docutils literal notranslate"><span class="pre">particle_diameter</span></code>, <code class="docutils literal notranslate"><span class="pre">std</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">['lognormal',</span> <span class="pre">gsd]</span></code>: LN(<code class="docutils literal notranslate"><span class="pre">particle_diameter</span></code>, <code class="docutils literal notranslate"><span class="pre">gsd</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">['weibull',</span> <span class="pre">shape]</span></code>: <code class="docutils literal notranslate"><span class="pre">scale=particle_diameter/tgamma(1</span> <span class="pre">+</span> <span class="pre">1/shape)</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">drag_coefficient_model</span></code> : model for the drag coefficient, LSM-2 only (default: 1)</p>
+<ul>
+<li><p>0: Constant drag model,</p></li>
+<li><p>1: Schiller et Nauman (1935),</p></li>
+<li><p>2: Almedeij (2008).</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">drag_coefficient</span></code> : constant drag coefficient for drag_coefficient_model=0, LSM-2 only (default: 0.44)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">added_mass_force</span></code> : activate added mass force, LSM-2 only (default: False)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">added_mass_coef</span></code> : added mass coefficient, LSM-2 only (default: 0.5)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">buoyancy_velocity_model</span></code>: add settling velocity, LSM-1 and pset.dim=3 only (default: 0)</p>
+<ul>
+<li><p>0 : Constant buoyancy velocity;</p></li>
+<li><p>1 : Analytical solution.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">buoyancy_velocity</span></code>: settling velocity in m/s, LSM-1 only (default: 0.0)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">compute_depth</span></code> : compute particle depth to free surface, only for <code class="docutils literal notranslate"><span class="pre">pset.dim=3</span></code> (default: False)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_stranded</span></code> : maximum number of stranded particles (default: <code class="docutils literal notranslate"><span class="pre">initial_pool_size</span></code>)</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>When <code class="docutils literal notranslate"><span class="pre">position</span></code> argument is given, the <code class="docutils literal notranslate"><span class="pre">initial_pool_size</span></code> is automatically set to the size of <code class="docutils literal notranslate"><span class="pre">position</span></code>
+unless <code class="docutils literal notranslate"><span class="pre">initial_pool_size</span></code> is provided by the user.</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">position</span></code> is not given and sources are used to add particles during the simulation,
+it is important to initialize <code class="docutils literal notranslate"><span class="pre">initial_pool_size</span></code> with a rough estimate
+of the number of particles that will enter the domain with sources.
+The <code class="docutils literal notranslate"><span class="pre">min_pool_size_update</span></code> corresponds to the size of the increase in pool
+size if the number of particles reach the <code class="docutils literal notranslate"><span class="pre">initial_pool_size</span></code> value during the computation.
+In that case, CyLag reallocates all particle attributes to match the new number of particles.
+This allocation change impacts performance, so it is recommended to fix
+a value that is not too low for <code class="docutils literal notranslate"><span class="pre">min_pool_size_update</span></code>.</p></li>
+</ul>
+</div>
+</section>
+<section id="solver-inputs">
+<h3>3 - Solver inputs<a class="headerlink" href="#solver-inputs" title="Link to this heading">¶</a></h3>
+<p>There are two types of solvers in CyLag:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Solver</span></code> : for sequential usage,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SolverParallel</span></code> for parallelization with MPI (particle are distributed among processes).</p></li>
+</ul>
+<p>Both classes take the following arguments:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">field_set</span></code> : Eulerian field set containing velocity and optional fields</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">particle_set</span></code> : Lagrangian particle set</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">parameters</span></code> : Model parameters (default: defined in cylag_dico.py)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sources</span></code> : List of particle sources (default: None)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">control_sections</span></code> : List of control sections for statistics (default: None)</p></li>
+</ul>
+</section>
+<section id="parameters-dictionary">
+<h3>4 - Parameters dictionary<a class="headerlink" href="#parameters-dictionary" title="Link to this heading">¶</a></h3>
+<p>Complete list of available parameters in <code class="docutils literal notranslate"><span class="pre">cylag_dico.py</span></code>:</p>
+<p><strong>Time Parameters</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">initial_time</span></code>: simulation start time (default: 0.0)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">final_time</span></code>: simulation end time (default: 3600.0)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">time_step</span></code>: time step size (default: 1.)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">frozen_eulerian_fields</span></code>: use first time step of EulerianFieldSet for steady-state flow (default: False)</p></li>
+</ul>
+<p><strong>LSM Parameters</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">model</span></code>: Lagrangian Stochastic Model (default: 1)</p>
+<ul>
+<li><p>0 : testing kernel;</p></li>
+<li><p>1 : LSM1;</p></li>
+<li><p>2 : LSM2;</p></li>
+<li><p>3 : LSM3.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">time_scheme</span></code>: integration scheme (default: depends on model)</p>
+<ul>
+<li><p>1 : Euler or Euler-Maruyama (default for LSM-1 with diffusion);</p></li>
+<li><p>2 : Runge-Kutta 2;</p></li>
+<li><p>4 : Runge-Kutta 4 (default for LSM-1 without diffusion);</p></li>
+<li><p>5 : Direct integration (default for LSM-2 and 3);</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">particle_velocity_init</span></code>: type of initialization for Up (default: 1)</p>
+<ul>
+<li><p>0 : user defined (zero if not specified),</p></li>
+<li><p>1 : interpolated from mean fluid velocity;</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rng_method</span></code>: random number generator method (default: 2)</p>
+<ul>
+<li><p>1 : rectangular approximation;</p></li>
+<li><p>2 : Ziggurat method (default);</p></li>
+<li><p>3 : Marsaglia’s polar method.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lsm3_edge_opt</span></code>: edge-case treatment of the LSM-3 direct integrator (<code class="docutils literal notranslate"><span class="pre">time_scheme=5</span></code>) (default: 2)</p>
+<ul>
+<li><p>1 : normalized Taylor series (accurate for tiny steps and <img class="math" src="_images/math/8c908b29a94ecabe343de8ff36944a0e0449354a.png" alt="\mathcal{A}_1 = 1/T_L"/>);</p></li>
+<li><p>2 : closed-form coefficients with clipping: the degenerate denominator <img class="math" src="_images/math/caec76c51e5ade9508203b20c5dae4bc4d306ee0.png" alt="\mathcal{A}_1 - 1/T_L"/> is clipped,
+and the covariance is clipped to remain positive semi-definite instead of raising an error.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Physical Parameters</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">water_density</span></code>: density of water (default: 1000.)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">diffusion_model</span></code>: main diffusion model (default: 0)</p>
+<ul>
+<li><p>0 : no diffusion,</p></li>
+<li><p>1 : constant diffusion coefficient,</p></li>
+<li><p>2 : diffusion coefficient from <img class="math" src="_images/math/c4cc41a91468f6c44c8c0d60116ab1f375b0415c.png" alt="k-\varepsilon"/></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">horizontal_diffusivity</span></code>: horizontal diffusivity in m²/s for <code class="docutils literal notranslate"><span class="pre">diffusion_model=1</span></code> (default: 0.0)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vertical_diffusivity</span></code>: vertical diffusivity in m²/s (default: 0.0)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">schmidt_number</span></code>: Schmidt number for turbulent <code class="docutils literal notranslate"><span class="pre">diffusion_model=2</span></code> and <code class="docutils literal notranslate"><span class="pre">3</span></code> (default: 1.0)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">diffusion_lsm2_option</span></code>: option for diffusion coefficient in LSM-2 (default: 1)</p>
+<ul>
+<li><p>0 : <img class="math" src="_images/math/df30b6bf59a38694ffbbe02c24945f0e13163112.png" alt="B_i"/> provided;</p></li>
+<li><p>1 : <img class="math" src="_images/math/d4290704da5100a766d9be9a917feb5413b66a53.png" alt="K_i"/> provided.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Boundary Conditions</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">boundary_conditions</span></code>: enable BC handling (default: True)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">boundary_conditions_type</span></code>: type of BC handling (default: 0)</p>
+<ul>
+<li><p>1 : specular rebound;</p></li>
+<li><p>2 : diffuse rebound.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">boundary_conditions_debug</span></code>: verbose BC bounces for debug (default: False)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max_wall_rebounds</span></code>: maximum wall bounces (default: 4)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rebound_damping_coef</span></code>: damping on rebound (default: 0.5)</p>
+<ul>
+<li><p>0.0 : no kinetic energy loss;</p></li>
+<li><p>1.0 : total kinetic energy loss.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">wall_roughness_angle</span></code>: standard deviation (in degree) of the random perturbation
+applied to the local wall normal to model diffuse rebounds (default: 15.0).
+low value corresponds to small roughness. Maximum value is 85 degrees.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stranding_probability</span></code>: stranding probability (default: 0.)</p>
+<ul>
+<li><p>0.0 : no stranding;</p></li>
+<li><p>1.0 : always stranding.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>I/O Parameters</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">listing</span></code>: print progress (default: False)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">listing_printout_period</span></code>: iterations between prints (default: 10)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">output_rep</span></code>: name of the output repertory (default: “particles”)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">output_file</span></code>: write particle positions (default: False)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">output_printout_period</span></code>: iterations between outputs (default: 10)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">output_file_format</span></code>: “vtk”, “txt” or “all” (“all” save both file format, default: “txt”)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">output_file_name</span></code>: name of the output file (default: “particles”)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bnd_statistics</span></code>: track boundary crossings (default: False)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bnd_statistics_file_name</span></code>: base name of the boundary statistics files (default: “bnd_stats”),</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">control_sections_file_name</span></code>: base name of the control sections files (default: “cs_stats”),</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stranding_output</span></code>: activate output file for stranded particles (default: False),</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stranding_output_file_name</span></code>: name of the output file for stranded particle (default: “stranded_particles”),</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>See the <a class="reference internal" href="good_practices.html#good-practices"><span class="std std-ref">Good practices</span></a> for recommendations on how to set main input parameters for a simulation.</p>
+</div>
+</section>
+</section>
+<section id="adding-particles-to-a-simulation">
+<h2>Adding particles to a simulation<a class="headerlink" href="#adding-particles-to-a-simulation" title="Link to this heading">¶</a></h2>
+<p>Adding particles to a simulation can be done in different ways:</p>
+<ul class="simple">
+<li><p>Add directly in initialization of <code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet</span></code>;</p></li>
+<li><p>Add via <code class="docutils literal notranslate"><span class="pre">ParticleSource</span></code>;</p></li>
+<li><p>Add via <code class="docutils literal notranslate"><span class="pre">ParticleSourceFromField</span></code>.</p></li>
+</ul>
+<p>Note that both <code class="docutils literal notranslate"><span class="pre">ParticleSource</span></code> and <code class="docutils literal notranslate"><span class="pre">ParticleSourceFromField</span></code> use a time <code class="docutils literal notranslate"><span class="pre">Scheduler</span></code>
+object to trigger the addition of particles in the domain.
+The time scheduler can be defined as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">source_scheduler</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">schedules</span><span class="p">(</span><span class="n">time_delta</span><span class="o">=</span><span class="mf">5.</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Several options are available to schedule the addition of particles:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ini_time</span></code> (float) : Time at which the scheduler is initilised.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">time_delta</span></code> (float) : Time delta between two tasks.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">iteration_delta</span></code> (int) : Number of iterations between two tasks.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">times</span></code> (list (float)) : Task times.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">iterations</span></code> (list (int)) : Task time iterations.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">count</span></code> (int) : Number of tasks, equally time-separated.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">always</span></code> (bool) : Task is triggered at each time iteration.</p></li>
+</ul>
+<section id="add-as-input-of-lagrangianparticleset">
+<h3>1 - Add as input of <code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet</span></code><a class="headerlink" href="#add-as-input-of-lagrangianparticleset" title="Link to this heading">¶</a></h3>
+<p>The easiest way to define particles is to add them at the beginning of a simulation via the
+<code class="docutils literal notranslate"><span class="pre">position</span></code> argument of the <code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet</span></code> class, such as:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ini_position</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span>
+    <span class="p">[</span><span class="mf">5000.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">5000.</span><span class="p">,</span> <span class="mf">500.</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">1000.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">1000.</span><span class="p">,</span> <span class="mf">500.</span><span class="p">]])</span>
+
+<span class="n">pset</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">LagrangianParticleSet</span><span class="p">(</span>
+    <span class="n">position</span><span class="o">=</span><span class="n">ini_position</span><span class="p">,</span>
+    <span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">initial_pool_size</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Users can also define the initial particle velocity and the fluid velocity seen (for LSM-2 and LSM-3)
+via the <code class="docutils literal notranslate"><span class="pre">velocity</span></code> and <code class="docutils literal notranslate"><span class="pre">fluid_velocity_seen</span></code> parameters.
+These velocities can also be initialized from the interpolation of the mean fluid velocity if <code class="docutils literal notranslate"><span class="pre">param:particle_velocity_init=1</span></code>.
+Note that if <code class="docutils literal notranslate"><span class="pre">particle_velocity_init=0</span></code> and the <code class="docutils literal notranslate"><span class="pre">velocity</span></code> parameter is not specified, it is initialized to zero.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It is not recommended to set initial particle velocity to zero with LSM-2 and LSM-3.</p>
+</div>
+</section>
+<section id="add-via-particlesource">
+<h3>2 - Add via <code class="docutils literal notranslate"><span class="pre">ParticleSource</span></code><a class="headerlink" href="#add-via-particlesource" title="Link to this heading">¶</a></h3>
+<p>When using the <code class="docutils literal notranslate"><span class="pre">ParticleSource</span></code> class, users need to specify a polygon in which to add particles,
+as well as a time scheduler:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">source_poly</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">5.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">6.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">6.1</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">5.1</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">]])</span>
+<span class="n">source_scheduler</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">schedules</span><span class="p">(</span><span class="n">time_delta</span><span class="o">=</span><span class="mf">5.</span><span class="p">)</span>
+<span class="n">source</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">ParticleSource</span><span class="p">(</span>
+    <span class="n">source_scheduler</span><span class="p">,</span>
+    <span class="n">source_poly</span><span class="p">,</span>
+    <span class="n">xy_method</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">xy_npart</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The main parameters of the <code class="docutils literal notranslate"><span class="pre">ParticleSource</span></code> are as follows:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">scheduler</span></code>: class used to trigger the addition of particles</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">poly</span></code>: contains the x and y positions of the polygon shape</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">xy_method</span></code>: method of initialization on the horizontal plane (default: 0)</p>
+<ul>
+<li><p>0 : number of particles along x and y axis;</p></li>
+<li><p>1 : total number of particles;</p></li>
+<li><p>2 : number of particles/m²)</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">grid_res</span></code>: number of points on the x, y, and z axes</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">xy_npart</span></code>: number of particles in the polygon</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">xy_density</span></code>: number of particles per unit area in the polygon</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">z_method</span></code>: method of initialization on the vertical axis (default: 0)</p>
+<ul>
+<li><p>0 : number of particles along z axis;</p></li>
+<li><p>1 : number of particles layers;</p></li>
+<li><p>2: number of particles/m.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">z_npart</span></code>: number of particles along the vertical axis</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">z_density</span></code>: number of particles per unit area along the vertical axis</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">zmin</span></code>: minimum z value for vertical initialization</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">zmax</span></code>: maximum z value for vertical initialization</p></li>
+</ul>
+</section>
+<section id="add-via-particlesourcefromfield">
+<h3>3 - Add via <code class="docutils literal notranslate"><span class="pre">ParticleSourceFromField</span></code><a class="headerlink" href="#add-via-particlesourcefromfield" title="Link to this heading">¶</a></h3>
+<p>The idea of <code class="docutils literal notranslate"><span class="pre">ParticleSourceFromField</span></code> is to trigger the release of particles when a specific condition
+is met on a field of the <code class="docutils literal notranslate"><span class="pre">EulerianFieldSet</span></code> object. For example, particles can be added when a field reaches a given threshold.
+The Eulerian fields used are specified with their ID (the number in the list of optional fields); two fields are required:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">field_id_criteria</span></code>: field used to compute the criterion;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">field_id_density</span></code>: field used for density when adding particles.</p></li>
+</ul>
+<p>When using the <code class="docutils literal notranslate"><span class="pre">ParticleSourceFromField</span></code> class, two options are available: <code class="docutils literal notranslate"><span class="pre">val</span></code> (value) and <code class="docutils literal notranslate"><span class="pre">var</span></code> (variation) for adding particles:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">val</span></code>: the value of the field is compared to a <code class="docutils literal notranslate"><span class="pre">threshold</span></code>;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">var</span></code>: the value of the field variation (<code class="docutils literal notranslate"><span class="pre">field[n+1]-field[n]</span></code>) is compared to a <code class="docutils literal notranslate"><span class="pre">threshold</span></code>.</p></li>
+</ul>
+<p>The following comparison options are available (see the <code class="docutils literal notranslate"><span class="pre">criteria</span></code> parameter):</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">eq</span></code> (==);</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">neq</span></code> (!=);</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geq</span></code> (&gt;=);</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">leq</span></code> (&lt;=);</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gt</span></code> (&gt;);</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lt</span></code> (&lt;).</p></li>
+</ul>
+<p>Finally, users need to provide the <code class="docutils literal notranslate"><span class="pre">virtual_mass</span></code> associated with particles in kg to control the amount of particles added to the domain (default: 1.):</p>
+<ul class="simple">
+<li><p>If <code class="docutils literal notranslate"><span class="pre">virtual_mass</span> <span class="pre">==</span> <span class="pre">1.</span></code>: <code class="docutils literal notranslate"><span class="pre">npart</span> <span class="pre">=</span> <span class="pre">density*cell_area</span></code>;</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">virtual_mass</span> <span class="pre">!=</span> <span class="pre">1.</span></code>: <code class="docutils literal notranslate"><span class="pre">npart</span> <span class="pre">=</span> <span class="pre">density*cell_area/virtual_mass</span></code>.</p></li>
+</ul>
+<p>An example is given below:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">ParticleSourceFromField</span><span class="p">(</span>
+    <span class="n">scheduler</span><span class="o">=</span><span class="n">cylag</span><span class="o">.</span><span class="n">schedules</span><span class="p">(</span><span class="n">always</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="n">field_id_criteria</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+    <span class="n">field_id_density</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+    <span class="n">criteria</span><span class="o">=</span><span class="s1">'var_neq'</span><span class="p">,</span>
+    <span class="n">threshold</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span>
+    <span class="n">virtual_mass</span><span class="o">=</span><span class="mf">20.</span><span class="p">,</span>
+    <span class="n">single_release</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="saving-particles">
+<h2>Saving particles<a class="headerlink" href="#saving-particles" title="Link to this heading">¶</a></h2>
+<p>Two output formats are available in CyLag:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">.vtk</span></code> format: saves a list of files that can be loaded with ParaView;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.txt</span></code> format: saves a single <code class="docutils literal notranslate"><span class="pre">particles.txt</span></code> file that can be loaded with the <code class="docutils literal notranslate"><span class="pre">ParticlesIO</span></code> class of CyLag.</p></li>
+</ul>
+</section>
+<section id="post-processing-particle-files">
+<h2>Post-processing particle files<a class="headerlink" href="#post-processing-particle-files" title="Link to this heading">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">ParticlesIO</span></code> class included in CyLag allows quick and easy post-processing of particle files.
+To load a particle file, simply use:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">part</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">ParticlesIO</span><span class="o">.</span><span class="n">from_cylag_txt</span><span class="p">(</span><span class="s1">'particles/particles_2d.txt'</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The positions can then be retrieved for any record (<code class="docutils literal notranslate"><span class="pre">rec</span></code>):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">time</span> <span class="o">=</span> <span class="n">part</span><span class="o">.</span><span class="n">times</span><span class="p">[</span><span class="n">rec</span><span class="p">]</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">part</span><span class="o">.</span><span class="n">xp</span><span class="p">[</span><span class="n">rec</span><span class="p">][:]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">part</span><span class="o">.</span><span class="n">yp</span><span class="p">[</span><span class="n">rec</span><span class="p">][:]</span>
+</pre></div>
+</div>
+<p>This class also allows simple computation of trajectories, based on all saved positions:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">traj</span> <span class="o">=</span> <span class="n">part</span><span class="o">.</span><span class="n">get_trajectories</span><span class="p">(</span><span class="n">traj_list</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/logo_cylag_sb.png" alt="Logo of CYLAG"/>
+            </a></p>
+<h3><a href="index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="get_started.html">Quick installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Mathematical models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="algo.html">Particle-mesh implementation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Setup, inputs and practical informations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#setup-philosophy">Setup philosophy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#overview-of-input-parameters">Overview of input parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#adding-particles-to-a-simulation">Adding particles to a simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#saving-particles">Saving particles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#post-processing-particle-files">Post-processing particle files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html">Gallery of examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="good_practices.html">Good practices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev.html">Developer guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/modules.html">API</a></li>
+</ul>
+
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="algo.html"
+                          title="previous chapter">Particle-mesh implementation</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="auto_examples/index.html"
+                          title="next chapter">Examples</a></p>
+  </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="auto_examples/index.html" title="Examples"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="algo.html" title="Particle-mesh implementation"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CYLAG 0.9 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Setup, inputs and practical informations</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2023, Fabien Souillé.
+    </div>
+  </body>
+</html>

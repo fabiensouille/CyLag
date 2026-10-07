@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Stochastic diffusion in 1D &#8212; CYLAG 0.9 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/classic.css?v=51dfc302" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=427e2fde" />
+    
+    <script src="../../_static/documentation_options.js?v=049aceee"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Homogeneous isotropic turbulence with the LSM-2" href="vnv_diffusion_2d_lsm2.html" />
+    <link rel="prev" title="Isotropic diffusion" href="index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="vnv_diffusion_2d_lsm2.html" title="Homogeneous isotropic turbulence with the LSM-2"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Isotropic diffusion"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CYLAG 0.9 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Examples</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">Isotropic diffusion</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Stochastic diffusion in 1D</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p><a class="reference internal" href="#sphx-glr-download-auto-examples-vnv-02-isotropic-diffusion-vnv-diffusion-1d-py"><span class="std std-ref">Go to the end</span></a>
+to download the full example code.</p>
+</div>
+<section class="sphx-glr-example-title" id="stochastic-diffusion-in-1d">
+<span id="sphx-glr-auto-examples-vnv-02-isotropic-diffusion-vnv-diffusion-1d-py"></span><h1>Stochastic diffusion in 1D<a class="headerlink" href="#stochastic-diffusion-in-1d" title="Link to this heading">¶</a></h1>
+<p>This example shows the basic principle of stochastic diffusion in 1D.
+In this example, we :</p>
+<ul class="simple">
+<li><p>solve 1D diffusion equation with finite differences for reference,</p></li>
+<li><p>solve the stochastic diffusion in 1D with a Gaussian initial condition,</p></li>
+<li><p>plot trajectories of particles,</p></li>
+<li><p>compare results to the reference by computing estimates of density with two methods:</p>
+<ul>
+<li><p>Kernel Smoothing (KS)</p></li>
+<li><p>Nearest Grid Point (NGP)</p></li>
+</ul>
+</li>
+</ul>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">cylag</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pylab</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s2">"../../examples/vnv_02_isotropic_diffusion"</span><span class="p">))</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">vnv_02_utils.finite_differences_diffusion_1D_2D</span><span class="w"> </span><span class="kn">import</span> <span class="n">solve_heat_equation_1d</span>
+
+<span class="c1">#sphinx_gallery_thumbnail_number = 3</span>
+</pre></div>
+</div>
+<section id="define-function-to-model-stochastic-diffusion-in-1d">
+<h2>Define function to model stochastic diffusion in 1D<a class="headerlink" href="#define-function-to-model-stochastic-diffusion-in-1d" title="Link to this heading">¶</a></h2>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">Stochastic_diffusion_1D</span><span class="p">(</span><span class="n">nt</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">nu</span><span class="p">,</span> <span class="n">Z0</span><span class="o">=</span><span class="mf">0.</span><span class="p">):</span>
+    <span class="c1"># Weiner increments</span>
+    <span class="n">dW</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">dt</span><span class="p">),</span> <span class="n">nt</span><span class="p">)</span>
+    <span class="c1"># Diffusion</span>
+    <span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">nu</span><span class="p">)</span>
+    <span class="n">dW</span> <span class="o">=</span> <span class="n">dW</span><span class="o">*</span><span class="n">B</span>
+    <span class="c1"># Solution</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">dW</span><span class="p">)</span>
+    <span class="n">Z</span> <span class="o">+=</span> <span class="n">Z0</span>
+    <span class="k">return</span> <span class="n">Z</span>
+</pre></div>
+</div>
+</section>
+<section id="solve-diffusion-equation-with-finite-difference-scheme-for-comparison">
+<h2>Solve diffusion equation with Finite Difference scheme for comparison<a class="headerlink" href="#solve-diffusion-equation-with-finite-difference-scheme-for-comparison" title="Link to this heading">¶</a></h2>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">u0</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">u0</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">2.</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mf">5.</span><span class="p">)</span><span class="o">**</span><span class="mf">2.</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">u0</span>
+
+<span class="n">times</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">u</span> <span class="o">=</span> <span class="n">solve_heat_equation_1d</span><span class="p">(</span>
+    <span class="n">domain</span><span class="o">=</span><span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">10.</span><span class="p">],</span>
+    <span class="n">dx</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
+    <span class="n">tf</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span>
+    <span class="n">CFL</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
+    <span class="n">nu</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span>
+    <span class="n">u0</span><span class="o">=</span><span class="n">u0</span><span class="p">,</span>
+    <span class="n">bnd_type</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Plot result</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">4.5</span><span class="p">,</span> <span class="mf">4.</span><span class="p">))</span>
+<span class="n">cylag</span><span class="o">.</span><span class="n">set_rcparams</span><span class="p">()</span>
+<span class="n">color</span><span class="p">,</span><span class="n">_</span><span class="p">,</span><span class="n">_</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">get_default_color_palette</span><span class="p">()</span>
+
+<span class="n">List_of_time_to_plot</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">350</span><span class="p">,</span> <span class="mi">800</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">List_of_time_to_plot</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"times plotted = "</span><span class="p">,</span> <span class="n">times</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">List_of_time_to_plot</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">u</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:],</span> <span class="n">c</span><span class="o">=</span><span class="n">color</span><span class="p">[</span><span class="n">idx</span><span class="o">%</span><span class="nb">len</span><span class="p">(</span><span class="n">color</span><span class="p">)],</span> <span class="n">label</span><span class="o">=</span><span class="s1">'$t=</span><span class="si">{:.2f}</span><span class="s1">$s'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">times</span><span class="p">[</span><span class="n">k</span><span class="p">]))</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"$x$ (m)"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"$</span><span class="se">\\</span><span class="s2">rho_</span><span class="si">{FD}</span><span class="s2">(t,x)$"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mf">0.</span><span class="p">,</span><span class="mf">1.</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">'figs/diffusion1d_fd.png'</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">"png"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<img src="../../_images/sphx_glr_vnv_diffusion_1d_001.png" srcset="../../_images/sphx_glr_vnv_diffusion_1d_001.png" alt="vnv diffusion 1d" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>times plotted =  0.0
+times plotted =  0.05937500000000001
+times plotted =  0.17812500000000003
+times plotted =  0.4156250000000001
+times plotted =  0.9500000000000002
+</pre></div>
+</div>
+</section>
+<section id="initialization-particles-positions-based-cdf-fucntion-of-c0">
+<h2>Initialization particles positions based CDF fucntion of C0<a class="headerlink" href="#initialization-particles-positions-based-cdf-fucntion-of-c0" title="Link to this heading">¶</a></h2>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">npart</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">sampling</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">xp0</span><span class="p">,</span> <span class="n">massp</span><span class="p">,</span> <span class="n">cdf</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">initialize_particles_from_pdf_1D</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">u</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:],</span> <span class="n">npart</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">,</span> <span class="n">sampling</span><span class="o">=</span><span class="n">sampling</span><span class="p">)</span>
+
+<span class="c1"># integral of the initial condition</span>
+<span class="n">pdf0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">cylag</span><span class="o">.</span><span class="n">compute_density_1D_NGP</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">xp0</span><span class="p">,</span> <span class="n">massp</span><span class="p">))</span>
+<span class="n">pdf2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">cylag</span><span class="o">.</span><span class="n">compute_density_1D_KS</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">xp0</span><span class="p">,</span> <span class="n">massp</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">kernel</span><span class="o">=</span><span class="mi">5</span><span class="p">))</span>
+
+<span class="c1"># plot initial condition</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">4.5</span><span class="p">,</span> <span class="mf">4.</span><span class="p">))</span>
+<span class="c1">#ax.plot(x, cdf, label='CDF of $p$', c=color[1])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xp0</span><span class="p">,</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">npart</span><span class="p">),</span> <span class="n">c</span><span class="o">=</span><span class="s2">"k"</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">'o'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"$x_p$"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">pdf0</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'NGP'</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">color</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">pdf2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'GKS'</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">color</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.8</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">u</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:],</span> <span class="n">label</span><span class="o">=</span><span class="s1">'$</span><span class="se">\\</span><span class="s1">rho_0$'</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">color</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ls</span><span class="o">=</span><span class="s1">'--'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"$x$"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"$</span><span class="se">\\</span><span class="s2">rho(0, x)$"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mf">0.</span><span class="p">,</span><span class="mf">1.2</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">'figs/diffusion1d_initial_npart</span><span class="si">{}</span><span class="s1">_s</span><span class="si">{}</span><span class="s1">.png'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">npart</span><span class="p">,</span> <span class="n">sampling</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">"png"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<img src="../../_images/sphx_glr_vnv_diffusion_1d_002.png" srcset="../../_images/sphx_glr_vnv_diffusion_1d_002.png" alt="vnv diffusion 1d" class = "sphx-glr-single-img"/></section>
+<section id="computing-particle-trajetories">
+<h2>Computing particle trajetories<a class="headerlink" href="#computing-particle-trajetories" title="Link to this heading">¶</a></h2>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">nt</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">times</span><span class="p">)</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="n">times</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">times</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">xp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">nt</span><span class="p">,</span> <span class="n">npart</span><span class="p">))</span>
+
+<span class="c1"># compute trajectories</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">npart</span><span class="p">):</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">xp</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Stochastic_diffusion_1D</span><span class="p">(</span><span class="n">nt</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="n">dt</span><span class="p">,</span> <span class="n">nu</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">Z0</span><span class="o">=</span><span class="n">xp0</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>plot trajectories:</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">cylag</span><span class="o">.</span><span class="n">set_rcparams</span><span class="p">()</span>
+<span class="n">color</span><span class="p">,</span><span class="n">_</span><span class="p">,</span><span class="n">_</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">get_default_color_palette</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">npart</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">xp</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">color</span><span class="p">[</span><span class="n">i</span><span class="o">%</span><span class="nb">len</span><span class="p">(</span><span class="n">color</span><span class="p">)],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"$t$ (s)"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"$x_p(t)$"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
+<span class="c1">#plt.legend()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">'figs/diffusion1d_trajectories_npart</span><span class="si">{}</span><span class="s1">.png'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">npart</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">"png"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<img src="../../_images/sphx_glr_vnv_diffusion_1d_003.png" srcset="../../_images/sphx_glr_vnv_diffusion_1d_003.png" alt="vnv diffusion 1d" class = "sphx-glr-single-img"/></section>
+<section id="compute-density-with-kernel-smoothing-method">
+<h2>Compute density with kernel smoothing method<a class="headerlink" href="#compute-density-with-kernel-smoothing-method" title="Link to this heading">¶</a></h2>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">pdf2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">cylag</span><span class="o">.</span><span class="n">compute_density_1D_KS</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">xp</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:],</span> <span class="n">massp</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">kernel</span><span class="o">=</span><span class="mi">5</span><span class="p">))</span>
+
+<span class="c1"># plot</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">4.5</span><span class="p">,</span> <span class="mf">4.</span><span class="p">))</span>
+<span class="n">cylag</span><span class="o">.</span><span class="n">set_rcparams</span><span class="p">()</span>
+<span class="n">color</span><span class="p">,</span><span class="n">_</span><span class="p">,</span><span class="n">_</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">get_default_color_palette</span><span class="p">()</span>
+
+<span class="c1"># plot density</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">pdf2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'GKS'</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">color</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.8</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">u</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:],</span> <span class="n">label</span><span class="o">=</span><span class="s1">'FD'</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">color</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ls</span><span class="o">=</span><span class="s1">'--'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
+
+<span class="n">List_of_time_to_plot</span> <span class="o">=</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">350</span><span class="p">,</span> <span class="mi">800</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">List_of_time_to_plot</span><span class="p">):</span>
+    <span class="c1"># compute density</span>
+    <span class="n">pdf2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">cylag</span><span class="o">.</span><span class="n">compute_density_1D_KS</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">xp</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:],</span> <span class="n">massp</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">kernel</span><span class="o">=</span><span class="mi">5</span><span class="p">))</span>
+    <span class="c1"># plot density</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">pdf2</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">color</span><span class="p">[</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.8</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">u</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:],</span> <span class="n">c</span><span class="o">=</span><span class="n">color</span><span class="p">[</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">ls</span><span class="o">=</span><span class="s1">'--'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"$x$"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"$</span><span class="se">\\</span><span class="s2">rho(t, x)$"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mf">0.</span><span class="p">,</span><span class="mf">1.</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">'figs/diffusion1d_ks_npart</span><span class="si">{}</span><span class="s1">.png'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">npart</span><span class="p">,</span> <span class="n">sampling</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">"png"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<img src="../../_images/sphx_glr_vnv_diffusion_1d_004.png" srcset="../../_images/sphx_glr_vnv_diffusion_1d_004.png" alt="vnv diffusion 1d" class = "sphx-glr-single-img"/><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The density estimate computed from kernel smoothing fits the reference solution.
+For a more accurate estimate, the number of particles should be increased until convergence.</p>
+</div>
+</section>
+<section id="compute-density-with-the-nearest-grid-point-method">
+<h2>Compute density with the Nearest Grid Point method<a class="headerlink" href="#compute-density-with-the-nearest-grid-point-method" title="Link to this heading">¶</a></h2>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">pdf0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">cylag</span><span class="o">.</span><span class="n">compute_density_1D_NGP</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">xp</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:],</span> <span class="n">massp</span><span class="p">))</span>
+
+<span class="c1"># plot</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">4.5</span><span class="p">,</span> <span class="mf">4.</span><span class="p">))</span>
+<span class="n">cylag</span><span class="o">.</span><span class="n">set_rcparams</span><span class="p">()</span>
+<span class="n">color</span><span class="p">,</span><span class="n">_</span><span class="p">,</span><span class="n">_</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">get_default_color_palette</span><span class="p">()</span>
+
+<span class="c1"># plot density</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">pdf0</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'NGP'</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">color</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
+<span class="c1">#ax.plot(x, pdf2, label='SPH', c=color[0], lw=1.8)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">u</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:],</span> <span class="n">label</span><span class="o">=</span><span class="s1">'FD'</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">color</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ls</span><span class="o">=</span><span class="s1">'--'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
+
+<span class="n">List_of_time_to_plot</span> <span class="o">=</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">350</span><span class="p">,</span> <span class="mi">800</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">List_of_time_to_plot</span><span class="p">):</span>
+    <span class="c1"># compute density</span>
+    <span class="n">pdf0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">cylag</span><span class="o">.</span><span class="n">compute_density_1D_NGP</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">xp</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:],</span> <span class="n">massp</span><span class="p">))</span>
+    <span class="c1"># plot density</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">pdf0</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">color</span><span class="p">[</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">u</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:],</span> <span class="n">c</span><span class="o">=</span><span class="n">color</span><span class="p">[</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">ls</span><span class="o">=</span><span class="s1">'--'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"$x$"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"$</span><span class="se">\\</span><span class="s2">rho(t, x)$"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mf">0.</span><span class="p">,</span><span class="mf">1.</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">'figs/diffusion1d_ngp_npart</span><span class="si">{}</span><span class="s1">.png'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">npart</span><span class="p">,</span> <span class="n">sampling</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">"png"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<img src="../../_images/sphx_glr_vnv_diffusion_1d_005.png" srcset="../../_images/sphx_glr_vnv_diffusion_1d_005.png" alt="vnv diffusion 1d" class = "sphx-glr-single-img"/><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Contrary to the kernel smoothing, the nearest grid point estimation is much more
+chaotic which makes it difficult to rely on for physical interpretation.</p>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 3.188 seconds)</p>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-vnv-02-isotropic-diffusion-vnv-diffusion-1d-py">
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/c0afdb4d87d21be396343aba0e14bb57/vnv_diffusion_1d.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">vnv_diffusion_1d.ipynb</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/528cefd5c9a447382c4aeb256e3522eb/vnv_diffusion_1d.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">vnv_diffusion_1d.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-zip docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/b60eed78d18818401104a446afb310c4/vnv_diffusion_1d.zip"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">zipped:</span> <span class="pre">vnv_diffusion_1d.zip</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/logo_cylag_sb.png" alt="Logo of CYLAG"/>
+            </a></p>
+<h3><a href="../../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../get_started.html">Quick installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models.html">Mathematical models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../algo.html">Particle-mesh implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../setup.html">Setup, inputs and practical informations</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Gallery of examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#couette-flow">Couette flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#isotropic-diffusion">Isotropic diffusion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#flume">Flume</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#tide">Tide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#meander">Meander</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#taylor-vortices">Taylor vortices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#settling">Settling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#sources">Sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#statistics">Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#poly-disperse">Poly-disperse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#oil-slick-module">Oil slick module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#algae-module">Algae module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#macrophyte-module">Macrophyte module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#fish-module">Fish module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#jellyfish-module">Jellyfish module</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#online">Online</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../good_practices.html">Good practices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev.html">Developer guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/modules.html">API</a></li>
+</ul>
+
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="index.html"
+                          title="previous chapter">Isotropic diffusion</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="vnv_diffusion_2d_lsm2.html"
+                          title="next chapter">Homogeneous isotropic turbulence with the LSM-2</a></p>
+  </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="vnv_diffusion_2d_lsm2.html" title="Homogeneous isotropic turbulence with the LSM-2"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Isotropic diffusion"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CYLAG 0.9 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Examples</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >Isotropic diffusion</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Stochastic diffusion in 1D</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2023, Fabien Souillé.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Couette flow - LSM-1 convergence test &#8212; CYLAG 0.9 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/classic.css?v=51dfc302" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=427e2fde" />
+    
+    <script src="../../_static/documentation_options.js?v=049aceee"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Isotropic diffusion" href="../vnv_02_isotropic_diffusion/index.html" />
+    <link rel="prev" title="Couette flow - LSM-1 advection with different schemes (comparison)" href="vnv_couette_lsm1_comparison.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../vnv_02_isotropic_diffusion/index.html" title="Isotropic diffusion"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="vnv_couette_lsm1_comparison.html" title="Couette flow - LSM-1 advection with different schemes (comparison)"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CYLAG 0.9 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Examples</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">Couette flow</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Couette flow - LSM-1 convergence test</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p><a class="reference internal" href="#sphx-glr-download-auto-examples-vnv-01-couette-flow-vnv-couette-lsm1-convergence-py"><span class="std std-ref">Go to the end</span></a>
+to download the full example code.</p>
+</div>
+<section class="sphx-glr-example-title" id="couette-flow-lsm-1-convergence-test">
+<span id="sphx-glr-auto-examples-vnv-01-couette-flow-vnv-couette-lsm1-convergence-py"></span><h1>Couette flow - LSM-1 convergence test<a class="headerlink" href="#couette-flow-lsm-1-convergence-test" title="Link to this heading">¶</a></h1>
+<p>In this example we analyse the convergence of the following numerical scheme for the
+LSM-1 model without diffusion (material pathlines):</p>
+<ul class="simple">
+<li><p><strong>Euler</strong></p></li>
+<li><p><strong>Runge-Kutta 2</strong></p></li>
+<li><p><strong>Runge-Kutta 4</strong></p></li>
+</ul>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">cylag</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pylab</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s2">"../../examples/vnv_01_couette_flow"</span><span class="p">))</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">vnv_01_utils.couette_field_set</span><span class="w"> </span><span class="kn">import</span> <span class="n">couette_field_set</span><span class="p">,</span> <span class="n">couette_flow_period</span><span class="p">,</span> \
+    <span class="n">couette_flow_analytical_solution</span>
+
+<span class="c1">#sphinx_gallery_thumbnail_number = 1</span>
+</pre></div>
+</div>
+<section id="define-function-to-run-cylag">
+<h2>Define function to run CyLag<a class="headerlink" href="#define-function-to-run-cylag" title="Link to this heading">¶</a></h2>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">run_cylag_couette_lsm1</span><span class="p">(</span>\
+        <span class="n">position0</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.</span><span class="p">]]),</span>
+        <span class="n">time_scheme</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">dt</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span>
+        <span class="n">nturn</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>
+        <span class="n">output_file_name</span><span class="o">=</span><span class="s1">'particles_2d_euler'</span><span class="p">,</span>
+        <span class="n">mesh</span><span class="o">=</span><span class="s2">"couette"</span><span class="p">):</span>
+
+    <span class="c1"># define EulerianFieldSet</span>
+    <span class="n">fset</span><span class="p">,</span> <span class="n">tri</span> <span class="o">=</span> <span class="n">couette_field_set</span><span class="p">(</span><span class="n">mesh</span><span class="p">)</span>
+
+    <span class="c1"># define LagrangianParticleSet</span>
+    <span class="n">r0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">position0</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">position0</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">T</span> <span class="o">=</span> <span class="n">couette_flow_period</span><span class="p">(</span><span class="n">r0</span><span class="p">)</span>
+    <span class="n">pset</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">LagrangianParticleSet</span><span class="p">(</span><span class="n">position0</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="c1"># set general parameters</span>
+    <span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">'final_time'</span><span class="p">:</span> <span class="n">nturn</span><span class="o">*</span><span class="n">T</span><span class="p">,</span>
+        <span class="s1">'time_step'</span><span class="p">:</span> <span class="n">dt</span><span class="p">,</span>
+        <span class="s1">'frozen_eulerian_fields'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s1">'model'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s1">'time_scheme'</span><span class="p">:</span> <span class="n">time_scheme</span><span class="p">,</span>
+        <span class="s1">'diffusion_model'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s1">'horizontal_diffusivity'</span><span class="p">:</span> <span class="mf">0.</span><span class="p">,</span>
+        <span class="s1">'vertical_diffusivity'</span><span class="p">:</span> <span class="mf">0.</span><span class="p">,</span>
+        <span class="s1">'boundary_conditions'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s1">'boundary_conditions_debug'</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="s1">'listing'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s1">'listing_printout_period'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s1">'output_file'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s1">'output_printout_period'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s1">'output_file_format'</span><span class="p">:</span> <span class="s1">'txt'</span><span class="p">,</span>
+        <span class="s1">'output_rep'</span><span class="p">:</span> <span class="s1">'resu_03'</span><span class="p">,</span>
+        <span class="s1">'output_file_name'</span><span class="p">:</span> <span class="n">output_file_name</span><span class="p">,</span>
+        <span class="p">}</span>
+
+    <span class="c1"># run</span>
+    <span class="n">cylag_solver</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">Solver</span><span class="p">(</span><span class="n">fset</span><span class="p">,</span> <span class="n">pset</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span>
+    <span class="n">cylag_solver</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="define-function-to-compute-errors">
+<h2>Define function to compute errors<a class="headerlink" href="#define-function-to-compute-errors" title="Link to this heading">¶</a></h2>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">compute_error</span><span class="p">(</span><span class="n">traj</span><span class="p">,</span> <span class="n">exact_traj</span><span class="p">):</span>
+    <span class="n">nt</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">traj</span><span class="p">)</span>
+    <span class="n">err</span> <span class="o">=</span> <span class="mf">0.</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nt</span><span class="p">):</span>
+        <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">traj</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">exact_traj</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">traj</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">exact_traj</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">err</span> <span class="o">+=</span> <span class="n">dist</span>
+    <span class="k">return</span> <span class="n">err</span><span class="o">/</span><span class="n">nt</span>
+</pre></div>
+</div>
+</section>
+<section id="define-the-initial-position">
+<h2>Define the initial position<a class="headerlink" href="#define-the-initial-position" title="Link to this heading">¶</a></h2>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">position0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.</span><span class="p">]])</span>
+<span class="n">r0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">position0</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">position0</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">T</span> <span class="o">=</span> <span class="n">couette_flow_period</span><span class="p">(</span><span class="n">r0</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="define-number-of-computations-for-the-convergence-and-associated-time-steps">
+<h2>Define number of computations for the convergence and associated time steps<a class="headerlink" href="#define-number-of-computations-for-the-convergence-and-associated-time-steps" title="Link to this heading">¶</a></h2>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># number of computations</span>
+<span class="n">n_traj</span> <span class="o">=</span> <span class="mi">4</span>
+
+<span class="c1"># error lists</span>
+<span class="n">errors1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">n_traj</span><span class="p">))</span>
+<span class="n">errors2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">n_traj</span><span class="p">))</span>
+<span class="n">errors3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">n_traj</span><span class="p">))</span>
+<span class="n">errors4</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">n_traj</span><span class="p">))</span>
+
+<span class="c1"># time steps</span>
+<span class="n">dts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="n">n_traj</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="run-model-for-each-time-step-and-scheme">
+<h2>Run model for each time step and scheme<a class="headerlink" href="#run-model-for-each-time-step-and-scheme" title="Link to this heading">¶</a></h2>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_traj</span><span class="p">):</span>
+    <span class="c1"># solve trajectory</span>
+    <span class="n">dt</span> <span class="o">=</span> <span class="n">dts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+    <span class="c1"># solve trajectory</span>
+    <span class="n">run_cylag_couette_lsm1</span><span class="p">(</span><span class="n">position0</span><span class="p">,</span> <span class="n">time_scheme</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="n">dt</span><span class="p">,</span> <span class="n">output_file_name</span><span class="o">=</span><span class="s1">'particles_2d_E'</span><span class="p">,</span> <span class="n">nturn</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">mesh</span><span class="o">=</span><span class="s2">"couette_refined"</span><span class="p">)</span>
+    <span class="n">run_cylag_couette_lsm1</span><span class="p">(</span><span class="n">position0</span><span class="p">,</span> <span class="n">time_scheme</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="n">dt</span><span class="p">,</span> <span class="n">output_file_name</span><span class="o">=</span><span class="s1">'particles_2d_RK2'</span><span class="p">,</span> <span class="n">nturn</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">mesh</span><span class="o">=</span><span class="s2">"couette_refined"</span><span class="p">)</span>
+    <span class="n">run_cylag_couette_lsm1</span><span class="p">(</span><span class="n">position0</span><span class="p">,</span> <span class="n">time_scheme</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="n">dt</span><span class="p">,</span> <span class="n">output_file_name</span><span class="o">=</span><span class="s1">'particles_2d_RK3'</span><span class="p">,</span> <span class="n">nturn</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">mesh</span><span class="o">=</span><span class="s2">"couette_refined"</span><span class="p">)</span>
+    <span class="n">run_cylag_couette_lsm1</span><span class="p">(</span><span class="n">position0</span><span class="p">,</span> <span class="n">time_scheme</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="n">dt</span><span class="p">,</span> <span class="n">output_file_name</span><span class="o">=</span><span class="s1">'particles_2d_RK4'</span><span class="p">,</span> <span class="n">nturn</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">mesh</span><span class="o">=</span><span class="s2">"couette_refined"</span><span class="p">)</span>
+
+    <span class="c1"># get particles</span>
+    <span class="n">part1</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">ParticlesIO</span><span class="o">.</span><span class="n">from_cylag_txt</span><span class="p">(</span><span class="s1">'resu_03/particles_2d_E.txt'</span><span class="p">)</span>
+    <span class="n">part2</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">ParticlesIO</span><span class="o">.</span><span class="n">from_cylag_txt</span><span class="p">(</span><span class="s1">'resu_03/particles_2d_RK2.txt'</span><span class="p">)</span>
+    <span class="n">part3</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">ParticlesIO</span><span class="o">.</span><span class="n">from_cylag_txt</span><span class="p">(</span><span class="s1">'resu_03/particles_2d_RK3.txt'</span><span class="p">)</span>
+    <span class="n">part4</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">ParticlesIO</span><span class="o">.</span><span class="n">from_cylag_txt</span><span class="p">(</span><span class="s1">'resu_03/particles_2d_RK4.txt'</span><span class="p">)</span>
+
+    <span class="c1"># time</span>
+    <span class="n">rec</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">part1</span><span class="o">.</span><span class="n">times</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span>
+    <span class="n">time</span> <span class="o">=</span> <span class="n">part1</span><span class="o">.</span><span class="n">times</span><span class="p">[</span><span class="n">rec</span><span class="p">]</span>
+    <span class="n">T</span> <span class="o">=</span> <span class="n">time</span>
+
+    <span class="c1"># load particles trajectories</span>
+    <span class="n">traj1</span> <span class="o">=</span> <span class="n">part1</span><span class="o">.</span><span class="n">get_trajectories</span><span class="p">([</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">traj2</span> <span class="o">=</span> <span class="n">part2</span><span class="o">.</span><span class="n">get_trajectories</span><span class="p">([</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">traj3</span> <span class="o">=</span> <span class="n">part3</span><span class="o">.</span><span class="n">get_trajectories</span><span class="p">([</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">traj4</span> <span class="o">=</span> <span class="n">part4</span><span class="o">.</span><span class="n">get_trajectories</span><span class="p">([</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">positions1</span> <span class="o">=</span> <span class="n">traj1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">positions2</span> <span class="o">=</span> <span class="n">traj2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">positions3</span> <span class="o">=</span> <span class="n">traj3</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">positions4</span> <span class="o">=</span> <span class="n">traj4</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1"># analytical trajectory</span>
+    <span class="c1">#times = np.arange(0., T, dts[i])</span>
+    <span class="n">times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">part1</span><span class="o">.</span><span class="n">times</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">times</span><span class="p">)</span>
+    <span class="n">r</span><span class="p">,</span> <span class="n">theta</span> <span class="o">=</span> <span class="n">couette_flow_analytical_solution</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">position0</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">exact_pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">times</span><span class="p">),</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">exact_pos</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+    <span class="n">exact_pos</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+
+    <span class="c1"># plot trajectory error</span>
+    <span class="n">nei</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">exact_pos</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">errors1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">compute_error</span><span class="p">(</span><span class="n">positions1</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">nei</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">exact_pos</span><span class="p">)</span>
+    <span class="n">errors2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">compute_error</span><span class="p">(</span><span class="n">positions2</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">nei</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">exact_pos</span><span class="p">)</span>
+    <span class="n">errors3</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">compute_error</span><span class="p">(</span><span class="n">positions3</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">nei</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">exact_pos</span><span class="p">)</span>
+    <span class="n">errors4</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">compute_error</span><span class="p">(</span><span class="n">positions4</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">nei</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">exact_pos</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>================================================================================
+|                                INITIALIZATION                                |
+================================================================================
+ ~~&gt; Simulation type : 2D
+ ~~&gt; Lagrangian Stochastic Model : LSM-1
+ ~~&gt; Integration method : Euler
+ ~~&gt; Time interval : [0.000, 7.069] - dt = 0.500
+ ~~&gt; Diffusion model : No diffusion
+ ~~&gt; Particle velocity : Initialized from field set
+ ~~&gt; Wall boundary conditions : Specular rebound
+================================================================================
+|                                 TIME LOOP                                    |
+================================================================================
+Iter =          1 ; Dt = 0.5000s ; Time = 00d 00:00:00 ; [&gt;..............]   7%
+Iter =          2 ; Dt = 0.5000s ; Time = 00d 00:00:01 ; [=&gt;.............]  14%
+Iter =          3 ; Dt = 0.5000s ; Time = 00d 00:00:01 ; [==&gt;............]  21%
+Iter =          4 ; Dt = 0.5000s ; Time = 00d 00:00:02 ; [===&gt;...........]  28%
+Iter =          5 ; Dt = 0.5000s ; Time = 00d 00:00:02 ; [====&gt;..........]  35%
+Iter =          6 ; Dt = 0.5000s ; Time = 00d 00:00:03 ; [=====&gt;.........]  42%
+Iter =          7 ; Dt = 0.5000s ; Time = 00d 00:00:03 ; [======&gt;........]  49%
+Iter =          8 ; Dt = 0.5000s ; Time = 00d 00:00:04 ; [=======&gt;.......]  56%
+Iter =          9 ; Dt = 0.5000s ; Time = 00d 00:00:04 ; [========&gt;......]  63%
+Iter =         10 ; Dt = 0.5000s ; Time = 00d 00:00:05 ; [=========&gt;.....]  70%
+Iter =         11 ; Dt = 0.5000s ; Time = 00d 00:00:05 ; [==========&gt;....]  77%
+Iter =         12 ; Dt = 0.5000s ; Time = 00d 00:00:06 ; [===========&gt;...]  84%
+Iter =         13 ; Dt = 0.5000s ; Time = 00d 00:00:06 ; [============&gt;..]  91%
+Iter =         14 ; Dt = 0.5000s ; Time = 00d 00:00:07 ; [=============&gt;.]  99%
+================================================================================
+|                                    END                                       |
+================================================================================
+Problem.solve() completed in 0.001031637191772461s (wall time)
+================================================================================
+|                                INITIALIZATION                                |
+================================================================================
+ ~~&gt; Simulation type : 2D
+ ~~&gt; Lagrangian Stochastic Model : LSM-1
+ ~~&gt; Integration method : Runge-Kutta 2
+ ~~&gt; Time interval : [0.000, 7.069] - dt = 0.500
+ ~~&gt; Diffusion model : No diffusion
+ ~~&gt; Particle velocity : Initialized from field set
+ ~~&gt; Wall boundary conditions : Specular rebound
+================================================================================
+|                                 TIME LOOP                                    |
+================================================================================
+Iter =          1 ; Dt = 0.5000s ; Time = 00d 00:00:00 ; [&gt;..............]   7%
+Iter =          2 ; Dt = 0.5000s ; Time = 00d 00:00:01 ; [=&gt;.............]  14%
+Iter =          3 ; Dt = 0.5000s ; Time = 00d 00:00:01 ; [==&gt;............]  21%
+Iter =          4 ; Dt = 0.5000s ; Time = 00d 00:00:02 ; [===&gt;...........]  28%
+Iter =          5 ; Dt = 0.5000s ; Time = 00d 00:00:02 ; [====&gt;..........]  35%
+Iter =          6 ; Dt = 0.5000s ; Time = 00d 00:00:03 ; [=====&gt;.........]  42%
+Iter =          7 ; Dt = 0.5000s ; Time = 00d 00:00:03 ; [======&gt;........]  49%
+Iter =          8 ; Dt = 0.5000s ; Time = 00d 00:00:04 ; [=======&gt;.......]  56%
+Iter =          9 ; Dt = 0.5000s ; Time = 00d 00:00:04 ; [========&gt;......]  63%
+Iter =         10 ; Dt = 0.5000s ; Time = 00d 00:00:05 ; [=========&gt;.....]  70%
+Iter =         11 ; Dt = 0.5000s ; Time = 00d 00:00:05 ; [==========&gt;....]  77%
+Iter =         12 ; Dt = 0.5000s ; Time = 00d 00:00:06 ; [===========&gt;...]  84%
+Iter =         13 ; Dt = 0.5000s ; Time = 00d 00:00:06 ; [============&gt;..]  91%
+Iter =         14 ; Dt = 0.5000s ; Time = 00d 00:00:07 ; [=============&gt;.]  99%
+================================================================================
+|                                    END                                       |
+================================================================================
+Problem.solve() completed in 0.00067138671875s (wall time)
+================================================================================
+|                                INITIALIZATION                                |
+================================================================================
+ ~~&gt; Simulation type : 2D
+ ~~&gt; Lagrangian Stochastic Model : LSM-1
+ ~~&gt; Integration method : Runge-Kutta 3
+ ~~&gt; Time interval : [0.000, 7.069] - dt = 0.500
+ ~~&gt; Diffusion model : No diffusion
+ ~~&gt; Particle velocity : Initialized from field set
+ ~~&gt; Wall boundary conditions : Specular rebound
+================================================================================
+|                                 TIME LOOP                                    |
+================================================================================
+Iter =          1 ; Dt = 0.5000s ; Time = 00d 00:00:00 ; [&gt;..............]   7%
+Iter =          2 ; Dt = 0.5000s ; Time = 00d 00:00:01 ; [=&gt;.............]  14%
+Iter =          3 ; Dt = 0.5000s ; Time = 00d 00:00:01 ; [==&gt;............]  21%
+Iter =          4 ; Dt = 0.5000s ; Time = 00d 00:00:02 ; [===&gt;...........]  28%
+Iter =          5 ; Dt = 0.5000s ; Time = 00d 00:00:02 ; [====&gt;..........]  35%
+Iter =          6 ; Dt = 0.5000s ; Time = 00d 00:00:03 ; [=====&gt;.........]  42%
+Iter =          7 ; Dt = 0.5000s ; Time = 00d 00:00:03 ; [======&gt;........]  49%
+Iter =          8 ; Dt = 0.5000s ; Time = 00d 00:00:04 ; [=======&gt;.......]  56%
+Iter =          9 ; Dt = 0.5000s ; Time = 00d 00:00:04 ; [========&gt;......]  63%
+Iter =         10 ; Dt = 0.5000s ; Time = 00d 00:00:05 ; [=========&gt;.....]  70%
+Iter =         11 ; Dt = 0.5000s ; Time = 00d 00:00:05 ; [==========&gt;....]  77%
+Iter =         12 ; Dt = 0.5000s ; Time = 00d 00:00:06 ; [===========&gt;...]  84%
+Iter =         13 ; Dt = 0.5000s ; Time = 00d 00:00:06 ; [============&gt;..]  91%
+Iter =         14 ; Dt = 0.5000s ; Time = 00d 00:00:07 ; [=============&gt;.]  99%
+================================================================================
+|                                    END                                       |
+================================================================================
+Problem.solve() completed in 0.0007348060607910156s (wall time)
+================================================================================
+|                                INITIALIZATION                                |
+================================================================================
+ ~~&gt; Simulation type : 2D
+ ~~&gt; Lagrangian Stochastic Model : LSM-1
+ ~~&gt; Integration method : Runge-Kutta 4
+ ~~&gt; Time interval : [0.000, 7.069] - dt = 0.500
+ ~~&gt; Diffusion model : No diffusion
+ ~~&gt; Particle velocity : Initialized from field set
+ ~~&gt; Wall boundary conditions : Specular rebound
+================================================================================
+|                                 TIME LOOP                                    |
+================================================================================
+Iter =          1 ; Dt = 0.5000s ; Time = 00d 00:00:00 ; [&gt;..............]   7%
+Iter =          2 ; Dt = 0.5000s ; Time = 00d 00:00:01 ; [=&gt;.............]  14%
+Iter =          3 ; Dt = 0.5000s ; Time = 00d 00:00:01 ; [==&gt;............]  21%
+Iter =          4 ; Dt = 0.5000s ; Time = 00d 00:00:02 ; [===&gt;...........]  28%
+Iter =          5 ; Dt = 0.5000s ; Time = 00d 00:00:02 ; [====&gt;..........]  35%
+Iter =          6 ; Dt = 0.5000s ; Time = 00d 00:00:03 ; [=====&gt;.........]  42%
+Iter =          7 ; Dt = 0.5000s ; Time = 00d 00:00:03 ; [======&gt;........]  49%
+Iter =          8 ; Dt = 0.5000s ; Time = 00d 00:00:04 ; [=======&gt;.......]  56%
+Iter =          9 ; Dt = 0.5000s ; Time = 00d 00:00:04 ; [========&gt;......]  63%
+Iter =         10 ; Dt = 0.5000s ; Time = 00d 00:00:05 ; [=========&gt;.....]  70%
+Iter =         11 ; Dt = 0.5000s ; Time = 00d 00:00:05 ; [==========&gt;....]  77%
+Iter =         12 ; Dt = 0.5000s ; Time = 00d 00:00:06 ; [===========&gt;...]  84%
+Iter =         13 ; Dt = 0.5000s ; Time = 00d 00:00:06 ; [============&gt;..]  91%
+Iter =         14 ; Dt = 0.5000s ; Time = 00d 00:00:07 ; [=============&gt;.]  99%
+================================================================================
+|                                    END                                       |
+================================================================================
+Problem.solve() completed in 0.0011744499206542969s (wall time)
+[0.  0.5 1.  1.5 2.  2.5 3.  3.5 4.  4.5 5.  5.5 6.  6.5 7. ]
+================================================================================
+|                                INITIALIZATION                                |
+================================================================================
+ ~~&gt; Simulation type : 2D
+ ~~&gt; Lagrangian Stochastic Model : LSM-1
+ ~~&gt; Integration method : Euler
+ ~~&gt; Time interval : [0.000, 7.069] - dt = 0.667
+ ~~&gt; Diffusion model : No diffusion
+ ~~&gt; Particle velocity : Initialized from field set
+ ~~&gt; Wall boundary conditions : Specular rebound
+================================================================================
+|                                 TIME LOOP                                    |
+================================================================================
+Iter =          1 ; Dt = 0.6667s ; Time = 00d 00:00:00 ; [&gt;..............]   9%
+Iter =          2 ; Dt = 0.6667s ; Time = 00d 00:00:01 ; [=&gt;.............]  18%
+Iter =          3 ; Dt = 0.6667s ; Time = 00d 00:00:02 ; [===&gt;...........]  28%
+Iter =          4 ; Dt = 0.6667s ; Time = 00d 00:00:02 ; [====&gt;..........]  37%
+Iter =          5 ; Dt = 0.6667s ; Time = 00d 00:00:03 ; [======&gt;........]  47%
+Iter =          6 ; Dt = 0.6667s ; Time = 00d 00:00:03 ; [=======&gt;.......]  56%
+Iter =          7 ; Dt = 0.6667s ; Time = 00d 00:00:04 ; [========&gt;......]  66%
+Iter =          8 ; Dt = 0.6667s ; Time = 00d 00:00:05 ; [==========&gt;....]  75%
+Iter =          9 ; Dt = 0.6667s ; Time = 00d 00:00:06 ; [===========&gt;...]  84%
+Iter =         10 ; Dt = 0.6667s ; Time = 00d 00:00:06 ; [=============&gt;.]  94%
+================================================================================
+|                                    END                                       |
+================================================================================
+Problem.solve() completed in 0.0004956722259521484s (wall time)
+================================================================================
+|                                INITIALIZATION                                |
+================================================================================
+ ~~&gt; Simulation type : 2D
+ ~~&gt; Lagrangian Stochastic Model : LSM-1
+ ~~&gt; Integration method : Runge-Kutta 2
+ ~~&gt; Time interval : [0.000, 7.069] - dt = 0.667
+ ~~&gt; Diffusion model : No diffusion
+ ~~&gt; Particle velocity : Initialized from field set
+ ~~&gt; Wall boundary conditions : Specular rebound
+================================================================================
+|                                 TIME LOOP                                    |
+================================================================================
+Iter =          1 ; Dt = 0.6667s ; Time = 00d 00:00:00 ; [&gt;..............]   9%
+Iter =          2 ; Dt = 0.6667s ; Time = 00d 00:00:01 ; [=&gt;.............]  18%
+Iter =          3 ; Dt = 0.6667s ; Time = 00d 00:00:02 ; [===&gt;...........]  28%
+Iter =          4 ; Dt = 0.6667s ; Time = 00d 00:00:02 ; [====&gt;..........]  37%
+Iter =          5 ; Dt = 0.6667s ; Time = 00d 00:00:03 ; [======&gt;........]  47%
+Iter =          6 ; Dt = 0.6667s ; Time = 00d 00:00:03 ; [=======&gt;.......]  56%
+Iter =          7 ; Dt = 0.6667s ; Time = 00d 00:00:04 ; [========&gt;......]  66%
+Iter =          8 ; Dt = 0.6667s ; Time = 00d 00:00:05 ; [==========&gt;....]  75%
+Iter =          9 ; Dt = 0.6667s ; Time = 00d 00:00:06 ; [===========&gt;...]  84%
+Iter =         10 ; Dt = 0.6667s ; Time = 00d 00:00:06 ; [=============&gt;.]  94%
+================================================================================
+|                                    END                                       |
+================================================================================
+Problem.solve() completed in 0.0005331039428710938s (wall time)
+================================================================================
+|                                INITIALIZATION                                |
+================================================================================
+ ~~&gt; Simulation type : 2D
+ ~~&gt; Lagrangian Stochastic Model : LSM-1
+ ~~&gt; Integration method : Runge-Kutta 3
+ ~~&gt; Time interval : [0.000, 7.069] - dt = 0.667
+ ~~&gt; Diffusion model : No diffusion
+ ~~&gt; Particle velocity : Initialized from field set
+ ~~&gt; Wall boundary conditions : Specular rebound
+================================================================================
+|                                 TIME LOOP                                    |
+================================================================================
+Iter =          1 ; Dt = 0.6667s ; Time = 00d 00:00:00 ; [&gt;..............]   9%
+Iter =          2 ; Dt = 0.6667s ; Time = 00d 00:00:01 ; [=&gt;.............]  18%
+Iter =          3 ; Dt = 0.6667s ; Time = 00d 00:00:02 ; [===&gt;...........]  28%
+Iter =          4 ; Dt = 0.6667s ; Time = 00d 00:00:02 ; [====&gt;..........]  37%
+Iter =          5 ; Dt = 0.6667s ; Time = 00d 00:00:03 ; [======&gt;........]  47%
+Iter =          6 ; Dt = 0.6667s ; Time = 00d 00:00:03 ; [=======&gt;.......]  56%
+Iter =          7 ; Dt = 0.6667s ; Time = 00d 00:00:04 ; [========&gt;......]  66%
+Iter =          8 ; Dt = 0.6667s ; Time = 00d 00:00:05 ; [==========&gt;....]  75%
+Iter =          9 ; Dt = 0.6667s ; Time = 00d 00:00:06 ; [===========&gt;...]  84%
+Iter =         10 ; Dt = 0.6667s ; Time = 00d 00:00:06 ; [=============&gt;.]  94%
+================================================================================
+|                                    END                                       |
+================================================================================
+Problem.solve() completed in 0.0006771087646484375s (wall time)
+================================================================================
+|                                INITIALIZATION                                |
+================================================================================
+ ~~&gt; Simulation type : 2D
+ ~~&gt; Lagrangian Stochastic Model : LSM-1
+ ~~&gt; Integration method : Runge-Kutta 4
+ ~~&gt; Time interval : [0.000, 7.069] - dt = 0.667
+ ~~&gt; Diffusion model : No diffusion
+ ~~&gt; Particle velocity : Initialized from field set
+ ~~&gt; Wall boundary conditions : Specular rebound
+================================================================================
+|                                 TIME LOOP                                    |
+================================================================================
+Iter =          1 ; Dt = 0.6667s ; Time = 00d 00:00:00 ; [&gt;..............]   9%
+Iter =          2 ; Dt = 0.6667s ; Time = 00d 00:00:01 ; [=&gt;.............]  18%
+Iter =          3 ; Dt = 0.6667s ; Time = 00d 00:00:02 ; [===&gt;...........]  28%
+Iter =          4 ; Dt = 0.6667s ; Time = 00d 00:00:02 ; [====&gt;..........]  37%
+Iter =          5 ; Dt = 0.6667s ; Time = 00d 00:00:03 ; [======&gt;........]  47%
+Iter =          6 ; Dt = 0.6667s ; Time = 00d 00:00:03 ; [=======&gt;.......]  56%
+Iter =          7 ; Dt = 0.6667s ; Time = 00d 00:00:04 ; [========&gt;......]  66%
+Iter =          8 ; Dt = 0.6667s ; Time = 00d 00:00:05 ; [==========&gt;....]  75%
+Iter =          9 ; Dt = 0.6667s ; Time = 00d 00:00:06 ; [===========&gt;...]  84%
+Iter =         10 ; Dt = 0.6667s ; Time = 00d 00:00:06 ; [=============&gt;.]  94%
+================================================================================
+|                                    END                                       |
+================================================================================
+Problem.solve() completed in 0.0007348060607910156s (wall time)
+[0.         0.66666667 1.33333333 2.         2.66666667 3.33333333
+ 4.         4.66666667 5.33333333 6.         6.66666667]
+================================================================================
+|                                INITIALIZATION                                |
+================================================================================
+ ~~&gt; Simulation type : 2D
+ ~~&gt; Lagrangian Stochastic Model : LSM-1
+ ~~&gt; Integration method : Euler
+ ~~&gt; Time interval : [0.000, 7.069] - dt = 0.833
+ ~~&gt; Diffusion model : No diffusion
+ ~~&gt; Particle velocity : Initialized from field set
+ ~~&gt; Wall boundary conditions : Specular rebound
+================================================================================
+|                                 TIME LOOP                                    |
+================================================================================
+Iter =          1 ; Dt = 0.8333s ; Time = 00d 00:00:00 ; [&gt;..............]  11%
+Iter =          2 ; Dt = 0.8333s ; Time = 00d 00:00:01 ; [==&gt;............]  23%
+Iter =          3 ; Dt = 0.8333s ; Time = 00d 00:00:02 ; [====&gt;..........]  35%
+Iter =          4 ; Dt = 0.8333s ; Time = 00d 00:00:03 ; [======&gt;........]  47%
+Iter =          5 ; Dt = 0.8333s ; Time = 00d 00:00:04 ; [=======&gt;.......]  58%
+Iter =          6 ; Dt = 0.8333s ; Time = 00d 00:00:04 ; [=========&gt;.....]  70%
+Iter =          7 ; Dt = 0.8333s ; Time = 00d 00:00:05 ; [===========&gt;...]  82%
+Iter =          8 ; Dt = 0.8333s ; Time = 00d 00:00:06 ; [=============&gt;.]  94%
+================================================================================
+|                                    END                                       |
+================================================================================
+Problem.solve() completed in 0.00046443939208984375s (wall time)
+================================================================================
+|                                INITIALIZATION                                |
+================================================================================
+ ~~&gt; Simulation type : 2D
+ ~~&gt; Lagrangian Stochastic Model : LSM-1
+ ~~&gt; Integration method : Runge-Kutta 2
+ ~~&gt; Time interval : [0.000, 7.069] - dt = 0.833
+ ~~&gt; Diffusion model : No diffusion
+ ~~&gt; Particle velocity : Initialized from field set
+ ~~&gt; Wall boundary conditions : Specular rebound
+================================================================================
+|                                 TIME LOOP                                    |
+================================================================================
+Iter =          1 ; Dt = 0.8333s ; Time = 00d 00:00:00 ; [&gt;..............]  11%
+Iter =          2 ; Dt = 0.8333s ; Time = 00d 00:00:01 ; [==&gt;............]  23%
+Iter =          3 ; Dt = 0.8333s ; Time = 00d 00:00:02 ; [====&gt;..........]  35%
+Iter =          4 ; Dt = 0.8333s ; Time = 00d 00:00:03 ; [======&gt;........]  47%
+Iter =          5 ; Dt = 0.8333s ; Time = 00d 00:00:04 ; [=======&gt;.......]  58%
+Iter =          6 ; Dt = 0.8333s ; Time = 00d 00:00:04 ; [=========&gt;.....]  70%
+Iter =          7 ; Dt = 0.8333s ; Time = 00d 00:00:05 ; [===========&gt;...]  82%
+Iter =          8 ; Dt = 0.8333s ; Time = 00d 00:00:06 ; [=============&gt;.]  94%
+================================================================================
+|                                    END                                       |
+================================================================================
+Problem.solve() completed in 0.00048470497131347656s (wall time)
+================================================================================
+|                                INITIALIZATION                                |
+================================================================================
+ ~~&gt; Simulation type : 2D
+ ~~&gt; Lagrangian Stochastic Model : LSM-1
+ ~~&gt; Integration method : Runge-Kutta 3
+ ~~&gt; Time interval : [0.000, 7.069] - dt = 0.833
+ ~~&gt; Diffusion model : No diffusion
+ ~~&gt; Particle velocity : Initialized from field set
+ ~~&gt; Wall boundary conditions : Specular rebound
+================================================================================
+|                                 TIME LOOP                                    |
+================================================================================
+Iter =          1 ; Dt = 0.8333s ; Time = 00d 00:00:00 ; [&gt;..............]  11%
+Iter =          2 ; Dt = 0.8333s ; Time = 00d 00:00:01 ; [==&gt;............]  23%
+Iter =          3 ; Dt = 0.8333s ; Time = 00d 00:00:02 ; [====&gt;..........]  35%
+Iter =          4 ; Dt = 0.8333s ; Time = 00d 00:00:03 ; [======&gt;........]  47%
+Iter =          5 ; Dt = 0.8333s ; Time = 00d 00:00:04 ; [=======&gt;.......]  58%
+Iter =          6 ; Dt = 0.8333s ; Time = 00d 00:00:04 ; [=========&gt;.....]  70%
+Iter =          7 ; Dt = 0.8333s ; Time = 00d 00:00:05 ; [===========&gt;...]  82%
+Iter =          8 ; Dt = 0.8333s ; Time = 00d 00:00:06 ; [=============&gt;.]  94%
+================================================================================
+|                                    END                                       |
+================================================================================
+Problem.solve() completed in 0.0005064010620117188s (wall time)
+================================================================================
+|                                INITIALIZATION                                |
+================================================================================
+ ~~&gt; Simulation type : 2D
+ ~~&gt; Lagrangian Stochastic Model : LSM-1
+ ~~&gt; Integration method : Runge-Kutta 4
+ ~~&gt; Time interval : [0.000, 7.069] - dt = 0.833
+ ~~&gt; Diffusion model : No diffusion
+ ~~&gt; Particle velocity : Initialized from field set
+ ~~&gt; Wall boundary conditions : Specular rebound
+================================================================================
+|                                 TIME LOOP                                    |
+================================================================================
+Iter =          1 ; Dt = 0.8333s ; Time = 00d 00:00:00 ; [&gt;..............]  11%
+Iter =          2 ; Dt = 0.8333s ; Time = 00d 00:00:01 ; [==&gt;............]  23%
+Iter =          3 ; Dt = 0.8333s ; Time = 00d 00:00:02 ; [====&gt;..........]  35%
+Iter =          4 ; Dt = 0.8333s ; Time = 00d 00:00:03 ; [======&gt;........]  47%
+Iter =          5 ; Dt = 0.8333s ; Time = 00d 00:00:04 ; [=======&gt;.......]  58%
+Iter =          6 ; Dt = 0.8333s ; Time = 00d 00:00:04 ; [=========&gt;.....]  70%
+Iter =          7 ; Dt = 0.8333s ; Time = 00d 00:00:05 ; [===========&gt;...]  82%
+Iter =          8 ; Dt = 0.8333s ; Time = 00d 00:00:06 ; [=============&gt;.]  94%
+================================================================================
+|                                    END                                       |
+================================================================================
+Problem.solve() completed in 0.0005509853363037109s (wall time)
+[0.         0.83333333 1.66666667 2.5        3.33333333 4.16666667
+ 5.         5.83333333 6.66666667]
+================================================================================
+|                                INITIALIZATION                                |
+================================================================================
+ ~~&gt; Simulation type : 2D
+ ~~&gt; Lagrangian Stochastic Model : LSM-1
+ ~~&gt; Integration method : Euler
+ ~~&gt; Time interval : [0.000, 7.069] - dt = 1.000
+ ~~&gt; Diffusion model : No diffusion
+ ~~&gt; Particle velocity : Initialized from field set
+ ~~&gt; Wall boundary conditions : Specular rebound
+================================================================================
+|                                 TIME LOOP                                    |
+================================================================================
+Iter =          1 ; Dt = 1.0000s ; Time = 00d 00:00:01 ; [=&gt;.............]  14%
+Iter =          2 ; Dt = 1.0000s ; Time = 00d 00:00:02 ; [===&gt;...........]  28%
+Iter =          3 ; Dt = 1.0000s ; Time = 00d 00:00:03 ; [=====&gt;.........]  42%
+Iter =          4 ; Dt = 1.0000s ; Time = 00d 00:00:04 ; [=======&gt;.......]  56%
+Iter =          5 ; Dt = 1.0000s ; Time = 00d 00:00:05 ; [=========&gt;.....]  70%
+Iter =          6 ; Dt = 1.0000s ; Time = 00d 00:00:06 ; [===========&gt;...]  84%
+Iter =          7 ; Dt = 1.0000s ; Time = 00d 00:00:07 ; [=============&gt;.]  99%
+================================================================================
+|                                    END                                       |
+================================================================================
+Problem.solve() completed in 0.0005316734313964844s (wall time)
+================================================================================
+|                                INITIALIZATION                                |
+================================================================================
+ ~~&gt; Simulation type : 2D
+ ~~&gt; Lagrangian Stochastic Model : LSM-1
+ ~~&gt; Integration method : Runge-Kutta 2
+ ~~&gt; Time interval : [0.000, 7.069] - dt = 1.000
+ ~~&gt; Diffusion model : No diffusion
+ ~~&gt; Particle velocity : Initialized from field set
+ ~~&gt; Wall boundary conditions : Specular rebound
+================================================================================
+|                                 TIME LOOP                                    |
+================================================================================
+Iter =          1 ; Dt = 1.0000s ; Time = 00d 00:00:01 ; [=&gt;.............]  14%
+Iter =          2 ; Dt = 1.0000s ; Time = 00d 00:00:02 ; [===&gt;...........]  28%
+Iter =          3 ; Dt = 1.0000s ; Time = 00d 00:00:03 ; [=====&gt;.........]  42%
+Iter =          4 ; Dt = 1.0000s ; Time = 00d 00:00:04 ; [=======&gt;.......]  56%
+Iter =          5 ; Dt = 1.0000s ; Time = 00d 00:00:05 ; [=========&gt;.....]  70%
+Iter =          6 ; Dt = 1.0000s ; Time = 00d 00:00:06 ; [===========&gt;...]  84%
+Iter =          7 ; Dt = 1.0000s ; Time = 00d 00:00:07 ; [=============&gt;.]  99%
+================================================================================
+|                                    END                                       |
+================================================================================
+Problem.solve() completed in 0.0004150867462158203s (wall time)
+================================================================================
+|                                INITIALIZATION                                |
+================================================================================
+ ~~&gt; Simulation type : 2D
+ ~~&gt; Lagrangian Stochastic Model : LSM-1
+ ~~&gt; Integration method : Runge-Kutta 3
+ ~~&gt; Time interval : [0.000, 7.069] - dt = 1.000
+ ~~&gt; Diffusion model : No diffusion
+ ~~&gt; Particle velocity : Initialized from field set
+ ~~&gt; Wall boundary conditions : Specular rebound
+================================================================================
+|                                 TIME LOOP                                    |
+================================================================================
+Iter =          1 ; Dt = 1.0000s ; Time = 00d 00:00:01 ; [=&gt;.............]  14%
+Iter =          2 ; Dt = 1.0000s ; Time = 00d 00:00:02 ; [===&gt;...........]  28%
+Iter =          3 ; Dt = 1.0000s ; Time = 00d 00:00:03 ; [=====&gt;.........]  42%
+Iter =          4 ; Dt = 1.0000s ; Time = 00d 00:00:04 ; [=======&gt;.......]  56%
+Iter =          5 ; Dt = 1.0000s ; Time = 00d 00:00:05 ; [=========&gt;.....]  70%
+Iter =          6 ; Dt = 1.0000s ; Time = 00d 00:00:06 ; [===========&gt;...]  84%
+Iter =          7 ; Dt = 1.0000s ; Time = 00d 00:00:07 ; [=============&gt;.]  99%
+================================================================================
+|                                    END                                       |
+================================================================================
+Problem.solve() completed in 0.00044035911560058594s (wall time)
+================================================================================
+|                                INITIALIZATION                                |
+================================================================================
+ ~~&gt; Simulation type : 2D
+ ~~&gt; Lagrangian Stochastic Model : LSM-1
+ ~~&gt; Integration method : Runge-Kutta 4
+ ~~&gt; Time interval : [0.000, 7.069] - dt = 1.000
+ ~~&gt; Diffusion model : No diffusion
+ ~~&gt; Particle velocity : Initialized from field set
+ ~~&gt; Wall boundary conditions : Specular rebound
+================================================================================
+|                                 TIME LOOP                                    |
+================================================================================
+Iter =          1 ; Dt = 1.0000s ; Time = 00d 00:00:01 ; [=&gt;.............]  14%
+Iter =          2 ; Dt = 1.0000s ; Time = 00d 00:00:02 ; [===&gt;...........]  28%
+Iter =          3 ; Dt = 1.0000s ; Time = 00d 00:00:03 ; [=====&gt;.........]  42%
+Iter =          4 ; Dt = 1.0000s ; Time = 00d 00:00:04 ; [=======&gt;.......]  56%
+Iter =          5 ; Dt = 1.0000s ; Time = 00d 00:00:05 ; [=========&gt;.....]  70%
+Iter =          6 ; Dt = 1.0000s ; Time = 00d 00:00:06 ; [===========&gt;...]  84%
+Iter =          7 ; Dt = 1.0000s ; Time = 00d 00:00:07 ; [=============&gt;.]  99%
+================================================================================
+|                                    END                                       |
+================================================================================
+Problem.solve() completed in 0.0005056858062744141s (wall time)
+[0. 1. 2. 3. 4. 5. 6. 7.]
+</pre></div>
+</div>
+</section>
+<section id="plot-convergence">
+<h2>Plot convergence<a class="headerlink" href="#plot-convergence" title="Link to this heading">¶</a></h2>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">cylag</span><span class="o">.</span><span class="n">set_rcparams</span><span class="p">()</span>
+<span class="n">color</span><span class="p">,</span><span class="n">_</span><span class="p">,</span><span class="n">_</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">get_default_color_palette</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">5.5</span><span class="p">,</span><span class="mf">4.5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">dts</span><span class="p">,</span> <span class="n">errors1</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">'s'</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>  <span class="n">ls</span><span class="o">=</span><span class="s1">'-'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">color</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Euler"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">dts</span><span class="p">,</span> <span class="n">errors2</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">'s'</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>  <span class="n">ls</span><span class="o">=</span><span class="s1">'-'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">color</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">"RK2"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">dts</span><span class="p">,</span> <span class="n">errors3</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">'s'</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>  <span class="n">ls</span><span class="o">=</span><span class="s1">'-'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">color</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">"RK3"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">dts</span><span class="p">,</span> <span class="n">errors4</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">'s'</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>  <span class="n">ls</span><span class="o">=</span><span class="s1">'-'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">color</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">"RK4"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">which</span><span class="o">=</span><span class="s1">'major'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'grey'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">'--'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">which</span><span class="o">=</span><span class="s1">'minor'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'grey'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">':'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s1">'log'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s1">'log'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">"$dt$ (s)"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"$E$ (m)"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="c1">#plt.savefig('figs/couette_flow_convergence.pdf', dpi=300, format="pdf")</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">'figs/couette_flow_convergence.png'</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">"png"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<img src="../../_images/sphx_glr_vnv_couette_lsm1_convergence_001.png" srcset="../../_images/sphx_glr_vnv_couette_lsm1_convergence_001.png" alt="vnv couette lsm1 convergence" class = "sphx-glr-single-img"/><p>Clean:</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="k">del</span> <span class="n">part1</span>
+<span class="k">del</span> <span class="n">part2</span>
+<span class="k">del</span> <span class="n">part3</span>
+<span class="k">del</span> <span class="n">part4</span>
+<span class="k">del</span> <span class="n">rec</span>
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 8.398 seconds)</p>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-vnv-01-couette-flow-vnv-couette-lsm1-convergence-py">
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/5bf90f1f059930e5b020bf038d1a6639/vnv_couette_lsm1_convergence.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">vnv_couette_lsm1_convergence.ipynb</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/edeccdc7ad5211f64c361ce7e038bc3f/vnv_couette_lsm1_convergence.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">vnv_couette_lsm1_convergence.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-zip docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/685e570ebecf02a79410f1305b222327/vnv_couette_lsm1_convergence.zip"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">zipped:</span> <span class="pre">vnv_couette_lsm1_convergence.zip</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/logo_cylag_sb.png" alt="Logo of CYLAG"/>
+            </a></p>
+<h3><a href="../../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../get_started.html">Quick installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models.html">Mathematical models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../algo.html">Particle-mesh implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../setup.html">Setup, inputs and practical informations</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Gallery of examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#couette-flow">Couette flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#isotropic-diffusion">Isotropic diffusion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#flume">Flume</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#tide">Tide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#meander">Meander</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#taylor-vortices">Taylor vortices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#settling">Settling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#sources">Sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#statistics">Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#poly-disperse">Poly-disperse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#oil-slick-module">Oil slick module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#algae-module">Algae module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#macrophyte-module">Macrophyte module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#fish-module">Fish module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#jellyfish-module">Jellyfish module</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#online">Online</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../good_practices.html">Good practices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev.html">Developer guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/modules.html">API</a></li>
+</ul>
+
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="vnv_couette_lsm1_comparison.html"
+                          title="previous chapter">Couette flow - LSM-1 advection with different schemes (comparison)</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="../vnv_02_isotropic_diffusion/index.html"
+                          title="next chapter">Isotropic diffusion</a></p>
+  </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../vnv_02_isotropic_diffusion/index.html" title="Isotropic diffusion"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="vnv_couette_lsm1_comparison.html" title="Couette flow - LSM-1 advection with different schemes (comparison)"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CYLAG 0.9 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Examples</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >Couette flow</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Couette flow - LSM-1 convergence test</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2023, Fabien Souillé.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,69 @@
+cylag.io package
+================
+
+Submodules
+----------
+
+cylag.io.converter module
+-------------------------
+
+.. automodule:: cylag.io.converter
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+cylag.io.parallel\_tags module
+------------------------------
+
+.. automodule:: cylag.io.parallel_tags
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+cylag.io.particles\_io module
+-----------------------------
+
+.. automodule:: cylag.io.particles_io
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+cylag.io.write\_particles module
+--------------------------------
+
+.. automodule:: cylag.io.write_particles
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+cylag.io.write\_statistics module
+---------------------------------
+
+.. automodule:: cylag.io.write_statistics
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+cylag.io.writer\_txt module
+---------------------------
+
+.. automodule:: cylag.io.writer_txt
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+cylag.io.writer\_vtk module
+---------------------------
+
+.. automodule:: cylag.io.writer_vtk
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: cylag.io
+   :members:
+   :undoc-members:
+   :show-inheritance:

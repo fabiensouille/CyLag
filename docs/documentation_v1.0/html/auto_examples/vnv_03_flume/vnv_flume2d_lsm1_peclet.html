@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Flume 2D - LSM-1 sensitivity to Peclet number &#8212; CYLAG 0.9 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/classic.css?v=51dfc302" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=427e2fde" />
+    
+    <script src="../../_static/documentation_options.js?v=049aceee"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Flume 3D - LSM-1" href="vnv_flume3d_lsm1.html" />
+    <link rel="prev" title="Flume 3D - LSM-3" href="vnv_flume3d_lsm3.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="vnv_flume3d_lsm1.html" title="Flume 3D - LSM-1"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="vnv_flume3d_lsm3.html" title="Flume 3D - LSM-3"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CYLAG 0.9 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Examples</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">Flume</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Flume 2D - LSM-1 sensitivity to Peclet number</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p><a class="reference internal" href="#sphx-glr-download-auto-examples-vnv-03-flume-vnv-flume2d-lsm1-peclet-py"><span class="std std-ref">Go to the end</span></a>
+to download the full example code.</p>
+</div>
+<section class="sphx-glr-example-title" id="flume-2d-lsm-1-sensitivity-to-peclet-number">
+<span id="sphx-glr-auto-examples-vnv-03-flume-vnv-flume2d-lsm1-peclet-py"></span><h1>Flume 2D - LSM-1 sensitivity to Peclet number<a class="headerlink" href="#flume-2d-lsm-1-sensitivity-to-peclet-number" title="Link to this heading">¶</a></h1>
+<p>In this example we compute the advection-diffusion of particles in an 2D flume
+with the LSM-1 model for different Peclet numbers.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">cylag</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pylab</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="c1">#sphinx_gallery_thumbnail_number = 4</span>
+</pre></div>
+</div>
+<section id="define-function-to-run-cylag">
+<h2>Define function to run CyLag<a class="headerlink" href="#define-function-to-run-cylag" title="Link to this heading">¶</a></h2>
+<p>In this exmple we use the LSM-1 model with diffusion and solve it using the Euler-Maruyama scheme.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">run_cylag</span><span class="p">(</span><span class="n">pe</span><span class="o">=</span><span class="mf">1.e3</span><span class="p">,</span> <span class="n">particle_file_name</span><span class="o">=</span><span class="s2">"particles_2d_pe"</span><span class="p">):</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Peclet number = "</span><span class="p">,</span> <span class="n">pe</span><span class="p">)</span>
+
+    <span class="c1"># define EulerianFieldSet :</span>
+    <span class="n">file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">'data'</span><span class="p">,</span> <span class="s1">'r2d_particles.slf'</span><span class="p">)</span>
+    <span class="n">bnd_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">'data'</span><span class="p">,</span> <span class="s1">'geo_particles.cli'</span><span class="p">)</span>
+    <span class="n">fset</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">EulerianFieldSet</span><span class="o">.</span><span class="n">from_telemac2d</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">bnd_file</span><span class="o">=</span><span class="n">bnd_file</span><span class="p">)</span>
+
+    <span class="c1"># define LagrangianParticleSet :</span>
+    <span class="n">circ</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span><span class="n">x0</span><span class="o">=-</span><span class="mf">180.</span><span class="p">,</span> <span class="n">y0</span><span class="o">=</span><span class="mf">500.</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mf">10.</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">180</span><span class="p">)</span>
+    <span class="n">position</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">init_positions_2d</span><span class="p">(</span><span class="n">poly</span><span class="o">=</span><span class="n">circ</span><span class="p">,</span> <span class="n">grid_res</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
+    <span class="n">npart</span> <span class="o">=</span> <span class="n">position</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">pset</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">LagrangianParticleSet</span><span class="p">(</span>\
+        <span class="n">position</span><span class="p">,</span>
+        <span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="c1"># set general parameters :</span>
+    <span class="n">Um</span> <span class="o">=</span> <span class="mf">0.5</span>      <span class="c1"># mean velocity for computation of Pe</span>
+    <span class="n">Lc</span> <span class="o">=</span> <span class="mf">1700.</span>    <span class="c1"># length scale of the flume for computation of Pe</span>
+    <span class="n">nu</span> <span class="o">=</span> <span class="n">Um</span><span class="o">*</span><span class="n">Lc</span><span class="o">/</span><span class="n">pe</span> <span class="c1"># diffusivity computed from Pe</span>
+
+    <span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">'final_time'</span><span class="p">:</span> <span class="mf">3600.</span><span class="p">,</span>
+        <span class="s1">'time_step'</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+        <span class="s1">'frozen_eulerian_fields'</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="s1">'model'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s1">'time_scheme'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s1">'particle_velocity_init'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s1">'diffusion_model'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s1">'horizontal_diffusivity'</span><span class="p">:</span> <span class="n">nu</span><span class="p">,</span>
+        <span class="s1">'boundary_conditions'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s1">'listing'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s1">'listing_printout_period'</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span>
+        <span class="s1">'output_file'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s1">'output_printout_period'</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+        <span class="s1">'output_rep'</span><span class="p">:</span> <span class="s1">'resu_02'</span><span class="p">,</span>
+        <span class="s1">'output_file_format'</span><span class="p">:</span> <span class="s1">'txt'</span><span class="p">,</span>
+        <span class="s1">'output_file_name'</span><span class="p">:</span> <span class="n">particle_file_name</span><span class="p">,</span>
+        <span class="p">}</span>
+
+    <span class="c1"># traking algo run</span>
+    <span class="c1"># ~~~~~~~~~~~~~~~~</span>
+    <span class="n">cylag_solver</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">Solver</span><span class="p">(</span><span class="n">fset</span><span class="p">,</span> <span class="n">pset</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span>
+    <span class="n">cylag_solver</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="run-cylag-for-different-peclet-number">
+<h2>Run CyLag for different Peclet number<a class="headerlink" href="#run-cylag-for-different-peclet-number" title="Link to this heading">¶</a></h2>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">Pe_list</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.e6</span><span class="p">,</span> <span class="mf">1.e5</span><span class="p">,</span> <span class="mf">1.e4</span><span class="p">,</span> <span class="mf">5.e3</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">Pe</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">Pe_list</span><span class="p">):</span>
+    <span class="n">run_cylag</span><span class="p">(</span><span class="n">Pe</span><span class="p">,</span> <span class="s2">"particles_2d_pe_</span><span class="si">{}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">idx</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Peclet number =  1000000.0
+================================================================================
+|                                INITIALIZATION                                |
+================================================================================
+ ~~&gt; Simulation type : 2D
+ ~~&gt; Lagrangian Stochastic Model : LSM-1
+ ~~&gt; Integration method : Euler
+ ~~&gt; Time interval : [0.000, 3600.000] - dt = 0.500
+ ~~&gt; Diffusion model : Constant horiz. and vert. diffusivity
+ ~~&gt; Particle velocity : Initialized from field set
+ ~~&gt; Wall boundary conditions : Specular rebound
+================================================================================
+|                                 TIME LOOP                                    |
+================================================================================
+Iter =       1000 ; Dt = 0.5000s ; Time = 00d 00:08:20 ; [=&gt;.............]  13%
+Iter =       2000 ; Dt = 0.5000s ; Time = 00d 00:16:40 ; [===&gt;...........]  27%
+Iter =       3000 ; Dt = 0.5000s ; Time = 00d 00:25:00 ; [=====&gt;.........]  41%
+Iter =       4000 ; Dt = 0.5000s ; Time = 00d 00:33:20 ; [=======&gt;.......]  55%
+Iter =       5000 ; Dt = 0.5000s ; Time = 00d 00:41:40 ; [=========&gt;.....]  69%
+Iter =       6000 ; Dt = 0.5000s ; Time = 00d 00:50:00 ; [===========&gt;...]  83%
+Iter =       7000 ; Dt = 0.5000s ; Time = 00d 00:58:20 ; [=============&gt;.]  97%
+================================================================================
+|                                    END                                       |
+================================================================================
+Problem.solve() completed in 1.1988391876220703s (wall time)
+Peclet number =  100000.0
+================================================================================
+|                                INITIALIZATION                                |
+================================================================================
+ ~~&gt; Simulation type : 2D
+ ~~&gt; Lagrangian Stochastic Model : LSM-1
+ ~~&gt; Integration method : Euler
+ ~~&gt; Time interval : [0.000, 3600.000] - dt = 0.500
+ ~~&gt; Diffusion model : Constant horiz. and vert. diffusivity
+ ~~&gt; Particle velocity : Initialized from field set
+ ~~&gt; Wall boundary conditions : Specular rebound
+================================================================================
+|                                 TIME LOOP                                    |
+================================================================================
+Iter =       1000 ; Dt = 0.5000s ; Time = 00d 00:08:20 ; [=&gt;.............]  13%
+Iter =       2000 ; Dt = 0.5000s ; Time = 00d 00:16:40 ; [===&gt;...........]  27%
+Iter =       3000 ; Dt = 0.5000s ; Time = 00d 00:25:00 ; [=====&gt;.........]  41%
+Iter =       4000 ; Dt = 0.5000s ; Time = 00d 00:33:20 ; [=======&gt;.......]  55%
+Iter =       5000 ; Dt = 0.5000s ; Time = 00d 00:41:40 ; [=========&gt;.....]  69%
+Iter =       6000 ; Dt = 0.5000s ; Time = 00d 00:50:00 ; [===========&gt;...]  83%
+Iter =       7000 ; Dt = 0.5000s ; Time = 00d 00:58:20 ; [=============&gt;.]  97%
+================================================================================
+|                                    END                                       |
+================================================================================
+Problem.solve() completed in 1.1574289798736572s (wall time)
+Peclet number =  10000.0
+================================================================================
+|                                INITIALIZATION                                |
+================================================================================
+ ~~&gt; Simulation type : 2D
+ ~~&gt; Lagrangian Stochastic Model : LSM-1
+ ~~&gt; Integration method : Euler
+ ~~&gt; Time interval : [0.000, 3600.000] - dt = 0.500
+ ~~&gt; Diffusion model : Constant horiz. and vert. diffusivity
+ ~~&gt; Particle velocity : Initialized from field set
+ ~~&gt; Wall boundary conditions : Specular rebound
+================================================================================
+|                                 TIME LOOP                                    |
+================================================================================
+Iter =       1000 ; Dt = 0.5000s ; Time = 00d 00:08:20 ; [=&gt;.............]  13%
+Iter =       2000 ; Dt = 0.5000s ; Time = 00d 00:16:40 ; [===&gt;...........]  27%
+Iter =       3000 ; Dt = 0.5000s ; Time = 00d 00:25:00 ; [=====&gt;.........]  41%
+Iter =       4000 ; Dt = 0.5000s ; Time = 00d 00:33:20 ; [=======&gt;.......]  55%
+Iter =       5000 ; Dt = 0.5000s ; Time = 00d 00:41:40 ; [=========&gt;.....]  69%
+Iter =       6000 ; Dt = 0.5000s ; Time = 00d 00:50:00 ; [===========&gt;...]  83%
+Iter =       7000 ; Dt = 0.5000s ; Time = 00d 00:58:20 ; [=============&gt;.]  97%
+================================================================================
+|                                    END                                       |
+================================================================================
+Problem.solve() completed in 1.2623884677886963s (wall time)
+Peclet number =  5000.0
+================================================================================
+|                                INITIALIZATION                                |
+================================================================================
+ ~~&gt; Simulation type : 2D
+ ~~&gt; Lagrangian Stochastic Model : LSM-1
+ ~~&gt; Integration method : Euler
+ ~~&gt; Time interval : [0.000, 3600.000] - dt = 0.500
+ ~~&gt; Diffusion model : Constant horiz. and vert. diffusivity
+ ~~&gt; Particle velocity : Initialized from field set
+ ~~&gt; Wall boundary conditions : Specular rebound
+================================================================================
+|                                 TIME LOOP                                    |
+================================================================================
+Iter =       1000 ; Dt = 0.5000s ; Time = 00d 00:08:20 ; [=&gt;.............]  13%
+Iter =       2000 ; Dt = 0.5000s ; Time = 00d 00:16:40 ; [===&gt;...........]  27%
+Iter =       3000 ; Dt = 0.5000s ; Time = 00d 00:25:00 ; [=====&gt;.........]  41%
+Iter =       4000 ; Dt = 0.5000s ; Time = 00d 00:33:20 ; [=======&gt;.......]  55%
+Iter =       5000 ; Dt = 0.5000s ; Time = 00d 00:41:40 ; [=========&gt;.....]  69%
+Iter =       6000 ; Dt = 0.5000s ; Time = 00d 00:50:00 ; [===========&gt;...]  83%
+Iter =       7000 ; Dt = 0.5000s ; Time = 00d 00:58:20 ; [=============&gt;.]  97%
+================================================================================
+|                                    END                                       |
+================================================================================
+Problem.solve() completed in 1.333930253982544s (wall time)
+</pre></div>
+</div>
+</section>
+<section id="post-processing">
+<h2>Post-processing<a class="headerlink" href="#post-processing" title="Link to this heading">¶</a></h2>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">Pe</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">Pe_list</span><span class="p">):</span>
+
+    <span class="n">part</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">ParticlesIO</span><span class="o">.</span><span class="n">from_cylag_txt</span><span class="p">(</span><span class="s1">'resu_02/particles_2d_pe_</span><span class="si">{}</span><span class="s1">.txt'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">idx</span><span class="p">))</span>
+
+    <span class="n">rec</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">part</span><span class="o">.</span><span class="n">times</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">time</span> <span class="o">=</span> <span class="n">part</span><span class="o">.</span><span class="n">times</span><span class="p">[</span><span class="n">rec</span><span class="p">]</span>
+
+    <span class="n">traj_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mi">130</span><span class="p">,</span> <span class="mi">140</span><span class="p">,</span> <span class="mi">150</span><span class="p">]</span>
+    <span class="n">traj</span> <span class="o">=</span> <span class="n">part</span><span class="o">.</span><span class="n">get_trajectories</span><span class="p">(</span><span class="n">traj_list</span><span class="p">)</span>
+
+    <span class="c1"># Define field set to plot velocity field:</span>
+    <span class="n">file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">'data'</span><span class="p">,</span> <span class="s1">'r2d_particles.slf'</span><span class="p">)</span>
+    <span class="n">bnd_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">'data'</span><span class="p">,</span> <span class="s1">'geo_particles.cli'</span><span class="p">)</span>
+    <span class="n">fset</span> <span class="o">=</span> <span class="n">cylag</span><span class="o">.</span><span class="n">EulerianFieldSet</span><span class="o">.</span><span class="n">from_telemac2d</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">bnd_file</span><span class="o">=</span><span class="n">bnd_file</span><span class="p">)</span>
+    <span class="n">tri</span> <span class="o">=</span> <span class="n">fset</span><span class="o">.</span><span class="n">get_mtri_triangulation</span><span class="p">()</span>
+    <span class="n">ux</span> <span class="o">=</span> <span class="n">fset</span><span class="o">.</span><span class="n">get_field</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">time</span><span class="p">)</span>
+    <span class="n">uy</span> <span class="o">=</span> <span class="n">fset</span><span class="o">.</span><span class="n">get_field</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">time</span><span class="p">)</span>
+    <span class="n">velocity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">ux</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">uy</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="c1"># Plot result:</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+    <span class="n">cylag</span><span class="o">.</span><span class="n">set_rcparams</span><span class="p">()</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">'equal'</span><span class="p">)</span>
+
+    <span class="c1"># plot mesh and velocity</span>
+    <span class="n">levels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mi">13</span><span class="p">)</span>
+    <span class="n">cs</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">tricontourf</span><span class="p">(</span><span class="n">tri</span><span class="p">,</span> <span class="n">velocity</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">levels</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">'RdBu_r'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s2">"both"</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">cs</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"$|</span><span class="se">\\</span><span class="s2">textbf</span><span class="si">{U}</span><span class="s2">_f|$ (m/s)"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">triplot</span><span class="p">(</span><span class="n">tri</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.12</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">'k'</span><span class="p">)</span>
+
+    <span class="c1"># plot trajectories</span>
+    <span class="k">for</span> <span class="n">tr</span> <span class="ow">in</span> <span class="n">traj</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tr</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">rec</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">tr</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">rec</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.35</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">'o'</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">'k'</span><span class="p">)</span>
+
+    <span class="c1"># plot initial and final positions</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">part</span><span class="o">.</span><span class="n">xp</span><span class="p">[</span><span class="mi">0</span><span class="p">][:],</span> <span class="n">part</span><span class="o">.</span><span class="n">yp</span><span class="p">[</span><span class="mi">0</span><span class="p">][:],</span> <span class="n">c</span><span class="o">=</span><span class="s1">'b'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">'o'</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"$x_p(0)$"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">part</span><span class="o">.</span><span class="n">xp</span><span class="p">[</span><span class="n">rec</span><span class="p">][:],</span> <span class="n">part</span><span class="o">.</span><span class="n">yp</span><span class="p">[</span><span class="n">rec</span><span class="p">][:],</span> <span class="n">c</span><span class="o">=</span><span class="s1">'k'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">'o'</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"$x_p(t_f)$"</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">250</span><span class="p">,</span> <span class="mi">1550</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="mi">300</span><span class="p">,</span> <span class="mi">700</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"Peclet number = </span><span class="si">{}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">Pe</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">"figs/cylag_particles_2d_pe_</span><span class="si">{}</span><span class="s2">.png"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">idx</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">"png"</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<ul class="sphx-glr-horizontal">
+<li><img src="../../_images/sphx_glr_vnv_flume2d_lsm1_peclet_001.png" srcset="../../_images/sphx_glr_vnv_flume2d_lsm1_peclet_001.png" alt="Peclet number = 1000000.0" class = "sphx-glr-multi-img"/></li>
+<li><img src="../../_images/sphx_glr_vnv_flume2d_lsm1_peclet_002.png" srcset="../../_images/sphx_glr_vnv_flume2d_lsm1_peclet_002.png" alt="Peclet number = 100000.0" class = "sphx-glr-multi-img"/></li>
+<li><img src="../../_images/sphx_glr_vnv_flume2d_lsm1_peclet_003.png" srcset="../../_images/sphx_glr_vnv_flume2d_lsm1_peclet_003.png" alt="Peclet number = 10000.0" class = "sphx-glr-multi-img"/></li>
+<li><img src="../../_images/sphx_glr_vnv_flume2d_lsm1_peclet_004.png" srcset="../../_images/sphx_glr_vnv_flume2d_lsm1_peclet_004.png" alt="Peclet number = 5000.0" class = "sphx-glr-multi-img"/></li>
+</ul>
+<p>Clean:</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="k">del</span> <span class="n">part</span>
+<span class="k">del</span> <span class="n">rec</span>
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 6.813 seconds)</p>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-vnv-03-flume-vnv-flume2d-lsm1-peclet-py">
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/45c1d4314e8b29a272622be902e99891/vnv_flume2d_lsm1_peclet.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">vnv_flume2d_lsm1_peclet.ipynb</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/78d26f9959aaeed9ab86e480280537b1/vnv_flume2d_lsm1_peclet.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">vnv_flume2d_lsm1_peclet.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-zip docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/447b985108dfea8ed5d8b097924168ba/vnv_flume2d_lsm1_peclet.zip"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">zipped:</span> <span class="pre">vnv_flume2d_lsm1_peclet.zip</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/logo_cylag_sb.png" alt="Logo of CYLAG"/>
+            </a></p>
+<h3><a href="../../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../get_started.html">Quick installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models.html">Mathematical models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../algo.html">Particle-mesh implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../setup.html">Setup, inputs and practical informations</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Gallery of examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#couette-flow">Couette flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#isotropic-diffusion">Isotropic diffusion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#flume">Flume</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#tide">Tide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#meander">Meander</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#taylor-vortices">Taylor vortices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#settling">Settling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#sources">Sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#statistics">Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#poly-disperse">Poly-disperse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#oil-slick-module">Oil slick module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#algae-module">Algae module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#macrophyte-module">Macrophyte module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#fish-module">Fish module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#jellyfish-module">Jellyfish module</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#online">Online</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../good_practices.html">Good practices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev.html">Developer guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/modules.html">API</a></li>
+</ul>
+
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="vnv_flume3d_lsm3.html"
+                          title="previous chapter">Flume 3D - LSM-3</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="vnv_flume3d_lsm1.html"
+                          title="next chapter">Flume 3D - LSM-1</a></p>
+  </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="vnv_flume3d_lsm1.html" title="Flume 3D - LSM-1"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="vnv_flume3d_lsm3.html" title="Flume 3D - LSM-3"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">CYLAG 0.9 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Examples</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >Flume</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Flume 2D - LSM-1 sensitivity to Peclet number</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2023, Fabien Souillé.
+    </div>
+  </body>
+</html>

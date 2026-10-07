@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Presentation &#8212; CYLAG 0.9 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/classic.css?v=51dfc302" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=427e2fde" />
+    
+    <script src="_static/documentation_options.js?v=049aceee"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Quick installation" href="get_started.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="get_started.html" title="Quick installation"
+             accesskey="N">next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">CYLAG 0.9 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Presentation</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="presentation">
+<h1>Presentation<a class="headerlink" href="#presentation" title="Link to this heading">¶</a></h1>
+<p><strong>CyLag</strong> is a high-performance Cython-based framework for simulating Lagrangian particle transport and dispersion in fluid flows, with a particular focus on free-surface hydrodynamic applications.</p>
+<ul class="simple">
+<li><p><strong>Version</strong>: 0.9</p></li>
+<li><p><strong>Author</strong>: Fabien Souillé (EDF R&amp;D, LNHE)</p></li>
+<li><p><strong>First release date</strong>: 2023</p></li>
+<li><p><strong>Language</strong>: <a class="reference external" href="http://cython.org/">Cython</a></p></li>
+<li><p><strong>License</strong>: <a class="reference external" href="https://opensource.org/license/gpl-3.0">GNU_GPL_v3</a></p></li>
+</ul>
+<video style="display:block; margin: 0 auto;" controls autoplay src="_static/video/tide.mp4" width="600" ></video>
+<center> <i>Example of a simulation with TELEMAC-2D/CyLag (tide example)</i> </center><section id="key-features">
+<h2>Key Features<a class="headerlink" href="#key-features" title="Link to this heading">¶</a></h2>
+<p>CyLag simulates the transport and dispersion of particles in fluid flows using a <strong>hybrid Eulerian-Lagrangian approach</strong>:</p>
+<ul class="simple">
+<li><p><strong>Eulerian</strong>: flow fields (velocity, turbulence) computed on a fixed mesh by a hydrodynamic solver (such as <a class="reference external" href="https://www.opentelemac.org/">openTELEMAC</a>)</p></li>
+<li><p><strong>Lagrangian</strong>: individual particles tracked through the flow by solving a Lagrangian Stochastic Model (LSM)</p></li>
+</ul>
+<figure class="align-center" id="id1">
+<a class="reference internal image-reference" href="_images/cylag_particles_2d_pe_2.png"><img alt="_images/cylag_particles_2d_pe_2.png" src="_images/cylag_particles_2d_pe_2.png" style="width: 900px;" />
+</a>
+<figcaption>
+<p><span class="caption-text"><em>Example of a simulation with TELEMAC-2D/CyLag (flume example)</em>.</span><a class="headerlink" href="#id1" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>Key Features of CyLag include:</p>
+<ul class="simple">
+<li><p><strong>Multiple Lagrangian Stochastic Models (LSM)</strong>:</p>
+<ul>
+<li><p>LSM-1: Simple advection-diffusion (state: position only)</p></li>
+<li><p>LSM-2: Newton’s second law of motion for each particle + velocity dispersion (state: position + velocity)</p></li>
+<li><p>LSM-3: Advanced turbulent dispersion model (state: position + velocity + fluid velocity seen)</p></li>
+</ul>
+</li>
+<li><p><strong>Online/Offline modes</strong>:</p>
+<ul>
+<li><p>Offline mode allows multiple computations from a single hydrodynamic simulation</p></li>
+<li><p>Online mode is still available and designed to be used with the TELEMAC API</p></li>
+</ul>
+</li>
+<li><p><strong>Flexible Mesh Support</strong>:</p>
+<ul>
+<li><p>Unstructured triangular meshes in 2D/3D</p></li>
+<li><p>Support for TELEMAC format</p></li>
+</ul>
+</li>
+<li><p><strong>High Performance</strong>:</p>
+<ul>
+<li><p>Written in Cython for C-level speed</p></li>
+<li><p>Optimized memory layouts for cache efficiency</p></li>
+<li><p>Fast point localization algorithms</p></li>
+<li><p>Optional MPI parallelization for large-scale simulations</p></li>
+</ul>
+</li>
+<li><p><strong>Physical Realism</strong>:</p>
+<ul>
+<li><p>Turbulent diffusion with various closure models</p></li>
+<li><p>Wall rebound and open boundary conditions</p></li>
+<li><p>Particle-fluid interaction (drag, added mass, buoyancy)</p></li>
+<li><p>Multiple drag coefficient models</p></li>
+</ul>
+</li>
+<li><p><strong>Various Modules</strong>:</p>
+<ul>
+<li><p><em>Oil slick module</em>: for the modeling of oil spill accidents</p></li>
+<li><p><em>Algae module</em>: for the modeling of algae transport</p></li>
+<li><p><em>Macrophytes module</em>: for the simulation of uprooted aquatic vegetation</p></li>
+<li><p><em>Fish module</em>: for the simulation of aquatic wildlife behavior</p></li>
+<li><p><em>Jellyfish module</em>: for the modeling of jellyfish transport</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="get-started">
+<h2>Get started<a class="headerlink" href="#get-started" title="Link to this heading">¶</a></h2>
+<p>To get started, see the <a class="reference internal" href="get_started.html#get-started"><span class="std std-ref">Quick installation</span></a> tutorial for the basic installation procedure and basic simulation setup with CyLag.
+For details on how to set up a simulation with CyLag, see the <a class="reference internal" href="setup.html#setup"><span class="std std-ref">Setup, inputs and practical informations</span></a> and <a class="reference internal" href="good_practices.html#good-practices"><span class="std std-ref">Good practices</span></a> sections.
+You may also want to check the gallery of examples, in which several simulation examples are provided with the corresponding scripts.
+Theoretical aspects and a description of the mathematical models are provided in the <a class="reference internal" href="models.html#models"><span class="std std-ref">Mathematical models</span></a> section.</p>
+<p><strong>Need help?</strong> Send an email to: <a class="reference external" href="mailto:fabien&#46;souille&#37;&#52;&#48;edf&#46;fr">fabien<span>&#46;</span>souille<span>&#64;</span>edf<span>&#46;</span>fr</a></p>
+</section>
+<section id="table-of-contents">
+<h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Link to this heading">¶</a></h2>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="get_started.html">Quick installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="get_started.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="get_started.html#compile-and-import-cylag">Compile and import CyLag</a></li>
+<li class="toctree-l2"><a class="reference internal" href="get_started.html#repository">Repository</a></li>
+<li class="toctree-l2"><a class="reference internal" href="get_started.html#build-documentation">Build documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="get_started.html#setup-a-simulation-and-run-cylag">Setup a simulation and run CyLag</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Mathematical models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="models.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#lagrangian-stochastic-model-n1-lsm-1">Lagrangian Stochastic Model n°1 (LSM-1)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#lagrangian-stochastic-model-n2-lsm-2">Lagrangian Stochastic Model n°2 (LSM-2)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#lagrangian-stochastic-model-n3-lsm-3">Lagrangian Stochastic Model n°3 (LSM-3)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#pseudo-3d-velocity-corrections">Pseudo-3D velocity corrections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#particle-modules">Particle Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="algo.html">Particle-mesh implementation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="algo.html#general-overview-of-the-algorithm">General overview of the algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="algo.html#interpolation">Interpolation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="algo.html#search-algorithm">Search algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="algo.html#boundary-conditions">Boundary conditions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">Setup, inputs and practical informations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#setup-philosophy">Setup philosophy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#overview-of-input-parameters">Overview of input parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#adding-particles-to-a-simulation">Adding particles to a simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#saving-particles">Saving particles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#post-processing-particle-files">Post-processing particle files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html">Gallery of examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="auto_examples/index.html#couette-flow">Couette flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auto_examples/index.html#isotropic-diffusion">Isotropic diffusion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auto_examples/index.html#flume">Flume</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auto_examples/index.html#tide">Tide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auto_examples/index.html#meander">Meander</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auto_examples/index.html#taylor-vortices">Taylor vortices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auto_examples/index.html#settling">Settling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auto_examples/index.html#sources">Sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auto_examples/index.html#statistics">Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auto_examples/index.html#poly-disperse">Poly-disperse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auto_examples/index.html#oil-slick-module">Oil slick module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auto_examples/index.html#algae-module">Algae module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auto_examples/index.html#macrophyte-module">Macrophyte module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auto_examples/index.html#fish-module">Fish module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auto_examples/index.html#jellyfish-module">Jellyfish module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auto_examples/index.html#online">Online</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="good_practices.html">Good practices</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="good_practices.html#mesh-and-eulerian-fields-quality">Mesh and Eulerian fields quality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="good_practices.html#number-of-particles">Number of particles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="good_practices.html#choice-of-numerical-parameters">Choice of numerical parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="good_practices.html#i-o-frequency">I/O frequency</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dev.html">Developer guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dev.html#get-access">Get access</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dev.html#development-checklist">Development checklist</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dev.html#unit-tests">Unit tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dev.html#performance-considerations-and-profiling">Performance considerations and profiling</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/modules.html">API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/cylag.html">cylag package</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="license">
+<h2>License<a class="headerlink" href="#license" title="Link to this heading">¶</a></h2>
+<p>Project name: CyLag Copyright (C) 2023 Fabien Souille</p>
+<p>This program is free: you can redistribute it and/or modify it under the terms of the GNU General Public License published by the Free Software Foundation, either version 3 of the license, or (at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</p>
+<p>See the GNU General Public License for details.</p>
+<p>You should have received a copy of the GNU General Public License with this program. If not, see &lt;<a class="reference external" href="https://www.gnu.org/licenses/">https://www.gnu.org/licenses/</a>&gt;.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="#">
+              <img class="logo" src="_static/logo_cylag_sb.png" alt="Logo of CYLAG"/>
+            </a></p>
+<h3><a href="#">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="get_started.html">Quick installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Mathematical models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="algo.html">Particle-mesh implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">Setup, inputs and practical informations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html">Gallery of examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="good_practices.html">Good practices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev.html">Developer guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/modules.html">API</a></li>
+</ul>
+
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="get_started.html"
+                          title="next chapter">Quick installation</a></p>
+  </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="get_started.html" title="Quick installation"
+             >next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">CYLAG 0.9 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Presentation</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2023, Fabien Souillé.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>cylag.modules package &#8212; CYLAG 0.9 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/classic.css?v=51dfc302" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=427e2fde" />
+    
+    <script src="../_static/documentation_options.js?v=049aceee"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="cylag.lsm package" href="cylag.lsm.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="cylag.lsm.html" title="cylag.lsm package"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">CYLAG 0.9 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >cylag</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="cylag.html" accesskey="U">cylag package</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">cylag.modules package</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="cylag-modules-package">
+<h1>cylag.modules package<a class="headerlink" href="#cylag-modules-package" title="Link to this heading">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+</section>
+<section id="module-cylag.modules.algae">
+<span id="cylag-modules-algae-module"></span><h2>cylag.modules.algae module<a class="headerlink" href="#module-cylag.modules.algae" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="cylag.modules.algae.AlgaeParticleSet">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cylag.modules.algae.</span></span><span class="sig-name descname"><span class="pre">AlgaeParticleSet</span></span><a class="headerlink" href="#cylag.modules.algae.AlgaeParticleSet" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet" title="cylag.core.lagrangian_particle_set.LagrangianParticleSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">LagrangianParticleSet</span></code></a></p>
+<p>Algae particle class</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>drag_coefficient_model</strong> (<em>int</em><em>,</em>) – model for the drag coefficient (default: 1)
+- 0: Constant drag model, Cd=cst
+- 1: Schiller et Nauman, (1935)
+- 2: Almedeij (2008)
+- 3: Algae formula: Cd = exp(self.Cd_a - self.Cd_b*log(Re))</p></li>
+<li><p><strong>Cd_a</strong> (<em>float</em><em>,</em>) – coef in algae Cd formula (default: Iridaea Flaccida, a=6.822121)</p></li>
+<li><p><strong>Cd_b</strong> (<em>float</em><em>,</em>) – coef in algae Cd formula (default: Iridaea Flaccida, b=0.800627)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.modules.algae.AlgaeParticleSet.Cd_a">
+<span class="sig-name descname"><span class="pre">Cd_a</span></span><a class="headerlink" href="#cylag.modules.algae.AlgaeParticleSet.Cd_a" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.modules.algae.AlgaeParticleSet.Cd_b">
+<span class="sig-name descname"><span class="pre">Cd_b</span></span><a class="headerlink" href="#cylag.modules.algae.AlgaeParticleSet.Cd_b" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylag.modules.algae.AlgaeParticleSet.drag_coefficient">
+<span class="sig-name descname"><span class="pre">drag_coefficient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">U</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dp</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.modules.algae.AlgaeParticleSet.drag_coefficient" title="Link to this definition">¶</a></dt>
+<dd><p>Computes the drag coefficient of a Algae particle.</p>
+<p>Fd=(1/2)*rhof*Sp*Cd*|U|*U</p>
+<dl class="simple">
+<dt>drag_coefficient_model :</dt><dd><ul class="simple">
+<li><p>0: Constant drag model, Cd=cst</p></li>
+<li><p>1: Schiller et Nauman, (1935),</p></li>
+<li><p>2: Almedeij (2008),</p></li>
+<li><p>3: Algae formula: Cd = exp(self.Cd_a - self.Cd_b*log(Re))</p></li>
+</ul>
+</dd>
+<dt>Coefficients depending on the species :</dt><dd><ul class="simple">
+<li><p>1: Iridaea Flaccida : Cd_a=6.822121, Cd_b=0.800627,</p></li>
+<li><p>2: Pelvetiopsis Limitata : Cd_a=8.214783, Cd_b=0.877036,</p></li>
+<li><p>3: Gigartina Leptorhynchos : Cd_a=6.773712, Cd_b=0.774252.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>U</strong> (<em>float</em><em>, </em><em>relative velocity</em>)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Cd</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float, drag coefficient</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-cylag.modules.custom_particle_set">
+<span id="cylag-modules-custom-particle-set-module"></span><h2>cylag.modules.custom_particle_set module<a class="headerlink" href="#module-cylag.modules.custom_particle_set" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="cylag.modules.custom_particle_set.CustomParticleSet">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cylag.modules.custom_particle_set.</span></span><span class="sig-name descname"><span class="pre">CustomParticleSet</span></span><a class="headerlink" href="#cylag.modules.custom_particle_set.CustomParticleSet" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet" title="cylag.core.lagrangian_particle_set.LagrangianParticleSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">LagrangianParticleSet</span></code></a></p>
+<p>Custom particle class for user defined additional velocity or force</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>additional_velocity</strong> (<em>bool</em><em>, </em><em>activate custom model based on added velocity</em>) – WARNING: compatible with LSM-1 formulation only</p></li>
+<li><p><strong>additional_force</strong> (<em>bool</em><em>, </em><em>activate custom model based on added force</em>) – WARNING: compatible with LSM-2 and 3 formulations only</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.modules.custom_particle_set.CustomParticleSet.addforce">
+<span class="sig-name descname"><span class="pre">addforce</span></span><a class="headerlink" href="#cylag.modules.custom_particle_set.CustomParticleSet.addforce" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.modules.custom_particle_set.CustomParticleSet.addvelocity">
+<span class="sig-name descname"><span class="pre">addvelocity</span></span><a class="headerlink" href="#cylag.modules.custom_particle_set.CustomParticleSet.addvelocity" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-cylag.modules.fish">
+<span id="cylag-modules-fish-module"></span><h2>cylag.modules.fish module<a class="headerlink" href="#module-cylag.modules.fish" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="cylag.modules.fish.FishParticleSet">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cylag.modules.fish.</span></span><span class="sig-name descname"><span class="pre">FishParticleSet</span></span><a class="headerlink" href="#cylag.modules.fish.FishParticleSet" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet" title="cylag.core.lagrangian_particle_set.LagrangianParticleSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">LagrangianParticleSet</span></code></a></p>
+<p>Fish particle class</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fish_mass</strong> (<em>float</em><em>, </em><em>mass</em><em> of </em><em>the fish</em><em> (</em><em>default: 0.3</em><em>)</em>)</p></li>
+<li><p><strong>fish_length</strong> (<em>float</em><em>, </em><em>length</em><em> of </em><em>the fish</em><em> (</em><em>default: 0.152</em><em>)</em>)</p></li>
+<li><p><strong>swimming_model</strong> (<em>int</em><em>, </em><em>swimming bahavior model</em>) – 1 : Fish IBM - LSM1 (swimming velocity)
+2 : Fish CBM - LSM1 (swimming velocity)
+3 : Fish IBM - LSM2 (swimming thrust force)
+4 : Fish CBM - LSM2 (swimming thrust force)</p></li>
+<li><p><strong>swimming_threshold_fluid_velocity</strong> – threshold velocity that trigger change of state
+(default : [0.15, 0.25])</p></li>
+<li><p><strong>swimming_velocity_states</strong> – swimming velocity of fish for each latent state
+(default : [0.15, 0.25, 0.5])</p></li>
+<li><p><strong>swimming_dispersion</strong> – dispersion of the direction of swimming for
+latent states 2 and 3
+(default : [0.1, 0.2])</p></li>
+<li><p><strong>swimming_thrust_forces</strong> – swimming thrust force of fish for each latent state
+(default : [6.e-4, 6.e-3, 6.5e-3])</p></li>
+<li><p><strong>attraction_radius</strong> (<em>float</em>) – attraction radius for the CBM model (default: 10.)</p></li>
+<li><p><strong>orientation_radius</strong> (<em>float</em>) – orientation radius for the CBM model (default: 5.)</p></li>
+<li><p><strong>repulsion_radius</strong> (<em>float</em>) – repulsion radius for the CBM model (default: .5)</p></li>
+<li><p><strong>blind_angle</strong> (<em>float</em>) – angle defining the cone of blindness of fish
+for the CBM model (default: 60.)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.modules.fish.FishParticleSet.addforce">
+<span class="sig-name descname"><span class="pre">addforce</span></span><a class="headerlink" href="#cylag.modules.fish.FishParticleSet.addforce" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.modules.fish.FishParticleSet.addvelocity">
+<span class="sig-name descname"><span class="pre">addvelocity</span></span><a class="headerlink" href="#cylag.modules.fish.FishParticleSet.addvelocity" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.modules.fish.FishParticleSet.attraction_radius">
+<span class="sig-name descname"><span class="pre">attraction_radius</span></span><a class="headerlink" href="#cylag.modules.fish.FishParticleSet.attraction_radius" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.modules.fish.FishParticleSet.blind_angle">
+<span class="sig-name descname"><span class="pre">blind_angle</span></span><a class="headerlink" href="#cylag.modules.fish.FishParticleSet.blind_angle" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.modules.fish.FishParticleSet.orientation_radius">
+<span class="sig-name descname"><span class="pre">orientation_radius</span></span><a class="headerlink" href="#cylag.modules.fish.FishParticleSet.orientation_radius" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.modules.fish.FishParticleSet.repulsion_radius">
+<span class="sig-name descname"><span class="pre">repulsion_radius</span></span><a class="headerlink" href="#cylag.modules.fish.FishParticleSet.repulsion_radius" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.modules.fish.FishParticleSet.swimming_dispersion">
+<span class="sig-name descname"><span class="pre">swimming_dispersion</span></span><a class="headerlink" href="#cylag.modules.fish.FishParticleSet.swimming_dispersion" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.modules.fish.FishParticleSet.swimming_model">
+<span class="sig-name descname"><span class="pre">swimming_model</span></span><a class="headerlink" href="#cylag.modules.fish.FishParticleSet.swimming_model" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.modules.fish.FishParticleSet.swimming_threshold_fluid_velocity">
+<span class="sig-name descname"><span class="pre">swimming_threshold_fluid_velocity</span></span><a class="headerlink" href="#cylag.modules.fish.FishParticleSet.swimming_threshold_fluid_velocity" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.modules.fish.FishParticleSet.swimming_thrust_forces">
+<span class="sig-name descname"><span class="pre">swimming_thrust_forces</span></span><a class="headerlink" href="#cylag.modules.fish.FishParticleSet.swimming_thrust_forces" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.modules.fish.FishParticleSet.swimming_velocity_states">
+<span class="sig-name descname"><span class="pre">swimming_velocity_states</span></span><a class="headerlink" href="#cylag.modules.fish.FishParticleSet.swimming_velocity_states" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-cylag.modules.jellyfish">
+<span id="cylag-modules-jellyfish-module"></span><h2>cylag.modules.jellyfish module<a class="headerlink" href="#module-cylag.modules.jellyfish" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="cylag.modules.jellyfish.JellyfishParticleSet">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cylag.modules.jellyfish.</span></span><span class="sig-name descname"><span class="pre">JellyfishParticleSet</span></span><a class="headerlink" href="#cylag.modules.jellyfish.JellyfishParticleSet" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet" title="cylag.core.lagrangian_particle_set.LagrangianParticleSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">LagrangianParticleSet</span></code></a></p>
+<p>Jellyfish particle class</p>
+<p>Drag formula from : Wang, K. et al. (2026),
+An improved Lagrangian particle tracking method with tentacle length correction for jellyfish,
+Ocean Engineering, 364, 127154.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>drag_coefficient_model</strong> (<em>int</em><em>,</em>) – model for the drag coefficient (default: 1)
+- 0: Constant drag model, Cd=cst
+- 1: Schiller et Nauman, (1935)
+- 2: Almedeij (2008)
+- 3: Jellyfish formula from Daniel (1983) and Wang &amp; al. (2026)</p></li>
+<li><p><strong>Cd_a</strong> (<em>float</em><em>,</em>) – coef in Jellyfish Cd formula (default: 0.0285)</p></li>
+<li><p><strong>Cd_b</strong> (<em>float</em><em>,</em>) – coef in Jellyfish Cd formula (default: -0.0002)</p></li>
+<li><p><strong>Cd_c1</strong> (<em>float</em><em>,</em>) – coef in Jellyfish Cd formula (default: 381.4771)</p></li>
+<li><p><strong>Cd_d1</strong> (<em>float</em><em>,</em>) – coef in Jellyfish Cd formula (default: 33.1604)</p></li>
+<li><p><strong>Cd_c2</strong> (<em>float</em><em>,</em>) – coef in Jellyfish Cd formula (default: 125.8822)</p></li>
+<li><p><strong>Cd_d2</strong> (<em>float</em><em>,</em>) – coef in Jellyfish Cd formula (default: 1.153211)</p></li>
+<li><p><strong>bell_diameter_ratio</strong> (<em>float</em>) – Bell length ratio (bell_height/diameter) (default: 1.)</p></li>
+<li><p><strong>tentacle_length_ratio</strong> (<em>float</em>) – Tentacle length ratio (length/bell_height) (default: 4.)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.modules.jellyfish.JellyfishParticleSet.Cd_a">
+<span class="sig-name descname"><span class="pre">Cd_a</span></span><a class="headerlink" href="#cylag.modules.jellyfish.JellyfishParticleSet.Cd_a" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.modules.jellyfish.JellyfishParticleSet.Cd_b">
+<span class="sig-name descname"><span class="pre">Cd_b</span></span><a class="headerlink" href="#cylag.modules.jellyfish.JellyfishParticleSet.Cd_b" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.modules.jellyfish.JellyfishParticleSet.Cd_c1">
+<span class="sig-name descname"><span class="pre">Cd_c1</span></span><a class="headerlink" href="#cylag.modules.jellyfish.JellyfishParticleSet.Cd_c1" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.modules.jellyfish.JellyfishParticleSet.Cd_c2">
+<span class="sig-name descname"><span class="pre">Cd_c2</span></span><a class="headerlink" href="#cylag.modules.jellyfish.JellyfishParticleSet.Cd_c2" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.modules.jellyfish.JellyfishParticleSet.Cd_d1">
+<span class="sig-name descname"><span class="pre">Cd_d1</span></span><a class="headerlink" href="#cylag.modules.jellyfish.JellyfishParticleSet.Cd_d1" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.modules.jellyfish.JellyfishParticleSet.Cd_d2">
+<span class="sig-name descname"><span class="pre">Cd_d2</span></span><a class="headerlink" href="#cylag.modules.jellyfish.JellyfishParticleSet.Cd_d2" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.modules.jellyfish.JellyfishParticleSet.bdr">
+<span class="sig-name descname"><span class="pre">bdr</span></span><a class="headerlink" href="#cylag.modules.jellyfish.JellyfishParticleSet.bdr" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylag.modules.jellyfish.JellyfishParticleSet.drag_coefficient">
+<span class="sig-name descname"><span class="pre">drag_coefficient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">U</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dp</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.modules.jellyfish.JellyfishParticleSet.drag_coefficient" title="Link to this definition">¶</a></dt>
+<dd><p>Computes the drag coefficient of a Jellyfish particle.</p>
+<p>Fd=(1/2)*rhof*Sp*Cd*|U|*U</p>
+<dl class="simple">
+<dt>drag_coefficient_model :</dt><dd><ul class="simple">
+<li><p>0: Constant drag model, Cd=cst</p></li>
+<li><p>1: Schiller et Nauman, (1935),</p></li>
+<li><p>2: Almedeij (2008),</p></li>
+<li><p>3: Jellyfish formula from Daniel (1983) and Wang &amp; al. (2026)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>U</strong> (<em>float</em><em>, </em><em>relative velocity</em>)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Cd</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float, drag coefficient</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.modules.jellyfish.JellyfishParticleSet.tlr">
+<span class="sig-name descname"><span class="pre">tlr</span></span><a class="headerlink" href="#cylag.modules.jellyfish.JellyfishParticleSet.tlr" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-cylag.modules.macrophyte">
+<span id="cylag-modules-macrophyte-module"></span><h2>cylag.modules.macrophyte module<a class="headerlink" href="#module-cylag.modules.macrophyte" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="cylag.modules.macrophyte.MacrophyteParticleSet">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cylag.modules.macrophyte.</span></span><span class="sig-name descname"><span class="pre">MacrophyteParticleSet</span></span><a class="headerlink" href="#cylag.modules.macrophyte.MacrophyteParticleSet" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet" title="cylag.core.lagrangian_particle_set.LagrangianParticleSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">LagrangianParticleSet</span></code></a></p>
+<p>Macrophyte particle class</p>
+<section id="macrophyte-specific-parameters">
+<h3>Macrophyte specific parameters<a class="headerlink" href="#macrophyte-specific-parameters" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>drag_coefficient_model<span class="classifier">int,</span></dt><dd><p>model for the drag coefficient (default: 1)
+- 0: Constant drag model
+- 1: Schiller et Nauman, (1935)
+- 2: Almedeij (2008)
+- 3: Sand-Jensen (2008) (use Cd_c, Cd_d, Cd_e, Cd_f coefficients depending on species)</p>
+</dd>
+<dt>drag_coefficient<span class="classifier">float,</span></dt><dd><p>constant drag coefficient for drag_coefficient_model=0 (default: 70.)</p>
+</dd>
+<dt>biomass<span class="classifier">float,</span></dt><dd><p>particle biomass used in the Sand-Jensen formula (default: 2.3)</p>
+</dd>
+<dt>Cd_c<span class="classifier">float,</span></dt><dd><p>coef in Sand-Jensen Cd formula (default: Renoncule, c=np.power(10, -0.75225))</p>
+</dd>
+<dt>Cd_d<span class="classifier">float,</span></dt><dd><p>coef in Sand-Jensen Cd formula (default: Renoncule, d=0.80969)</p>
+</dd>
+<dt>Cd_e<span class="classifier">float,</span></dt><dd><p>coef in Sand-Jensen Cd formula (default: Renoncule, e=0.)</p>
+</dd>
+<dt>Cd_f<span class="classifier">float,</span></dt><dd><p>coef in Sand-Jensen Cd formula (default: Renoncule, f=1.37888)</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.modules.macrophyte.MacrophyteParticleSet.Cd_c">
+<span class="sig-name descname"><span class="pre">Cd_c</span></span><a class="headerlink" href="#cylag.modules.macrophyte.MacrophyteParticleSet.Cd_c" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.modules.macrophyte.MacrophyteParticleSet.Cd_d">
+<span class="sig-name descname"><span class="pre">Cd_d</span></span><a class="headerlink" href="#cylag.modules.macrophyte.MacrophyteParticleSet.Cd_d" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.modules.macrophyte.MacrophyteParticleSet.Cd_e">
+<span class="sig-name descname"><span class="pre">Cd_e</span></span><a class="headerlink" href="#cylag.modules.macrophyte.MacrophyteParticleSet.Cd_e" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.modules.macrophyte.MacrophyteParticleSet.Cd_f">
+<span class="sig-name descname"><span class="pre">Cd_f</span></span><a class="headerlink" href="#cylag.modules.macrophyte.MacrophyteParticleSet.Cd_f" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.modules.macrophyte.MacrophyteParticleSet.biomass">
+<span class="sig-name descname"><span class="pre">biomass</span></span><a class="headerlink" href="#cylag.modules.macrophyte.MacrophyteParticleSet.biomass" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylag.modules.macrophyte.MacrophyteParticleSet.drag_coefficient">
+<span class="sig-name descname"><span class="pre">drag_coefficient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">U</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dp</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.modules.macrophyte.MacrophyteParticleSet.drag_coefficient" title="Link to this definition">¶</a></dt>
+<dd><p>Computes the drag coefficient of a Macrophyte particle.</p>
+<p>Fd=(1/2)*rhof*Sp*Cd*|U|*U</p>
+<dl class="simple">
+<dt>drag_coefficient_model :</dt><dd><ul class="simple">
+<li><p>0: Constant drag model, Cd=cst</p></li>
+<li><p>1: Schiller et Nauman, (1935)</p></li>
+<li><p>2: Almedeij (2008)</p></li>
+<li><p>3: Sand-Jensen (2008) , Cd=(2./(rhof*Sp))*c*(B**d)*(U**(elog(B)+f-2))</p></li>
+</ul>
+</dd>
+<dt>Coefficients depending on the species :</dt><dd><ul class="simple">
+<li><p>Renoncule :     c=np.power(10, -0.75225), d=0.80969, e=0.   , f=1.37888</p></li>
+<li><p>Elodea/Egerie : c=np.power(10, -0.46)   , d=0.73   , e=-0.28, f=2.15</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>U</strong> (<em>float</em><em>, </em><em>relative velocity</em>)</p></li>
+<li><p><strong>dp</strong> (<em>float</em><em>, </em><em>particle diameter</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Cd</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float, drag coefficient</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+<section id="module-cylag.modules.oil_slick">
+<span id="cylag-modules-oil-slick-module"></span><h2>cylag.modules.oil_slick module<a class="headerlink" href="#module-cylag.modules.oil_slick" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="cylag.modules.oil_slick.OilslickParticleSet">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cylag.modules.oil_slick.</span></span><span class="sig-name descname"><span class="pre">OilslickParticleSet</span></span><a class="headerlink" href="#cylag.modules.oil_slick.OilslickParticleSet" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="cylag.core.html#cylag.core.lagrangian_particle_set.LagrangianParticleSet" title="cylag.core.lagrangian_particle_set.LagrangianParticleSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">LagrangianParticleSet</span></code></a></p>
+<p>Oil slick particle class</p>
+<section id="requirements">
+<h3>Requirements<a class="headerlink" href="#requirements" title="Link to this heading">¶</a></h3>
+<p>Requires the following optional fields to be loaded in the EulerianFieldSet:
+opt_fields = [‘BOTTOM’, ‘WIND X’, ‘WIND Y’]</p>
+<dl class="field-list simple">
+<dt class="field-odd">param additional_velocity<span class="colon">:</span></dt>
+<dd class="field-odd"><p>WARNING: compatible with LSM-1 formulation only</p>
+</dd>
+<dt class="field-even">type additional_velocity<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool, activate oilslick model based on added velocity</p>
+</dd>
+<dt class="field-odd">param additional_force<span class="colon">:</span></dt>
+<dd class="field-odd"><p>WARNING: compatible with LSM-2 and 3 formulations only</p>
+</dd>
+<dt class="field-even">type additional_force<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool, activate oilslick model based on added force</p>
+</dd>
+<dt class="field-odd">param stokes_drift<span class="colon">:</span></dt>
+<dd class="field-odd"><p>activate oilslick stokes’ drift (default: T)</p>
+</dd>
+<dt class="field-even">type stokes_drift<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool,</p>
+</dd>
+<dt class="field-odd">param wind_coefficient<span class="colon">:</span></dt>
+<dd class="field-odd"><p>wind effect coefficient (default: 0.036)</p>
+</dd>
+<dt class="field-even">type wind_coefficient<span class="colon">:</span></dt>
+<dd class="field-even"><p>float,</p>
+</dd>
+<dt class="field-odd">param wind_attenuation_coef<span class="colon">:</span></dt>
+<dd class="field-odd"><p>wind effect attenuation depth (default: 3.4657)
+Only active if dim=3 (pseudo-3D)</p>
+</dd>
+<dt class="field-even">type wind_attenuation_coef<span class="colon">:</span></dt>
+<dd class="field-even"><p>float,</p>
+</dd>
+<dt class="field-odd">param wind_deviation_calibration_coef<span class="colon">:</span></dt>
+<dd class="field-odd"><p>calibration coefficient for wind deviation angle (default: 1.)
+set to 0. to disable wind deviation</p>
+</dd>
+<dt class="field-even">type wind_deviation_calibration_coef<span class="colon">:</span></dt>
+<dd class="field-even"><p>float,</p>
+</dd>
+<dt class="field-odd">param wave_induced_vertical_dispersion<span class="colon">:</span></dt>
+<dd class="field-odd"><p>activate wave-induced vertical dispersion (default: T)
+Only active if dim=3 (pseudo-3D)</p>
+</dd>
+<dt class="field-even">type wave_induced_vertical_dispersion<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool,</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.modules.oil_slick.OilslickParticleSet.addforce">
+<span class="sig-name descname"><span class="pre">addforce</span></span><a class="headerlink" href="#cylag.modules.oil_slick.OilslickParticleSet.addforce" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.modules.oil_slick.OilslickParticleSet.addvelocity">
+<span class="sig-name descname"><span class="pre">addvelocity</span></span><a class="headerlink" href="#cylag.modules.oil_slick.OilslickParticleSet.addvelocity" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.modules.oil_slick.OilslickParticleSet.dp">
+<span class="sig-name descname"><span class="pre">dp</span></span><a class="headerlink" href="#cylag.modules.oil_slick.OilslickParticleSet.dp" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.modules.oil_slick.OilslickParticleSet.stokes_drift">
+<span class="sig-name descname"><span class="pre">stokes_drift</span></span><a class="headerlink" href="#cylag.modules.oil_slick.OilslickParticleSet.stokes_drift" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.modules.oil_slick.OilslickParticleSet.wave_induced_vertical_dispersion">
+<span class="sig-name descname"><span class="pre">wave_induced_vertical_dispersion</span></span><a class="headerlink" href="#cylag.modules.oil_slick.OilslickParticleSet.wave_induced_vertical_dispersion" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.modules.oil_slick.OilslickParticleSet.wind_attenuation_coef">
+<span class="sig-name descname"><span class="pre">wind_attenuation_coef</span></span><a class="headerlink" href="#cylag.modules.oil_slick.OilslickParticleSet.wind_attenuation_coef" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.modules.oil_slick.OilslickParticleSet.wind_coefficient">
+<span class="sig-name descname"><span class="pre">wind_coefficient</span></span><a class="headerlink" href="#cylag.modules.oil_slick.OilslickParticleSet.wind_coefficient" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.modules.oil_slick.OilslickParticleSet.wind_dev_coef">
+<span class="sig-name descname"><span class="pre">wind_dev_coef</span></span><a class="headerlink" href="#cylag.modules.oil_slick.OilslickParticleSet.wind_dev_coef" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+<section id="module-cylag.modules">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-cylag.modules" title="Link to this heading">¶</a></h2>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/logo_cylag_sb.png" alt="Logo of CYLAG"/>
+            </a></p>
+<h3><a href="../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../get_started.html">Quick installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models.html">Mathematical models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../algo.html">Particle-mesh implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../setup.html">Setup, inputs and practical informations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html">Gallery of examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../good_practices.html">Good practices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev.html">Developer guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="cylag.html">cylag package</a></li>
+</ul>
+</li>
+</ul>
+
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="cylag.lsm.html"
+                          title="previous chapter">cylag.lsm package</a></p>
+  </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="cylag.lsm.html" title="cylag.lsm package"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">CYLAG 0.9 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >cylag</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="cylag.html" >cylag package</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">cylag.modules package</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2023, Fabien Souillé.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,100 @@
+
+
+.. _sphx_glr_auto_examples_vnv_02_isotropic_diffusion:
+
+Isotropic diffusion
+-------------------
+
+This example illustrate the isotropic stochastic diffusion of particles.
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This example shows the basic principle of stochastic diffusion in 1D. In this example, we : ">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_02_isotropic_diffusion/images/thumb/sphx_glr_vnv_diffusion_1d_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_02_isotropic_diffusion_vnv_diffusion_1d.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Stochastic diffusion in 1D</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Validation of the LSM-2 model with diffusion on particle velocity ( diffusion_lsm2_option=2) and its stochastic time integration scheme (Direct Integrator difull_lsm2, time_scheme=5) on the reference test case of a point source dispersion in a uniform zero-mean flow.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_02_isotropic_diffusion/images/thumb/sphx_glr_vnv_diffusion_2d_lsm2_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_02_isotropic_diffusion_vnv_diffusion_2d_lsm2.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Homogeneous isotropic turbulence with the LSM-2</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Validation of the LSM-3 model and of its stochastic time integration scheme (Direct Integrator difull_lsm3, time_scheme=5) on the reference test case of a point source dispersion in a stationary homogeneous isotropic turbulent flow, i.e. with uniform mean fields and uniform timescales.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_02_isotropic_diffusion/images/thumb/sphx_glr_vnv_diffusion_2d_lsm3_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_02_isotropic_diffusion_vnv_diffusion_2d_lsm3.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Homogeneous isotropic turbulence with the LSM-3</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Validation of the LSM-1 model (Random Displacement Model) on the reference test case of a point source dispersion in a stationary homogeneous isotropic turbulent flow, i.e. with a zero mean velocity and uniform turbulent fields.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_02_isotropic_diffusion/images/thumb/sphx_glr_vnv_diffusion_2d_lsm1_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_02_isotropic_diffusion_vnv_diffusion_2d_lsm1.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Homogeneous isotropic turbulence with the LSM-1</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /auto_examples/vnv_02_isotropic_diffusion/vnv_diffusion_1d
+   /auto_examples/vnv_02_isotropic_diffusion/vnv_diffusion_2d_lsm2
+   /auto_examples/vnv_02_isotropic_diffusion/vnv_diffusion_2d_lsm3
+   /auto_examples/vnv_02_isotropic_diffusion/vnv_diffusion_2d_lsm1
+

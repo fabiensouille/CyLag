@@ -1,0 +1,61 @@
+cylag.geom package
+==================
+
+Submodules
+----------
+
+cylag.geom.intersections module
+-------------------------------
+
+.. automodule:: cylag.geom.intersections
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+cylag.geom.read\_cli module
+---------------------------
+
+.. automodule:: cylag.geom.read_cli
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+cylag.geom.triangular\_mesh module
+----------------------------------
+
+.. automodule:: cylag.geom.triangular_mesh
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+cylag.geom.utils module
+-----------------------
+
+.. automodule:: cylag.geom.utils
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+cylag.geom.xylocalizer module
+-----------------------------
+
+.. automodule:: cylag.geom.xylocalizer
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+cylag.geom.zlocalizer module
+----------------------------
+
+.. automodule:: cylag.geom.zlocalizer
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: cylag.geom
+   :members:
+   :undoc-members:
+   :show-inheritance:

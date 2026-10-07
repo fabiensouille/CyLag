@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Mathematical models &#8212; CYLAG 0.9 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/classic.css?v=51dfc302" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=427e2fde" />
+    
+    <script src="_static/documentation_options.js?v=049aceee"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Particle-mesh implementation" href="algo.html" />
+    <link rel="prev" title="Quick installation" href="get_started.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="algo.html" title="Particle-mesh implementation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="get_started.html" title="Quick installation"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CYLAG 0.9 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Mathematical models</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="mathematical-models">
+<span id="models"></span><h1>Mathematical models<a class="headerlink" href="#mathematical-models" title="Link to this heading">¶</a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
+<p>CyLag implements several general Lagrangian formulations, in 2D and 3D,
+allowing the framework to accommodate a wide range of applications through the adjustment of
+closure relations associated with the forces acting on particles (e.g., drag, buoyancy, and additional forces),
+distribution of particle sizes, choice of numerical integration schemes,
+as well as through different diffusion parameterizations.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In the following, the parameters of the models that can be modified in CyLag are tagged as follows:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">fset:parameter</span></code>: passed to the <code class="docutils literal notranslate"><span class="pre">EulerianFieldSet</span></code> object,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pset:parameter</span></code>: passed to the <code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet</span></code> object,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">param:parameter</span></code>: passed to the <code class="docutils literal notranslate"><span class="pre">parameters</span></code> dictionary.</p></li>
+</ul>
+</div>
+<p><strong>Lagrangian Stochastic Models</strong></p>
+<p>Three Lagrangian Stochastic Models (LSMs) of increasing complexity are available, distinguished by the definition of the particle state vector. The simplest formulation, LSM-1, considers only the particle position (denoted <img class="math" src="_images/math/f5f4aa0135fbc823c88f7de2ef98571231cb6fa5.png" alt="\mathbf{x}_p"/>) and describes transport through an advection-diffusion process. LSM-2 extends the state vector by introducing the particle velocity (denoted <img class="math" src="_images/math/72fbf4177fdf707f9df3497b8f9717dfb2929a50.png" alt="\mathbf{U}_p"/>), thereby accounting for inertial effects through Newton’s equation of motion. Finally, LSM-3 includes the fluid velocity seen by the particle (denoted <img class="math" src="_images/math/7c4fbf4989554fd99c08b3828f9a76012ced8f0a.png" alt="\mathbf{U}_s"/>) in addition to its position and velocity and relies on a generalized Langevin formulation to represent turbulent velocity fluctuations and their temporal correlations. Together, these models provide a flexible framework for simulating a broad spectrum of transported substances, ranging from passive tracers to inertial particles in turbulent free-surface flows. In this section, the governing equations associated with these three model formulations are presented.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#lsm1-section"><span class="std std-ref">LSM-1 (Lagrangian Stochastic Model n°1)</span></a>: one equation (position only).</p></li>
+<li><p><a class="reference internal" href="#lsm2-section"><span class="std std-ref">LSM-2 (Lagrangian Stochastic Model n°2)</span></a>: two equations (position and velocity).</p></li>
+<li><p><a class="reference internal" href="#lsm3-section"><span class="std std-ref">LSM-3 (Lagrangian Stochastic Model n°3)</span></a>: three equations (position, velocity, and fluid velocity seen).</p></li>
+</ul>
+<hr style="height:1px; border:none; background-color:#ccc;"><p><strong>Numerical methods</strong></p>
+<p>Numerical integration methods differ depending on whether the governing equations constitute a system of ordinary differential equations (ODEs) in the absence of diffusion or a system of stochastic differential equations (SDEs). The numerical integration of SDEs involves stochastic integrals, which preclude the direct application of classical deterministic methods developed for ODEs, such as high-order Runge-Kutta schemes. Consequently, both the mathematical formulation of the problem and the nature of the governing equations strongly influence the choice of the numerical integration method.
+Table 1 summarizes the different model formulations implemented in CyLag, together with their underlying assumptions and corresponding numerical schemes.</p>
+<table class="docutils align-default" id="table-cylag-formulations">
+<caption><span class="caption-text">Description of CyLag Lagrangian models and associated numerical schemes. Euler-Maruyama (EM), Euler (E), second-order (RK2), third order (RK3) fourth-order (RK4) Runge-Kutta, and Direct Integration (DI).</span><a class="headerlink" href="#table-cylag-formulations" title="Link to this table">¶</a></caption>
+<colgroup>
+<col style="width: 10.7%" />
+<col style="width: 16.0%" />
+<col style="width: 10.7%" />
+<col style="width: 33.3%" />
+<col style="width: 10.7%" />
+<col style="width: 18.7%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Model</p></th>
+<th class="head"><p>State vector</p></th>
+<th class="head"><p>Diffusion</p></th>
+<th class="head"><p>Model name</p></th>
+<th class="head"><p>Equations</p></th>
+<th class="head"><p>Schemes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>LSM-1</strong></p></td>
+<td><p><img class="math" src="_images/math/a140f2230de18dcf81f92d9146810527bbab296c.png" alt="\{\mathbf{x}_p\}"/></p></td>
+<td><p>Yes</p></td>
+<td><p>Random Displacement Model</p></td>
+<td><p>SDE</p></td>
+<td><p>EM</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>LSM-1</strong></p></td>
+<td><p><img class="math" src="_images/math/a140f2230de18dcf81f92d9146810527bbab296c.png" alt="\{\mathbf{x}_p\}"/></p></td>
+<td><p>No</p></td>
+<td><p>Material path-lines</p></td>
+<td><p>ODE</p></td>
+<td><p>E, RK2, RK3, RK4</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>LSM-2</strong></p></td>
+<td><p><img class="math" src="_images/math/0500219b11b8b658fcfdcae1c52555342b676693.png" alt="\{\mathbf{x}_p,\mathbf{U}_p\}"/></p></td>
+<td><p>Yes</p></td>
+<td><p>Langevin model</p></td>
+<td><p>SDE</p></td>
+<td><p>EM, DI</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>LSM-2</strong></p></td>
+<td><p><img class="math" src="_images/math/0500219b11b8b658fcfdcae1c52555342b676693.png" alt="\{\mathbf{x}_p,\mathbf{U}_p\}"/></p></td>
+<td><p>No</p></td>
+<td><p>Newton model</p></td>
+<td><p>ODE</p></td>
+<td><p>E, RK2, RK3, RK4, DI</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>LSM-3</strong></p></td>
+<td><p><img class="math" src="_images/math/490ccdc3332b8a1a92ea4a16cb1a8f52a112ce55.png" alt="\{\mathbf{x}_p,\mathbf{U}_p,\mathbf{U}_s\}"/></p></td>
+<td><p>Yes</p></td>
+<td><p>Generalized Langevin</p></td>
+<td><p>SDE</p></td>
+<td><p>EM, DI</p></td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<hr style="height:1px; border:none; background-color:#ccc;"><p><strong>Dimension</strong></p>
+<p>The Lagrangian Stochastic Models in CyLag can be solved
+using 2D (<img class="math" src="_images/math/bf3ba73b3ace70af0f004a2ca42591f94c27d5d0.png" alt="\mathbf{x}_p, \mathbf{U}_p, \mathbf{U}_s \in \mathbb{R}^2"/>)
+or 3D particles (<img class="math" src="_images/math/f691239ca4ad583bdf719c8b3922dd9f9912c680.png" alt="\mathbf{x}_p, \mathbf{U}_p, \mathbf{U}_s \in \mathbb{R}^3"/>).
+While 2D particles can only be used with 2D Eulerian field set the 3D particles can be used
+with either 2D or 3D field set.
+The selection of the model is done by modifying the value of the <code class="docutils literal notranslate"><span class="pre">pset:dim</span></code>
+and <code class="docutils literal notranslate"><span class="pre">fset:dim</span></code> parameters.
+The available options are as follows :</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#d"><span class="std std-ref">2D simulation</span></a>: <code class="docutils literal notranslate"><span class="pre">pset:dim=2</span></code> with <code class="docutils literal notranslate"><span class="pre">fset:dim=2</span></code>;</p></li>
+<li><p><a class="reference internal" href="#id1"><span class="std std-ref">3D simulation</span></a>: <code class="docutils literal notranslate"><span class="pre">pset:dim=3</span></code> with <code class="docutils literal notranslate"><span class="pre">fset:dim=3</span></code>;</p></li>
+<li><p><a class="reference internal" href="#p3d"><span class="std std-ref">Pseudo-3D simulation</span></a>: <code class="docutils literal notranslate"><span class="pre">pset:dim=3</span></code> with <code class="docutils literal notranslate"><span class="pre">fset:dim=2</span></code>.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The models used for hydrodynamics are not detailed here, for more information please refer to the <a class="reference external" href="https://www.researchgate.net/publication/400906859_TELEMAC-2D_Theory_guide">TELEMAC</a> theory guides.</p>
+</div>
+<p id="id1"><span id="d"></span>In Figure 1, we illustrate of the different dimensions of the <code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet</span></code> and <code class="docutils literal notranslate"><span class="pre">EulerianFieldSet</span></code> objects,
+as well as the main notations. In the following, we denote
+<img class="math" src="_images/math/65af5715a2f8e619b6d50da7bd8a59e103e041af.png" alt="z_b"/> the bottom elevation,
+<img class="math" src="_images/math/20e4e7622e4c60fcf67cf0f741b517b68ccc5303.png" alt="z_s"/> the free surface elevation,
+<img class="math" src="_images/math/997679a2d20b027d48a801c95824a38db4d71a6d.png" alt="h = z_s - z_b"/> the water depth and
+<img class="math" src="_images/math/3961906932f54ca34a3f712f37964b7f239276ef.png" alt="\mathbf{U}_f"/> the mean fluid velocity, which can be either: <img class="math" src="_images/math/0a0bcdc54ed24a4d9d2bc6d6a5674d29c734a3e6.png" alt="\mathbf{U}_f = (u_f,v_f) \in \mathbb{R}^2"/>
+or: <img class="math" src="_images/math/d86f36e3c50f462904c3ec214c8acb9b8a5ac312.png" alt="\mathbf{U}_f = (u_f,v_f,w_f) \in \mathbb{R}^3"/> depending on <code class="docutils literal notranslate"><span class="pre">fset.dim</span></code>.</p>
+<table class="docutils align-default" id="id3">
+<caption><span class="caption-text">Illustration of <code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet</span></code> and <code class="docutils literal notranslate"><span class="pre">EulerianFieldSet</span></code> dimensions and main notations :</span><a class="headerlink" href="#id3" title="Link to this table">¶</a></caption>
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 33.3%" />
+<col style="width: 33.3%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><figure class="align-default" id="id4">
+<a class="reference internal image-reference" href="_images/fluid_domain_2D.png"><img alt="_images/fluid_domain_2D.png" src="_images/fluid_domain_2D.png" style="width: 100%;" />
+</a>
+<figcaption>
+<p><span class="caption-text"><em>Figure 1: (a) 2D</em></span><a class="headerlink" href="#id4" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+</td>
+<td><figure class="align-default" id="id5">
+<a class="reference internal image-reference" href="_images/fluid_domain_pseudo3D.png"><img alt="_images/fluid_domain_pseudo3D.png" src="_images/fluid_domain_pseudo3D.png" style="width: 100%;" />
+</a>
+<figcaption>
+<p><span class="caption-text"><em>(b) pseudo-3D</em></span><a class="headerlink" href="#id5" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+</td>
+<td><figure class="align-default" id="id6">
+<a class="reference internal image-reference" href="_images/fluid_domain_3D.png"><img alt="_images/fluid_domain_3D.png" src="_images/fluid_domain_3D.png" style="width: 100%;" />
+</a>
+<figcaption>
+<p><span class="caption-text"><em>(c) 3D</em></span><a class="headerlink" href="#id6" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Particle distribution</strong></p>
+<p>CyLag supports both mono-disperse and poly-disperse particle set.
+In the first case all particles are assumed to have the same size while the second option
+accounts for the natural variability in particle size.
+For poly-disperse modeling, CyLag supports several particle-diameter distributions (see Figure 2).
+User needs to provide the mean particle diameter <code class="docutils literal notranslate"><span class="pre">pset.particle_diameter</span></code>
+and a distribution <code class="docutils literal notranslate"><span class="pre">pset.particle_diameter_distribution</span></code> which is a <code class="docutils literal notranslate"><span class="pre">list</span></code> containing the
+distribution type and main parameter (e.g. <code class="docutils literal notranslate"><span class="pre">['uniform',</span> <span class="pre">0.5]</span></code>).
+The options are as follows:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">None</span></code> : mono-disperse particle set, all particles have the same size equal to <code class="docutils literal notranslate"><span class="pre">pset.particle_diameter</span></code>;</p></li>
+<li><p>[<code class="docutils literal notranslate"><span class="pre">uniform</span></code>, <img class="math" src="_images/math/6450616b75212cb568e905db49efd0c3dd584648.png" alt="\Delta"/>] : <img class="math" src="_images/math/b208c60b5ead82e3d768bb94099aec8a5384336f.png" alt="d_p \sim U(\mu-\Delta, \mu+\Delta)"/> with <code class="docutils literal notranslate"><span class="pre">pset.particle_diameter</span></code> <img class="math" src="_images/math/fffff525c1abb183d67fc9a1564759f4ffb31ea8.png" alt="=\mu"/>, <img class="math" src="_images/math/f384799c825a7a5d5189f45fc4c9434cbb31700f.png" alt="\Delta="/> half-width;</p></li>
+<li><p>[<code class="docutils literal notranslate"><span class="pre">normal</span></code>, <img class="math" src="_images/math/b52df27bfb0b1e3af0c2c68a7b9da459178c2a7d.png" alt="\sigma"/>] : <img class="math" src="_images/math/f69a64716806f40551dfb6007633ca8b5c068a2e.png" alt="d_p \sim N(\mu, \sigma^2)"/> with <code class="docutils literal notranslate"><span class="pre">pset.particle_diameter</span></code> <img class="math" src="_images/math/fffff525c1abb183d67fc9a1564759f4ffb31ea8.png" alt="=\mu"/>, <img class="math" src="_images/math/a0dde66d73aff0370d485cd650602ac4f1e09545.png" alt="\sigma="/> standard deviation;</p></li>
+<li><p>[<code class="docutils literal notranslate"><span class="pre">lognormal</span></code>, <img class="math" src="_images/math/c8542c694cd2c55830bf28765d559f239e6ce210.png" alt="GSD"/>] : <img class="math" src="_images/math/9c557fc68f4491d51c641b6c2ef53e3cc22fb695.png" alt="\ln(d_p) \sim N(\mu_l,\sigma_l^2)"/> with <code class="docutils literal notranslate"><span class="pre">pset.particle_diameter</span></code> <img class="math" src="_images/math/fefa00d8ee9add246f65875f4a1f0faae24958b5.png" alt="=E[d_p]"/>, <img class="math" src="_images/math/722da429d20e967841bc6080ed329b56933d8e46.png" alt="e^{\sigma_l} = GSD"/>;</p></li>
+<li><p>[<code class="docutils literal notranslate"><span class="pre">weibull</span></code>, <img class="math" src="_images/math/9630132210b904754c9ab272b61cb527d12263ca.png" alt="k"/>] : <img class="math" src="_images/math/90e074a629e6f94fcd261d030359579bc42c04bc.png" alt="d_p \sim \text{Wei}(k,\lambda)"/> with <img class="math" src="_images/math/550b63d70619df0eedf60eb731cc111d2eb0112e.png" alt="\lambda = E[d_p]/\Gamma(1+1/k)"/>, <code class="docutils literal notranslate"><span class="pre">pset.particle_diameter</span></code> <img class="math" src="_images/math/fefa00d8ee9add246f65875f4a1f0faae24958b5.png" alt="=E[d_p]"/>, <img class="math" src="_images/math/b60a2cc162ac03980cae24a69298700dd84461df.png" alt="k="/> shape.</p></li>
+<li><p>[<code class="docutils literal notranslate"><span class="pre">tabulated</span></code>, None] : user-defined tabulated distribution, with the first column containing the particle diameters and
+the second column containing the corresponding cumulative distribution function (CDF) values.
+The tabulated distribution must be defined in <code class="docutils literal notranslate"><span class="pre">cylag/core/particle_distribution.pyx</span></code> and CyLag must be re-compiled.</p></li>
+</ul>
+<p>These distributions enable the representation of both symmetric and skewed particle-size populations,
+providing flexibility for modelling a wide range of particle types.</p>
+<figure class="align-center" id="id7">
+<span id="fig-dist"></span><a class="reference internal image-reference" href="_images/particle_distributions.png"><img alt="_images/particle_distributions.png" src="_images/particle_distributions.png" style="width: 500px;" />
+</a>
+<figcaption>
+<p><span class="caption-text"><em>Figure 2: Example of particle distributions available in CyLag</em>.</span><a class="headerlink" href="#id7" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To prevent nonphysical diameters and avoid artificial concentrations at the bounds,
+we use truncation by rejection sampling: values outside the prescribed diameter range (&lt;1.e-12, &gt;10) are discarded and redrawn.
+Note that this truncation modifies the distribution’s mean, variance, and higher moments when many samples are rejected.</p>
+</div>
+</section>
+<section id="lagrangian-stochastic-model-n1-lsm-1">
+<span id="lsm1-section"></span><h2>Lagrangian Stochastic Model n°1 (LSM-1)<a class="headerlink" href="#lagrangian-stochastic-model-n1-lsm-1" title="Link to this heading">¶</a></h2>
+<p>The LSM-1 formulation is the simplest model implemented in CyLag.
+The particle state vector is restricted to the particle position, and particle motion is described directly through an advection-diffusion equation.
+In this framework, particles are transported by the mean flow field, while unresolved turbulent fluctuations are represented by a stochastic displacement term.
+As a result, LSM-1 belongs to the family of Random Displacement Models (RDMs) and is particularly well suited for tracer-like particles whose inertia can be neglected.
+Owing to its simplicity and low computational cost, it is commonly used for large-scale transport and dispersion studies.</p>
+<hr style="height:1px; border:none; background-color:#ccc;"><p><strong>1. Particle state vector</strong>: <img class="math" src="_images/math/07070bb7bab3be919250dfbfefbfac2dd761b984.png" alt="\{\bold{x}_p\}"/> (position only)</p>
+<p><strong>2. Main equation</strong>: The evolution of a particle’s position is computed as:</p>
+<div class="math">
+<p><img src="_images/math/d8931d38007bf2be53b0a8d3b2b2e53cb36d95f3.png" alt="dx_{p,i}  = \left( U_{f,i} + U_{b,i} + U_{a,i} + \partial_i K_i \right) dt + \sqrt{2K_{i}} dW_i,"/></p>
+</div><p>where:</p>
+<ul class="simple">
+<li><p><img class="math" src="_images/math/ba9118b33db361776411837f21e34f2b2ae38609.png" alt="i \in \{1,2,3\}"/> indicates the axis <img class="math" src="_images/math/d97b17954af5ee48de8cdeb8f72de347aee55057.png" alt="x,y,z"/> respectively,</p></li>
+<li><p><img class="math" src="_images/math/b00e15172af6b5b95b1caf7ef6c4fcaf177b1e3b.png" alt="\bold{x}_p"/> is the particle’s position,</p></li>
+<li><p><img class="math" src="_images/math/0ad2fb245ed43efe2931cd65d6c30a722cf568b2.png" alt="\bold{U}_{f}"/> is the mean fluid velocity interpolated at the particle’s position,</p></li>
+<li><p><img class="math" src="_images/math/f0529a4bc11abe7ba8a52173dfdb8518734929b7.png" alt="\bold{U}_{b} =(0,0,-w_p)"/> is the buoyancy velocity (only for 3D),</p></li>
+<li><p><img class="math" src="_images/math/d819f5b2ab86fe958765fd2ddb2d3a0c0b15bc7a.png" alt="\bold{U}_{a}"/> is an additional velocity (user-defined or module-dependent),</p></li>
+<li><p><img class="math" src="_images/math/ecd4c59e5a4b6cd8a6192142d037df571f311c6d.png" alt="\bold{W}"/> is a Wiener process, whose increment <img class="math" src="_images/math/ce91f3c6ab6c1655925a37c3580dcd4c7ecba049.png" alt="d\bold{W} = \bold{W}(t+dt)-\bold{W}(t)"/> is a Gaussian variable with zero mean and variance <img class="math" src="_images/math/a679bbf1184a6019c0b0085a592d1c7fc64335cf.png" alt="dt"/> (see Figure 4),</p></li>
+<li><p><img class="math" src="_images/math/d4290704da5100a766d9be9a917feb5413b66a53.png" alt="K_i"/> <img class="math" src="_images/math/1ca331083bad08f70b46d47ce636d2b067efe72a.png" alt="(0 \leq i \leq 2)"/> are horizontal diffusivity coefficients and <img class="math" src="_images/math/6bcc14f6beddd5c687ae0bbc284349ce5862cb71.png" alt="K_3"/> is the vertical diffusivity coefficient.</p></li>
+</ul>
+<hr style="height:1px; border:none; background-color:#ccc;"><p><strong>3. Buoyancy models</strong> (set via <code class="docutils literal notranslate"><span class="pre">pset:buoyancy_velocity_model</span></code>)</p>
+<ul>
+<li><p><strong>Model 0</strong>: constant buoyancy velocity defined via the parameter <code class="docutils literal notranslate"><span class="pre">pset:buoyancy_velocity</span></code> (default = 0.)</p></li>
+<li><p><strong>Model 1</strong>: computed within CyLag (see Figure 3) as follows:</p>
+<div class="math">
+<p><img src="_images/math/f46554fb6b89c0afdfd7035ecf3f1d8b6e725d3a.png" alt="&amp; w_p = \dfrac{g d_{p}^2 }{18 \nu_f} (s-1), \text{ if } d_{p} \leq 10^{-4}, \\
+
+&amp; w_p = \dfrac{10 \nu_f}{d_{p}} \left( \sqrt{1+ \dfrac{(s-1)g d_{p}^3}{100 \nu_f^2}} -1 \right), \text{ if } 10^{-4} &lt; d_{p} \leq 10^{-3}, \\
+
+&amp; w_p = \sqrt{\dfrac{4d_p g (s-1)}{3 C_d}}, \text{ if } d_{p} \geq 10^{-3},"/></p>
+</div><p>where <img class="math" src="_images/math/92a0bf81fc2f8c3890150275a12c59c3dd1a7066.png" alt="s = \rho_p/\rho_f"/>, and</p>
+<ul class="simple">
+<li><p><img class="math" src="_images/math/157ba5711de84b4c715a0478fd8ae440e596d96e.png" alt="g"/> is the gravitational acceleration (set at <img class="math" src="_images/math/c52508f99c12c3204c794d87311132673a286b4f.png" alt="g=9.80665"/>),</p></li>
+<li><p><img class="math" src="_images/math/df958b0d669119051ddf015c053a6e17cdeac34b.png" alt="\rho_f"/> is the water density (<code class="docutils literal notranslate"><span class="pre">param:water_density</span></code>, default: 1000),</p></li>
+<li><p><img class="math" src="_images/math/c1394609a2447379cb7ccb2cfc999bc5b712e585.png" alt="\rho_p"/> is the particle density (<code class="docutils literal notranslate"><span class="pre">pset:particle_density</span></code>, default: 1000),</p></li>
+<li><p><img class="math" src="_images/math/61c1773da454fe910e6580319e453aa0d652a313.png" alt="d_p"/> is the particle diameter (<code class="docutils literal notranslate"><span class="pre">pset:particle_diameter</span></code>, default: 0.01)</p></li>
+</ul>
+</li>
+</ul>
+<figure class="align-center" id="id8">
+<span id="fig-buoyancy"></span><a class="reference internal image-reference" href="_images/buoyancy.png"><img alt="_images/buoyancy.png" src="_images/buoyancy.png" style="width: 400px;" />
+</a>
+<figcaption>
+<p><span class="caption-text"><em>Figure 3: Buoyancy velocity analytical solution (CyLag LSM-1)</em>.</span><a class="headerlink" href="#id8" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<hr style="height:1px; border:none; background-color:#ccc;"><p><strong>4. Diffusion models</strong> (set via <code class="docutils literal notranslate"><span class="pre">param:diffusion_model</span></code>)</p>
+<ul class="simple">
+<li><p><strong>Model 0</strong>: no diffusion, <img class="math" src="_images/math/ab514b80c3562a3819cd2465589aca4f11f0c572.png" alt="K_{i}=0"/> <img class="math" src="_images/math/296ff1871cfff9b817da4274923484a6b9508abd.png" alt="(0 \leq i \leq 3)"/>.</p></li>
+<li><p><strong>Model 1</strong>: constant isotropic diffusivity defined as <img class="math" src="_images/math/4a85ddbc5337b8cbf600e404582b45373b2c63ee.png" alt="K_1 = K_2"/> (<code class="docutils literal notranslate"><span class="pre">param:horizontal_diffusivity</span></code>) and <img class="math" src="_images/math/6bcc14f6beddd5c687ae0bbc284349ce5862cb71.png" alt="K_3"/> (<code class="docutils literal notranslate"><span class="pre">param:vertical_diffusivity</span></code>).</p></li>
+<li><p><strong>Model 2</strong>: <img class="math" src="_images/math/c4cc41a91468f6c44c8c0d60116ab1f375b0415c.png" alt="k-\varepsilon"/> turbulence model for the horizontal component and constant vertical diffusivity; the horizontal diffusivity is then defined as <img class="math" src="_images/math/9b638198838e8c7797c165956a1b3d6559626bdc.png" alt="K_i=\nu_t/\sigma_c"/> <img class="math" src="_images/math/1ca331083bad08f70b46d47ce636d2b067efe72a.png" alt="(0 \leq i \leq 2)"/>, in which <img class="math" src="_images/math/1749c37acb84ec15c9a3f55969815935e260617b.png" alt="\sigma_c"/> is the Schmidt number (<code class="docutils literal notranslate"><span class="pre">param:schmidt_number</span></code>, default: 0.72) and <img class="math" src="_images/math/39694a00d70910fb066236fd8a5507e6a08f8919.png" alt="\nu_t"/> is the turbulent diffusivity defined as <img class="math" src="_images/math/f3096a9aa3fe1f929554ec02b46a493286e415c1.png" alt="\nu_t = C_{\mu} k^2 / \varepsilon"/>, where <img class="math" src="_images/math/70728e50e6b6b341be9dca4e16f6e94c22b30ab0.png" alt="C_{\mu}"/> is the Prandtl-Kolmogorov constant equal to <img class="math" src="_images/math/3147258b11676ec009e928001a0237b284472856.png" alt="C_{\mu}=0.09"/>.</p></li>
+<li><p><strong>Model 3</strong>: <img class="math" src="_images/math/c4cc41a91468f6c44c8c0d60116ab1f375b0415c.png" alt="k-\varepsilon"/> turbulence model for both horizontal and vertical components, with <img class="math" src="_images/math/9b638198838e8c7797c165956a1b3d6559626bdc.png" alt="K_i=\nu_t/\sigma_c"/> <img class="math" src="_images/math/296ff1871cfff9b817da4274923484a6b9508abd.png" alt="(0 \leq i \leq 3)"/>.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When using the <img class="math" src="_images/math/c4cc41a91468f6c44c8c0d60116ab1f375b0415c.png" alt="k-\varepsilon"/> turbulence model, the mean Eulerian fields
+<img class="math" src="_images/math/9630132210b904754c9ab272b61cb527d12263ca.png" alt="k"/> and <img class="math" src="_images/math/cc7cc8f478074da39b2a04d286fe2444178ba85e.png" alt="\varepsilon"/> should be passed to the <code class="docutils literal notranslate"><span class="pre">EulerianFieldSet</span></code>
+object with the <code class="docutils literal notranslate"><span class="pre">optional_fields</span></code> parameter.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The stochastic terms require an RNG (Random Number Generator) to generate the Wiener process increment <img class="math" src="_images/math/192fa8157108a8fdc5c60756728988392f194e9d.png" alt="d\bold{W}"/>.
+The RNG can be changed via the parameter <code class="docutils literal notranslate"><span class="pre">param:rng_method</span></code> which can have two values:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">param:rng_method=1</span></code>: rectangular approximation with mean=0, var=1;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">param:rng_method=2</span></code>: Ziggurat method (default);</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">param:rng_method=3</span></code>: Marsaglia’s polar method.</p></li>
+</ul>
+<p>All methods use the PCG32 as a base for pseudorandom number generator.</p>
+</div>
+<table class="docutils align-default" id="id9">
+<caption><span class="caption-text">Illustration of stochastic diffusion in 1D and 2D</span><a class="headerlink" href="#id9" title="Link to this table">¶</a></caption>
+<colgroup>
+<col style="width: 40.0%" />
+<col style="width: 33.3%" />
+<col style="width: 26.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><figure class="align-default" id="id10">
+<a class="reference internal image-reference" href="_images/diffusion_1D.png"><img alt="_images/diffusion_1D.png" src="_images/diffusion_1D.png" style="width: 100%;" />
+</a>
+<figcaption>
+<p><span class="caption-text"><em>Figure 4: (a) 1D (10 particles)</em></span><a class="headerlink" href="#id10" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+</td>
+<td><figure class="align-default" id="id11">
+<a class="reference internal image-reference" href="_images/diffusion_2D.png"><img alt="_images/diffusion_2D.png" src="_images/diffusion_2D.png" style="width: 100%;" />
+</a>
+<figcaption>
+<p><span class="caption-text"><em>(b) 2D (70 particles)</em></span><a class="headerlink" href="#id11" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+</td>
+<td><figure class="align-default" id="id12">
+<a class="reference internal image-reference" href="_images/diffusion_2D_2.png"><img alt="_images/diffusion_2D_2.png" src="_images/diffusion_2D_2.png" style="width: 100%;" />
+</a>
+<figcaption>
+<p><span class="caption-text"><em>(b) 2D (2000 particles)</em></span><a class="headerlink" href="#id12" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>5. Time integration schemes</strong> (set via <code class="docutils literal notranslate"><span class="pre">param:time_scheme</span></code>)</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">param:time_scheme=1</span></code>: <strong>Euler</strong> (1st order) or <strong>Euler-Maruyama</strong> (1st order stochastic);</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">param:time_scheme=2</span></code>: <strong>Runge-Kutta 2</strong> (2nd order);</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">param:time_scheme=3</span></code>: <strong>Runge-Kutta 3</strong> (3rd order);</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">param:time_scheme=4</span></code>: <strong>Runge-Kutta 4</strong> (4th order).</p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>High order anticipating methods such as the <strong>Runge-Kutta</strong> schemes are only suitable for ODE systems,
+ensure the diffusion is negligible before using these schemes.</p>
+</div>
+</section>
+<section id="lagrangian-stochastic-model-n2-lsm-2">
+<span id="lsm2-section"></span><h2>Lagrangian Stochastic Model n°2 (LSM-2)<a class="headerlink" href="#lagrangian-stochastic-model-n2-lsm-2" title="Link to this heading">¶</a></h2>
+<p>The LSM-2 formulation extends the state vector by introducing the particle velocity in addition to the particle position.
+Particle motion is therefore governed by both a displacement equation and a momentum equation derived from Newton’s second law.
+This approach allows the model to account for particle inertia and forces such as drag, buoyancy, added mass, pressure-gradient effects, and user-defined external forces.
+Compared with LSM-1, LSM-2 is better suited for modeling sediments, floating debris, biological particles, or any substance whose velocity may differ significantly from the local fluid velocity.</p>
+<hr style="height:1px; border:none; background-color:#ccc;"><p><strong>1. Particle state vector</strong>: <img class="math" src="_images/math/1c7fb6a89ee0c89feac6a28b0ccd4c23c26462e1.png" alt="\{\bold{x}_p, \bold{U}_p\}"/> (position, velocity)</p>
+<p><strong>2. Main equations</strong>: Newton’s second law of motion is solved for every particle, leading to a set of two equations for the update of the position and velocity. Two variants are available in CyLag, depending on whether diffusion is applied to velocity or position (see <code class="docutils literal notranslate"><span class="pre">param:diffusion_lsm2_option</span></code>):</p>
+<ul class="simple">
+<li><p><strong>Diffusion on position</strong> (<code class="docutils literal notranslate"><span class="pre">param:diffusion_lsm2_option=1</span></code>):</p></li>
+</ul>
+<div class="math">
+<p><img src="_images/math/f3765f0d20a132b19f2af89d0891191800e13471.png" alt="&amp; dx_{p,i} = \left( U_{p,i} + \partial_i K_i \right) dt + \sqrt{2K_{i}} dW_i, \\
+&amp; dU_{p,i} = \mathcal{A}_0 g_i dt + \mathcal{A}_1( U_{f,i} - U_{p,i}) dt +  \mathcal{A}_2 d U_{f,i} + \mathcal{A}_3 F_{a,i} dt,"/></p>
+</div><ul class="simple">
+<li><p><strong>Diffusion on velocity</strong> (<code class="docutils literal notranslate"><span class="pre">param:diffusion_lsm2_option=2</span> <span class="pre">or</span> <span class="pre">3</span></code>):</p></li>
+</ul>
+<div class="math">
+<p><img src="_images/math/c61663e7137f8de4d4e422af19ef7a1bbdd1a2c6.png" alt="&amp; dx_{p,i} = U_{p,i} dt, \\
+&amp; dU_{p,i} = \mathcal{A}_0 g_i dt + \mathcal{A}_1( U_{f,i} - U_{p,i}) dt +  \mathcal{A}_2 d U_{f,i} + \mathcal{A}_3 F_{a,i} dt + B_{p,i} dW_i,"/></p>
+</div><p>where:</p>
+<ul class="simple">
+<li><p><img class="math" src="_images/math/ba9118b33db361776411837f21e34f2b2ae38609.png" alt="i \in \{1,2,3\}"/> indicates the axis <img class="math" src="_images/math/d97b17954af5ee48de8cdeb8f72de347aee55057.png" alt="x,y,z"/> respectively,</p></li>
+<li><p><img class="math" src="_images/math/04edbbefa1ffc523eaf9bf1eb82d7c33c476b468.png" alt="\bold{g}=(0,0,-g)"/> is the gravitational acceleration (set at <img class="math" src="_images/math/c52508f99c12c3204c794d87311132673a286b4f.png" alt="g=9.80665"/>),</p></li>
+<li><p><img class="math" src="_images/math/b00e15172af6b5b95b1caf7ef6c4fcaf177b1e3b.png" alt="\bold{x}_p"/> is the particle’s position,</p></li>
+<li><p><img class="math" src="_images/math/5468cabb4de744361449b107ffa093886576380e.png" alt="\bold{U}_{p}"/> is the particle velocity,</p></li>
+<li><p><img class="math" src="_images/math/0ad2fb245ed43efe2931cd65d6c30a722cf568b2.png" alt="\bold{U}_{f}"/> is the mean fluid velocity interpolated at particle’s position,</p></li>
+<li><p><img class="math" src="_images/math/b07320a15a315dee24fee3460a5402326e0e50ac.png" alt="\bold{F}_{a}"/> is an additional force (user-defined or module-dependent),</p></li>
+<li><p><img class="math" src="_images/math/ecd4c59e5a4b6cd8a6192142d037df571f311c6d.png" alt="\bold{W}"/> is a Wiener process, whose increment <img class="math" src="_images/math/740baa208338812d62f45ebe69a2fd940773f214.png" alt="\bold{W} = \bold{W}(t+dt)-\bold{W}(t)"/> is a Gaussian variable with zero mean and variance <img class="math" src="_images/math/a679bbf1184a6019c0b0085a592d1c7fc64335cf.png" alt="dt"/>,</p></li>
+<li><p><img class="math" src="_images/math/d4290704da5100a766d9be9a917feb5413b66a53.png" alt="K_i"/> <img class="math" src="_images/math/1ca331083bad08f70b46d47ce636d2b067efe72a.png" alt="(0 \leq i \leq 2)"/> are horizontal diffusivity coefficients and <img class="math" src="_images/math/6bcc14f6beddd5c687ae0bbc284349ce5862cb71.png" alt="K_3"/> is the vertical diffusivity coefficient,</p></li>
+<li><p><img class="math" src="_images/math/940866208785653471e88834ffe6c82230eef15f.png" alt="B_{p,i}"/> <img class="math" src="_images/math/1ca331083bad08f70b46d47ce636d2b067efe72a.png" alt="(0 \leq i \leq 2)"/> are horizontal velocity diffusivity coefficients and <img class="math" src="_images/math/546a1d89dde9f0bc4e1528c0d26afe2be8ccf6c3.png" alt="B_{p,3}"/> the vertical velocity diffusivity coefficient.</p></li>
+</ul>
+<figure class="align-center" id="id13">
+<span id="fig-particle-adv"></span><a class="reference internal image-reference" href="_images/particle_adv.png"><img alt="_images/particle_adv.png" src="_images/particle_adv.png" style="width: 350px;" />
+</a>
+<figcaption>
+<p><span class="caption-text"><em>Figure 5: Force balance on a spherical particle in a fluid (left) considering external forces such as gravity and fluid forces; and trajectory separation illustration (right). Uf stands for the mean fluid velocity, with which fluid material particles are transported (dotted circle), whereas Up stands for the particle velocity resulting from Newton’s second law of motion and with which solid particles are transported (filled circle).</em>.</span><a class="headerlink" href="#id13" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>The coefficients <img class="math" src="_images/math/cae9c3b12053a4011b75d2d44bac2a49f2abde92.png" alt="\mathcal{A}_i"/> are defined by considering the balance of the following forces acting on a particle: <em>buoyancy</em>, <em>drag</em>, <em>added mass</em>, and <em>pressure gradient</em>:</p>
+<ul class="simple">
+<li><p><img class="math" src="_images/math/10c4593504557fe16cf57bbb2afbb2e95b5a92d0.png" alt="\mathcal{A}_0 = \dfrac{(\rho_p-\rho_f) }{\rho_p + \rho_f C_a}"/>,</p></li>
+<li><p><img class="math" src="_images/math/21f7de5529fd55558b2327efb80c20837c866ea7.png" alt="\mathcal{A}_1 = \dfrac{\rho_f S_p C_d |\bold{U}_f - \bold{U}_p|}{2(\rho_p+\rho_f C_a)V_p }"/>,</p></li>
+<li><p><img class="math" src="_images/math/f8fabbdb38a4ef5bc22814ebe65db00446101713.png" alt="\mathcal{A}_2 = \dfrac{\rho_f (1+C_a)}{\rho_p + \rho_f C_a}"/>,</p></li>
+<li><p><img class="math" src="_images/math/085a8c8e7b2d87b9dc3691c0aed033d34e11965a.png" alt="\mathcal{A}_3 = \dfrac{1}{(\rho_p + \rho_f C_a) V_p}"/>,</p></li>
+</ul>
+<p>where</p>
+<ul class="simple">
+<li><p><img class="math" src="_images/math/df958b0d669119051ddf015c053a6e17cdeac34b.png" alt="\rho_f"/> is the water density (<code class="docutils literal notranslate"><span class="pre">param:water_density</span></code>, default : 1000),</p></li>
+<li><p><img class="math" src="_images/math/c1394609a2447379cb7ccb2cfc999bc5b712e585.png" alt="\rho_p"/> is the particle density (<code class="docutils literal notranslate"><span class="pre">pset:particle_density</span></code>, default : 1000),</p></li>
+<li><p><img class="math" src="_images/math/61c1773da454fe910e6580319e453aa0d652a313.png" alt="d_p"/> is the particle diameter (<code class="docutils literal notranslate"><span class="pre">pset:particle_diameter</span></code>, default : 0.01)</p></li>
+<li><p><img class="math" src="_images/math/2c77107fd8d1eae3b4c5339ca158ca6928e1f13f.png" alt="S_p"/> is the apparent surface of the particle, defined as <img class="math" src="_images/math/807430745549621f4785328b082379c8bcc5004d.png" alt="S_p=\pi d_p^2/4"/>,</p></li>
+<li><p><img class="math" src="_images/math/70bdb5c509a569e9fc814299f3f8d27e4c1f57b9.png" alt="V_p"/> is the particle volume, given by <img class="math" src="_images/math/b8b3f29451faefabf530804ec6ef0472ec1d7916.png" alt="V_p=\pi d_p^3/6"/>,</p></li>
+<li><p><img class="math" src="_images/math/cf36a0b66a3fd92b6b2e5c3fa721e5f3ff022620.png" alt="C_a"/> is the added mass coefficient (<code class="docutils literal notranslate"><span class="pre">pset:added_mass_coef</span></code>, default: 0.5),</p></li>
+<li><p><img class="math" src="_images/math/0b33acc067eabb49e01dc6f7a834abfd10c67f03.png" alt="C_d"/> is the drag coefficient, defined hereafter.</p></li>
+</ul>
+<p>The <em>added mass</em> and <em>pressure gradient</em> forces can be deactivated (<code class="docutils literal notranslate"><span class="pre">pset:added_mass_force=False</span></code>), in which case we have</p>
+<ul class="simple">
+<li><p><img class="math" src="_images/math/ddfaef42f3a8a51a991e053688c69cfcd79022bf.png" alt="\mathcal{A}_0 = \dfrac{(\rho_p-\rho_f)}{\rho_p}"/>,</p></li>
+<li><p><img class="math" src="_images/math/107ce795cd1c2e912042b5934d04bb0bcefa50ca.png" alt="\mathcal{A}_1 = \dfrac{ \rho_fS_p C_d |\bold{U}_f - \bold{U}_p| }{2 \rho_p V_p}"/>,</p></li>
+<li><p><img class="math" src="_images/math/83294abba0af60eac7be5fef4dfd818adc0d0a57.png" alt="\mathcal{A}_2 = 0"/>,</p></li>
+<li><p><img class="math" src="_images/math/8f42d2f29e865bba811aee8603efad500fde6a46.png" alt="\mathcal{A}_3 = \dfrac{1}{\rho_p V_p}"/>.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>There is no need to model <strong>buoyancy</strong> with analytical formulas in LSM-2, as it is natively included in the model by taking gravity and drag forces into account.</p>
+</div>
+<hr style="height:1px; border:none; background-color:#ccc;"><p><strong>3. Drag models</strong>: different drag models are available for the drag coefficient <img class="math" src="_images/math/0b33acc067eabb49e01dc6f7a834abfd10c67f03.png" alt="C_d"/> via the parameter <code class="docutils literal notranslate"><span class="pre">pset:drag_coefficient_model</span></code> (see Figure 6):</p>
+<ul>
+<li><p><strong>Model 0</strong>: constant coefficient defined via the <code class="docutils literal notranslate"><span class="pre">pset:drag_coefficient</span></code> parameter,</p></li>
+<li><p><strong>Model 1</strong>: Schiller (1933):</p>
+<p><img class="math" src="_images/math/af1b78e4d2d3f59c9e55aba360dd74dee0c30948.png" alt="C_d =
+\left\lbrace
+\begin{aligned}
+&amp; \frac{24}{Re_p} \left( 1 + 0.15 Re_p^{0.687} \right)
+&amp; \quad \text{if} \quad Re_p \leq 1000 \\
+&amp; 0.44
+&amp; \quad \text{if} \quad Re_p &gt; 1000
+\end{aligned}\right."/></p>
+<p>where <img class="math" src="_images/math/40141fe56ec04ae6a024dea299932fb5672abf2f.png" alt="Re_p = d_p |\bold{U}_f - \bold{U}_p| / \nu_f"/>, where <img class="math" src="_images/math/2dc22e28c5e1463170c07949515a9ff22947752a.png" alt="\nu_f"/> is the fluid kinematic viscosity (set at <img class="math" src="_images/math/4f042a22f51a286ead1a32f563f1a89c73281658.png" alt="\nu_f= 1.3 \times 10^{-6}"/>).</p>
+</li>
+<li><p><strong>Model 2</strong>: Almedeij (2008):</p>
+<p><img class="math" src="_images/math/7e8e41bcdae37a9a45f0dafa513bf1030789c6a4.png" alt="\begin{aligned}
+&amp; C_d= \left( \dfrac{1}{(\phi_1+\phi_2)^{-1} + \phi_3^{-1}} + \phi_4   \right)^{1/10} \\
+&amp; \phi_1 = (24 Re_p^{-1})^{10} + (21 Re_p^{-0.67})^{10} +(4 Re_p^{-0.33})^{10} + 0.4^{10}  \\
+&amp; \phi_2 = \dfrac{1}{(0.148 Re_p^{0.11})^{-10} + 0.5^{-10}}\\
+&amp; \phi_3 = (1.57 \times 10^8 Re_p^{-1.625})^{10} \\
+&amp; \phi_4 = \dfrac{1}{(6 \times 10^{-17} Re_p^{2.63})^{-10} + 0.2^{-10}}
+\end{aligned}"/></p>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The drag model can be user-defined by using a custom <code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet</span></code> class (see the Particle Modules section).</p>
+</div>
+<figure class="align-center" id="id14">
+<span id="fig-drag"></span><a class="reference internal image-reference" href="_images/drag.png"><img alt="_images/drag.png" src="_images/drag.png" style="width: 750px;" />
+</a>
+<figcaption>
+<p><span class="caption-text"><em>Figure 6: Drag coefficient of a sphere as a function of the Reynolds number (left) and illustration of the flow pattern around the particle depending on the Reynolds number (right)</em>.</span><a class="headerlink" href="#id14" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<hr style="height:1px; border:none; background-color:#ccc;"><p><strong>4. Diffusion</strong></p>
+<p><strong>4.1. Diffusion option</strong> (set via <code class="docutils literal notranslate"><span class="pre">param:diffusion_lsm2_option</span></code>)</p>
+<ul class="simple">
+<li><p><strong>Option 1</strong>: diffusion only on <img class="math" src="_images/math/b00e15172af6b5b95b1caf7ef6c4fcaf177b1e3b.png" alt="\bold{x}_p"/> with <img class="math" src="_images/math/d4290704da5100a766d9be9a917feb5413b66a53.png" alt="K_i"/> given (<img class="math" src="_images/math/fa39c4be96f5f0776c878dc3463f05e65f7e6ddf.png" alt="B_{p,i}=0"/>);</p></li>
+<li><p><strong>Option 2</strong>: diffusion only on <img class="math" src="_images/math/57c4dddeb157f57e0d6c00a8232db9d5988751fb.png" alt="\bold{U}_p"/> with <img class="math" src="_images/math/940866208785653471e88834ffe6c82230eef15f.png" alt="B_{p,i}"/> given (<img class="math" src="_images/math/b1df295acd0dd49b95918d906d90132f4ad6ebf3.png" alt="K_i=0"/>);</p></li>
+<li><p><strong>Option 3</strong>: diffusion only on <img class="math" src="_images/math/57c4dddeb157f57e0d6c00a8232db9d5988751fb.png" alt="\bold{U}_p"/> with <img class="math" src="_images/math/d4290704da5100a766d9be9a917feb5413b66a53.png" alt="K_i"/> given and <img class="math" src="_images/math/c5195f391a9bcc643a26ffde2b8a1e9abe247c17.png" alt="B_{p,i}=\mathcal{A}_1 \sqrt{2 K_i}"/>.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Adding stochastic terms to both position and velocity at the same time is not possible in CyLag.</p>
+</div>
+<p><strong>4.2. Diffusion models</strong> (set via <code class="docutils literal notranslate"><span class="pre">param:diffusion_model</span></code>)</p>
+<ul class="simple">
+<li><p><strong>Model 0</strong>: no diffusion, <img class="math" src="_images/math/ab514b80c3562a3819cd2465589aca4f11f0c572.png" alt="K_{i}=0"/> or <img class="math" src="_images/math/fa39c4be96f5f0776c878dc3463f05e65f7e6ddf.png" alt="B_{p,i}=0"/>, <img class="math" src="_images/math/296ff1871cfff9b817da4274923484a6b9508abd.png" alt="(0 \leq i \leq 3)"/>.</p></li>
+<li><p><strong>Model 1</strong>: constant isotropic diffusivity with user-defined <img class="math" src="_images/math/d4290704da5100a766d9be9a917feb5413b66a53.png" alt="K_i"/> or <img class="math" src="_images/math/940866208785653471e88834ffe6c82230eef15f.png" alt="B_{p,i}"/> (see <code class="docutils literal notranslate"><span class="pre">param:diffusion_lsm2_option</span></code>), set via <code class="docutils literal notranslate"><span class="pre">param:horizontal_diffusivity</span></code> and <code class="docutils literal notranslate"><span class="pre">param:vertical_diffusivity</span></code>, similarly to the LSM-1.</p></li>
+<li><p><strong>Model 2</strong>: <img class="math" src="_images/math/c4cc41a91468f6c44c8c0d60116ab1f375b0415c.png" alt="k-\varepsilon"/> turbulence model for the horizontal component and constant vertical diffusivity. The horizontal diffusivity is then defined as follows:</p>
+<ul>
+<li><p>if <code class="docutils literal notranslate"><span class="pre">param:diffusion_lsm2_option=1</span></code> : <img class="math" src="_images/math/9b638198838e8c7797c165956a1b3d6559626bdc.png" alt="K_i=\nu_t/\sigma_c"/> <img class="math" src="_images/math/1ca331083bad08f70b46d47ce636d2b067efe72a.png" alt="(0 \leq i \leq 2)"/>,
+in which <img class="math" src="_images/math/1749c37acb84ec15c9a3f55969815935e260617b.png" alt="\sigma_c"/> is the Schmidt number (<code class="docutils literal notranslate"><span class="pre">param:schmidt_number</span></code>, default : 0.72)
+and <img class="math" src="_images/math/39694a00d70910fb066236fd8a5507e6a08f8919.png" alt="\nu_t"/> is the turbulent diffusivity defined as <img class="math" src="_images/math/234f0bf42a83ff695efddf2e4de612f6d9e1a0f3.png" alt="\nu_t= C_{\mu} k^2/ \varepsilon"/>,
+where <img class="math" src="_images/math/70728e50e6b6b341be9dca4e16f6e94c22b30ab0.png" alt="C_{\mu}"/> is the Prandtl-Kolmogorov constant equal to <img class="math" src="_images/math/3147258b11676ec009e928001a0237b284472856.png" alt="C_{\mu}=0.09"/>;</p></li>
+<li><p>if <code class="docutils literal notranslate"><span class="pre">param:diffusion_lsm2_option=2</span></code> or <code class="docutils literal notranslate"><span class="pre">param:diffusion_lsm2_option=3</span></code> : <img class="math" src="_images/math/eea46de3a978171e879b54e03a20540844202cbc.png" alt="B_{p,i}=\mathcal{A}_1 T_L \sqrt{C_0 \varepsilon}"/>, <img class="math" src="_images/math/1ca331083bad08f70b46d47ce636d2b067efe72a.png" alt="(0 \leq i \leq 2)"/>, in which case <img class="math" src="_images/math/1fe5515694c595aca4fffe10239a2e3bf5896dc0.png" alt="T_L"/> is the Lagrangian time scale, defined as
+<img class="math" src="_images/math/3743d5350a47dc9d073c1496b72710367db526cd.png" alt="T_L =  \frac{k}{\varepsilon} / (\frac{1}{2} + \frac{3}{4} C_0)"/>,
+where <img class="math" src="_images/math/69937a72d776e6622d3c2c0cda8b2ce3a94b76bf.png" alt="C_0"/> is the Kolmogorov constant (equal to 1.2).</p></li>
+</ul>
+</li>
+<li><p><strong>Model 3</strong>: <img class="math" src="_images/math/c4cc41a91468f6c44c8c0d60116ab1f375b0415c.png" alt="k-\varepsilon"/> turbulence model for both horizontal and vertical components.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When using the <img class="math" src="_images/math/c4cc41a91468f6c44c8c0d60116ab1f375b0415c.png" alt="k-\varepsilon"/> turbulence model,
+the mean Eulerian fields <img class="math" src="_images/math/9630132210b904754c9ab272b61cb527d12263ca.png" alt="k"/> and <img class="math" src="_images/math/cc7cc8f478074da39b2a04d286fe2444178ba85e.png" alt="\varepsilon"/> should be passed to the
+<code class="docutils literal notranslate"><span class="pre">EulerianFieldSet</span></code> object with the <code class="docutils literal notranslate"><span class="pre">optional_fields</span></code> parameter.</p>
+</div>
+<hr style="height:1px; border:none; background-color:#ccc;"><p><strong>5. Time schemes</strong> (set via <code class="docutils literal notranslate"><span class="pre">param:time_scheme</span></code>)</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">param:time_scheme=1</span></code>: <strong>Euler</strong> (1st order);</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">param:time_scheme=2</span></code>: <strong>Runge-Kutta 2</strong> (2nd order);</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">param:time_scheme=3</span></code>: <strong>Runge-Kutta 3</strong> (3rd order);</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">param:time_scheme=4</span></code>: <strong>Runge-Kutta 4</strong> (4th order);</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">param:time_scheme=5</span></code>: <strong>Direct Integrator</strong> (1st order, default) analytical solution over one time step, unconditionally stable.</p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Explicit schemes (<strong>Euler</strong> and <strong>Runge-Kutta</strong>) have a relaxation stability restriction.
+For a scalar frozen drag rate, <strong>Euler</strong> is linearly stable for <img class="math" src="_images/math/674d5ce03ccb5dfc18b97e879ade297cfaa73429.png" alt="0&lt;dt&lt;2\tau_p"/>; <img class="math" src="_images/math/ed5f082fbf4f70be10a34cdfd9448cdccb756015.png" alt="dt\leq\tau_p"/>
+additionally avoids oscillatory relaxation. The <strong>Direct Integrator</strong> removes this linear stability restriction,
+but does not remove accuracy requirements associated with varying drag, Eulerian fields, additional forces
+or boundary crossings. It is not an exact solution of the nonlinear variable-coefficient problem.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>High order anticipating methods such as the <strong>Runge-Kutta</strong> schemes are only suitable for ODE systems,
+ensure the diffusion is negligible before using these schemes.</p>
+</div>
+</section>
+<section id="lagrangian-stochastic-model-n3-lsm-3">
+<span id="lsm3-section"></span><h2>Lagrangian Stochastic Model n°3 (LSM-3)<a class="headerlink" href="#lagrangian-stochastic-model-n3-lsm-3" title="Link to this heading">¶</a></h2>
+<p>The LSM-3 formulation represents the most complete model available in CyLag. In addition to particle position and velocity, the state vector includes the fluid velocity seen by the particle. The evolution of this fluid velocity is described through a Langevin stochastic equation, allowing the model to explicitly represent turbulent velocity fluctuations and their temporal correlations. LSM-3 therefore belongs to the family of Generalized Lagrangian Stochastic Models (GLSMs) and is particularly appropriate when the interaction between particle dynamics and turbulence must be resolved with greater physical realism. Although computationally more demanding, it provides the most comprehensive description of particle transport and dispersion processes.</p>
+<hr style="height:1px; border:none; background-color:#ccc;"><p><strong>1. Particle state vector</strong>: <img class="math" src="_images/math/285b4265b6918295bf17fa0d6ef29390c65751b1.png" alt="\{\bold{x}_p, \bold{U}_p, \bold{U}_s\}"/> (position, velocity, and fluid velocity seen)</p>
+<p><strong>2. Main equations</strong>:</p>
+<div class="math">
+<p><img src="_images/math/bbfe8691c6fd417500ff24b485c54a7962f792eb.png" alt="&amp; dx_{p,i} = U_{p,i} dt, \\
+&amp; dU_{p,i} = \mathcal{A}_0 g_i dt + \mathcal{A}_1(U_{s,i}-U_{p,i}) dt  + \mathcal{A}_2 dU_{s,i} + \mathcal{A}_3 F_{a,i} dt, \\
+&amp; dU_{s,i} = -\frac{1}{\rho_f}\partial_i P_f dt -\dfrac{1}{T_{L,i}} \left( U_{s,i} - U_{f,i}  \right) dt + B_{s,i} dW_i."/></p>
+</div><p>where:</p>
+<ul class="simple">
+<li><p><img class="math" src="_images/math/ba9118b33db361776411837f21e34f2b2ae38609.png" alt="i \in \{1,2,3\}"/> indicates the axis <img class="math" src="_images/math/d97b17954af5ee48de8cdeb8f72de347aee55057.png" alt="x,y,z"/> respectively,</p></li>
+<li><p><img class="math" src="_images/math/b00e15172af6b5b95b1caf7ef6c4fcaf177b1e3b.png" alt="\bold{x}_p"/> is the particle’s position,</p></li>
+<li><p><img class="math" src="_images/math/5468cabb4de744361449b107ffa093886576380e.png" alt="\bold{U}_{p}"/> is the particle’s velocity,</p></li>
+<li><p><img class="math" src="_images/math/a2498bc2250e0f36b31d664f43ac3bd17643f4e0.png" alt="\bold{U}_{s}"/> is the fluid velocity seen by the particle,</p></li>
+<li><p><img class="math" src="_images/math/b07320a15a315dee24fee3460a5402326e0e50ac.png" alt="\bold{F}_{a}"/> is an additional force (user-defined or module-dependent),</p></li>
+<li><p><img class="math" src="_images/math/e646846414f650a03ca8aabcca5f1db2885ffb75.png" alt="\bold{P}_{f}"/> is the mean pressure field of the fluid at the particle’s position,</p></li>
+<li><p>The coefficients <img class="math" src="_images/math/cae9c3b12053a4011b75d2d44bac2a49f2abde92.png" alt="\mathcal{A}_i"/> are defined as for LSM-2 by replacing <img class="math" src="_images/math/c41f94be80b9d0296717942b171d28b385afbf64.png" alt="\bold{U}_f"/> by <img class="math" src="_images/math/992df60e923144d480d19c8b73df3cefa4d71bb3.png" alt="\bold{U}_s"/> in <img class="math" src="_images/math/52f6f9068077533134336e23cece5237fa28a251.png" alt="\mathcal{A}_1"/> and <img class="math" src="_images/math/c77ca33d1e2999e58573f4458a99b4471ee67220.png" alt="Re_p"/>,</p></li>
+<li><p><img class="math" src="_images/math/6b6dc03c174e26e61976ae7352554fca86da1f97.png" alt="T_{L,i}"/> are the Lagrangian time scales,</p></li>
+<li><p><img class="math" src="_images/math/249f393798d4a82906aec24e3e56dbcbec10f72d.png" alt="B_{s,i}"/> are the stochastic diffusion coefficients,</p></li>
+<li><p><img class="math" src="_images/math/ecd4c59e5a4b6cd8a6192142d037df571f311c6d.png" alt="\bold{W}"/> is a Wiener process, whose increment  <img class="math" src="_images/math/740baa208338812d62f45ebe69a2fd940773f214.png" alt="\bold{W} = \bold{W}(t+dt)-\bold{W}(t)"/> is a Gaussian variable with zero mean and variance <img class="math" src="_images/math/a679bbf1184a6019c0b0085a592d1c7fc64335cf.png" alt="dt"/>,</p></li>
+</ul>
+<p>The Lagragian time scale and stochastic diffusion coefficient are usually defined from turbulent mean fields.
+When using the <img class="math" src="_images/math/c4cc41a91468f6c44c8c0d60116ab1f375b0415c.png" alt="k-\varepsilon"/> model, the following definitions are used, for <img class="math" src="_images/math/ba9118b33db361776411837f21e34f2b2ae38609.png" alt="i \in \{1,2,3\}"/> :</p>
+<div class="math">
+<p><img src="_images/math/f4a7f9c314e082aa011beaf8e5e6a88ccf32b701.png" alt="T_{L,i} =  \frac{k}{\varepsilon} / \left( \frac{1}{2} + \frac{3}{4} C_0 \right) \quad \text{and} \quad
+B_{s,i} = \sqrt{C_0 \varepsilon}"/></p>
+</div><p>where:</p>
+<ul class="simple">
+<li><p><img class="math" src="_images/math/69937a72d776e6622d3c2c0cda8b2ce3a94b76bf.png" alt="C_0"/> is the Kolmogorov constant (equal to 1.2),</p></li>
+<li><p><img class="math" src="_images/math/9630132210b904754c9ab272b61cb527d12263ca.png" alt="k"/> is the turbulence kinetic energy,</p></li>
+<li><p><img class="math" src="_images/math/cc7cc8f478074da39b2a04d286fe2444178ba85e.png" alt="\varepsilon"/> is the rate of dissipation of turbulence kinetic energy,</p></li>
+</ul>
+<p>Since the Eulerian pressure field is usually unavailable in free surface flow solvers,
+its contribution to the Langevin drift is not evaluated explicitly.
+Instead, it is represented by the resolved variation of the mean fluid velocity along the particle trajectory,
+evaluated from successive interpolated Eulerian velocities. The following approximation is used:</p>
+<div class="math">
+<p><img src="_images/math/9d1c681c2862b624f3683a56e98e41f2aaa5e903.png" alt="-\frac{1}{\rho_f}\partial_i P_f dt \simeq d U_{f,i} \left(t, \bold{x}_p(t) \right)."/></p>
+</div><hr style="height:1px; border:none; background-color:#ccc;"><p><strong>3. Drag models</strong>: the same options as for LSM-2 are available with LSM-3 which we recall here.
+The drag coefficient <img class="math" src="_images/math/0b33acc067eabb49e01dc6f7a834abfd10c67f03.png" alt="C_d"/> can be set via the parameter <code class="docutils literal notranslate"><span class="pre">pset:drag_coefficient_model</span></code>:</p>
+<ul class="simple">
+<li><p><strong>Model 0</strong>: constant coefficient defined via the <code class="docutils literal notranslate"><span class="pre">pset:drag_coefficient</span></code> parameter,</p></li>
+<li><p><strong>Model 1</strong>: Schiller (1933),</p></li>
+<li><p><strong>Model 2</strong>: Almedeij (2008).</p></li>
+</ul>
+<hr style="height:1px; border:none; background-color:#ccc;"><p><strong>4. Diffusion models</strong> (set via <code class="docutils literal notranslate"><span class="pre">param:diffusion_model</span></code>)</p>
+<p>Diffusion with the LSM-3, meaning the couple <img class="math" src="_images/math/6dedccfa9792336e7dfd538274b938ab9ed41820.png" alt="(T_{L,i}-B_{s,i})"/>,
+is usually provided by the couple of mean fields <img class="math" src="_images/math/dda6d378fae061e5dfd6a5289c7902ff7e710662.png" alt="(k-\varepsilon)"/> interpolated in the particle’s position.
+However, is environmental applications, the vertical and horizontal turbulence are often modelled with different assumptions.
+Also, in pseudo-3D simulations, only horizontal <img class="math" src="_images/math/dda6d378fae061e5dfd6a5289c7902ff7e710662.png" alt="(k-\varepsilon)"/> fields are kown and users might want to apply a constant
+vertical diffusivity that is not computed from the horizontal <img class="math" src="_images/math/dda6d378fae061e5dfd6a5289c7902ff7e710662.png" alt="(k-\varepsilon)"/> fields.
+It is therefore allowed to provide a couple <img class="math" src="_images/math/310d03204cad7c4f862debde5a6faa5bfc904635.png" alt="(T_{L,i}-K_{i})"/>, in which case <img class="math" src="_images/math/249f393798d4a82906aec24e3e56dbcbec10f72d.png" alt="B_{s,i}"/> is defined as follows:</p>
+<div class="math">
+<p><img src="_images/math/487f715efdd3e5ab9dfe980de11ccbf387aa40ba.png" alt="B_{s,i} = \sqrt{2 K_i} / T_{L,i}"/></p>
+</div><p>This option is available for both horizontal diffusion and vertical diffusion, depending on the value of <code class="docutils literal notranslate"><span class="pre">param:diffusion_model</span></code>:</p>
+<ul class="simple">
+<li><p><strong>Model 1</strong>: constant isotropic diffusivity with user-defined <img class="math" src="_images/math/edae04ea7f3658943de51c04c2d0d8e561f03bc2.png" alt="K_{s,i}"/> set via <code class="docutils literal notranslate"><span class="pre">param:horizontal_diffusivity</span></code> and <code class="docutils literal notranslate"><span class="pre">param:vertical_diffusivity</span></code>, similarly to the LSM-1.
+the time scales <img class="math" src="_images/math/6b6dc03c174e26e61976ae7352554fca86da1f97.png" alt="T_{L,i}"/> are supposed constant and fixed by default to 1 second but can be adjusted via <code class="docutils literal notranslate"><span class="pre">param:diffusion_lsm3_tl_horizontal</span></code> and <code class="docutils literal notranslate"><span class="pre">param:diffusion_lsm3_tl_vertical</span></code>.</p></li>
+<li><p><strong>Model 2</strong>: <img class="math" src="_images/math/c4cc41a91468f6c44c8c0d60116ab1f375b0415c.png" alt="k-\varepsilon"/> turbulence model for the horizontal component and constant vertical diffusivity.</p></li>
+<li><p><strong>Model 3</strong>: <img class="math" src="_images/math/c4cc41a91468f6c44c8c0d60116ab1f375b0415c.png" alt="k-\varepsilon"/> turbulence model for both horizontal and vertical components.</p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The LSM-3 model cannot be used with <code class="docutils literal notranslate"><span class="pre">param:diffusion_model=0</span></code> (null diffusivity). Use LSM-2 without diffusion instead.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When using the LSM-3 model the use of <img class="math" src="_images/math/c4cc41a91468f6c44c8c0d60116ab1f375b0415c.png" alt="k-\varepsilon"/> turbulence model is mandatory
+and the mean Eulerian fields <img class="math" src="_images/math/9630132210b904754c9ab272b61cb527d12263ca.png" alt="k"/> and <img class="math" src="_images/math/cc7cc8f478074da39b2a04d286fe2444178ba85e.png" alt="\varepsilon"/> should be passed to the
+<code class="docutils literal notranslate"><span class="pre">EulerianFieldSet</span></code> object with the <code class="docutils literal notranslate"><span class="pre">optional_fields</span></code> parameter.</p>
+</div>
+<hr style="height:1px; border:none; background-color:#ccc;"><p><strong>5. Time schemes</strong> (set via <code class="docutils literal notranslate"><span class="pre">param:time_scheme</span></code>)</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">param:time_scheme=1</span></code>: <strong>Euler-Maruyama</strong> (1st order);</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">param:time_scheme=5</span></code>: <strong>Direct integrator with diffusion</strong> (1st order, default).</p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>Euler-Maruyama</strong> requires resolution of both relaxation scales,
+the sufficient non-oscillatory bound is <img class="math" src="_images/math/ece9f9c2b8164fcceebaf20317c0c40b2acef915.png" alt="dt &lt; \min(\tau_p, T_L)"/> with <img class="math" src="_images/math/9f4b66677847fe9c15fbe3e98ad20d9053277c94.png" alt="\tau_p=1/\mathcal{A}_1"/>.
+Exact frozen-coefficient integration (<strong>Direct integrator</strong>) removes the linear relaxation stability restriction,
+not the need to resolve changes in the model coefficients.
+For both direct integrators, Gaussian RNG methods 2 or 3 are required for an exact Gaussian transition.
+Method 1 preserves the prescribed first two moments of each frozen step but uses rectangular, non-Gaussian increments.</p>
+</div>
+</section>
+<section id="pseudo-3d-velocity-corrections">
+<span id="p3d"></span><h2>Pseudo-3D velocity corrections<a class="headerlink" href="#pseudo-3d-velocity-corrections" title="Link to this heading">¶</a></h2>
+<p>In the pseudo-3D case we introduce correction terms to account for the vertical variation of the horizontal velocity magnitude.
+To do so, we assume a logarithmic velocity profile in the vertical direction,
+and we apply a correction to the horizontal velocity components of the particles based on their vertical position.
+The corrected horizontal velocity <img class="math" src="_images/math/e0eb67c83360f7876022274d2d83cc1584624a1d.png" alt="\mathbf{U}_c \in \mathbb{R}^2"/> is computed as follows:</p>
+<div class="math">
+<p><img src="_images/math/19ff37f8e6984724be4b592655ed7faae95236bc.png" alt="\mathbf{U}_c(z) = \mathbf{U}_f \left[ \ln \left( \dfrac{z-z_b}{z_0} \right) \right] /
+                               \left[ \ln \left( \dfrac{h}{z_0} \right) - 1 \right]"/></p>
+</div><p>where</p>
+<div class="math">
+<p><img src="_images/math/2691963c710fbcb84f66b04793f884d9282c80ce.png" alt="z_0 = h \exp \left[ - \left( 1 + \dfrac{\kappa}{ \sqrt{C_f/2}} \right) \right]"/></p>
+</div><p>with <img class="math" src="_images/math/261e3eb56c1757dd003745ee4cc53aa595565af1.png" alt="\kappa"/> the von Karman constant (set at <img class="math" src="_images/math/f33b7cc7eecc3251652de45f72213c0f51415b13.png" alt="\kappa=0.41"/>)
+and <img class="math" src="_images/math/5e998cc1e7ab825c2a7af04180dd1ad2ea6892b8.png" alt="C_f"/> the friction coefficient of the Eulerian field set simulation.
+In CyLag, we don’t use <img class="math" src="_images/math/5e998cc1e7ab825c2a7af04180dd1ad2ea6892b8.png" alt="C_f"/> directly, but deduce it from the friction law (<code class="docutils literal notranslate"><span class="pre">fset:friction_model</span></code>)
+and friction coefficient (<code class="docutils literal notranslate"><span class="pre">fset:friction_coefficient</span></code>).
+The friction laws available in CyLag are as follows:</p>
+<ul class="simple">
+<li><p><strong>Model 0</strong>: Chézy law (<code class="docutils literal notranslate"><span class="pre">fset:friction_coefficient</span></code> is the Chézy coefficient),</p></li>
+<li><p><strong>Model 1</strong>: Strickler law, default (<code class="docutils literal notranslate"><span class="pre">fset:friction_coefficient</span></code> is the Strickler coefficient, default: 40.),</p></li>
+<li><p><strong>Model 2</strong>: Manning law (<code class="docutils literal notranslate"><span class="pre">fset:friction_coefficient</span></code> is the Manning coefficient),</p></li>
+<li><p><strong>Model 3</strong>: Nikuradse law (<code class="docutils literal notranslate"><span class="pre">fset:friction_coefficient</span></code> is the Nikuradse roughness height).</p></li>
+</ul>
+<p>The vertical Eulerian velocity being set to zero in pseudo-three-dimensional mode,
+to avoid particle artificial vertical motion due to changes
+in free surface and bottom elevation along the particle path,
+we introduce an additional vertical velocity.
+We define the relative heigth by <img class="math" src="_images/math/06d0e0df055544c1d747d83dcb9f3965337eb754.png" alt="\sigma=(z-z_b)/(z_s-z_b)"/>,
+where <img class="math" src="_images/math/65af5715a2f8e619b6d50da7bd8a59e103e041af.png" alt="z_b"/> is the bed elevation and <img class="math" src="_images/math/20e4e7622e4c60fcf67cf0f741b517b68ccc5303.png" alt="z_s"/> is the free surface elevation.
+The additional vertical velocity is then defined as follows:</p>
+<div class="math">
+<p><img src="_images/math/b71c72e0e64ad503045d5b6fe30cc98ada103eda.png" alt="w_c(z) = (1-\sigma) \frac{D z_b}{D t} + \sigma \frac{D z_s}{D t},"/></p>
+</div><p>where <img class="math" src="_images/math/e16c80efcf108d334fc668d0dad8f3ac16f2daac.png" alt="D/Dt = \partial/\partial t + \bold{U}_c \cdot \nabla"/> is the material derivative along the pseudo-3D corrected horizontal velocity.</p>
+<figure class="align-center" id="id15">
+<span id="id2"></span><a class="reference internal image-reference" href="_images/fluid_domain_pseudo3D.png"><img alt="_images/fluid_domain_pseudo3D.png" src="_images/fluid_domain_pseudo3D.png" style="width: 400px;" />
+</a>
+<figcaption>
+<p><span class="caption-text"><em>Figure 6: Pseudo-3D illustration</em>.</span><a class="headerlink" href="#id15" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="particle-modules">
+<h2>Particle Modules<a class="headerlink" href="#particle-modules" title="Link to this heading">¶</a></h2>
+<p>In CyLag, users can define custom <code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet</span></code> classes that inherit from the parent class.
+This allows the implementation of specific physics, such as custom drag-coefficient formulas, custom added drift velocity or force, and particle behavior models for aquatic wildlife, among others.
+You can build your own custom model in <code class="docutils literal notranslate"><span class="pre">cylag/modules/custom_particle_set.pyx</span></code>.</p>
+<p>Several custom classes are already defined to resolve specific types of particles, such as:</p>
+<ul class="simple">
+<li><p><strong>Oil slick</strong> (<code class="docutils literal notranslate"><span class="pre">cylag/modules/oil_slick.pyx</span></code>): simulates oil-slick transport and dispersion with the LSM-1 module;</p></li>
+<li><p><strong>Algae</strong> (<code class="docutils literal notranslate"><span class="pre">cylag/modules/algae.pyx</span></code>): simulates the transport of macrophytes with LSM-1 or LSM-2 models;</p></li>
+<li><p><strong>Macrophytes</strong> (<code class="docutils literal notranslate"><span class="pre">cylag/modules/macrophyte.pyx</span></code>): simulates the transport of macrophytes with LSM-1 or LSM-2 models;</p></li>
+<li><p><strong>Fish</strong> (<code class="docutils literal notranslate"><span class="pre">cylag/modules/fish.pyx</span></code>): simulates the transport and behavior of fish with individual- or collective-based models;</p></li>
+<li><p><strong>Jellyfish</strong> (<code class="docutils literal notranslate"><span class="pre">cylag/modules/jellyfish.pyx</span></code>): simulates the transport of jellyfish.</p></li>
+</ul>
+<p>Each new type of <code class="docutils literal notranslate"><span class="pre">LagrangianParticleSet</span></code> has its own set of input parameters (see docstrings of each class).</p>
+<video style="display:block; margin: 0 auto;" controls autoplay src="_static/video/fish_cbm.mp4" width="500" ></video>
+<center> <i>Example of a fish collective behavior model (Couzin model)</i> </center></section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/logo_cylag_sb.png" alt="Logo of CYLAG"/>
+            </a></p>
+<h3><a href="index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="get_started.html">Quick installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Mathematical models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lagrangian-stochastic-model-n1-lsm-1">Lagrangian Stochastic Model n°1 (LSM-1)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lagrangian-stochastic-model-n2-lsm-2">Lagrangian Stochastic Model n°2 (LSM-2)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lagrangian-stochastic-model-n3-lsm-3">Lagrangian Stochastic Model n°3 (LSM-3)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pseudo-3d-velocity-corrections">Pseudo-3D velocity corrections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#particle-modules">Particle Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="algo.html">Particle-mesh implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">Setup, inputs and practical informations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html">Gallery of examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="good_practices.html">Good practices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev.html">Developer guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/modules.html">API</a></li>
+</ul>
+
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="get_started.html"
+                          title="previous chapter">Quick installation</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="algo.html"
+                          title="next chapter">Particle-mesh implementation</a></p>
+  </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="algo.html" title="Particle-mesh implementation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="get_started.html" title="Quick installation"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CYLAG 0.9 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Mathematical models</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2023, Fabien Souillé.
+    </div>
+  </body>
+</html>

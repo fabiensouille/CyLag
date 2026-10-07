@@ -1,0 +1,46 @@
+
+
+.. _sphx_glr_auto_examples_vnv_16_online:
+
+Online
+------------
+
+This example illustrate how to run CyLag in online mode with openTELEMAC.
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we illustrate how to run CyLag in online mode with openTELEMAC API (TelAPY).">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_16_online/images/thumb/sphx_glr_vnv_tide_online_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_16_online_vnv_tide_online.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Runing tide example in online mode</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /auto_examples/vnv_16_online/vnv_tide_online
+

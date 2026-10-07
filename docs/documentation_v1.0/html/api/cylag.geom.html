@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>cylag.geom package &#8212; CYLAG 0.9 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/classic.css?v=51dfc302" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=427e2fde" />
+    
+    <script src="../_static/documentation_options.js?v=049aceee"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="cylag.io package" href="cylag.io.html" />
+    <link rel="prev" title="cylag.extra package" href="cylag.extra.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="cylag.io.html" title="cylag.io package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="cylag.extra.html" title="cylag.extra package"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">CYLAG 0.9 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >cylag</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="cylag.html" accesskey="U">cylag package</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">cylag.geom package</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="cylag-geom-package">
+<h1>cylag.geom package<a class="headerlink" href="#cylag-geom-package" title="Link to this heading">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+</section>
+<section id="module-cylag.geom.intersections">
+<span id="cylag-geom-intersections-module"></span><h2>cylag.geom.intersections module<a class="headerlink" href="#module-cylag.geom.intersections" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.geom.intersections.MT_intersec3d_triangle_ray">
+<span class="sig-prename descclassname"><span class="pre">cylag.geom.intersections.</span></span><span class="sig-name descname"><span class="pre">MT_intersec3d_triangle_ray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seg_point0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seg_point1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intersection_point</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.geom.intersections.MT_intersec3d_triangle_ray" title="Link to this definition">¶</a></dt>
+<dd><p>Find intersection of 3D triangle (point0, point1, point2) and a ray (seg_point0, seg_point1)</p>
+<p>Implementation of Möller and Trumbore algorithm.
+See article: “Fast, Minimum Storage Ray/Triangle Intersection”.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>point0</strong> (<em>array_like</em><em>, </em><em>shape</em><em> (</em><em>3</em><em>,</em><em>)</em>) – First point of the triangle.</p></li>
+<li><p><strong>point1</strong> (<em>array_like</em><em>, </em><em>shape</em><em> (</em><em>3</em><em>,</em><em>)</em>) – Second point of the triangle.</p></li>
+<li><p><strong>point2</strong> (<em>array_like</em><em>, </em><em>shape</em><em> (</em><em>3</em><em>,</em><em>)</em>) – Third point of the triangle.</p></li>
+<li><p><strong>seg_point0</strong> (<em>array_like</em><em>, </em><em>shape</em><em> (</em><em>3</em><em>,</em><em>)</em>) – First point of the ray.</p></li>
+<li><p><strong>seg_point1</strong> (<em>array_like</em><em>, </em><em>shape</em><em> (</em><em>3</em><em>,</em><em>)</em>) – Second point of the ray.</p></li>
+<li><p><strong>intersection_point</strong> (<em>array_like</em><em>, </em><em>shape</em><em> (</em><em>3</em><em>,</em><em>)</em>) – Intersection point of the triangle and the ray (if they intersect).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 = disjoint (no intersection)
+1 = intersect in unique point</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.geom.intersections.compute_symetric_point2d">
+<span class="sig-prename descclassname"><span class="pre">cylag.geom.intersections.</span></span><span class="sig-name descname"><span class="pre">compute_symetric_point2d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">damp</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.geom.intersections.compute_symetric_point2d" title="Link to this definition">¶</a></dt>
+<dd><p>Computes symetric of a point from a segment defined by (point0, point1)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>point0</strong> (<em>array_like</em><em>, </em><em>shape</em><em> (</em><em>2</em><em>,</em><em>)</em>) – First point of the segment.</p></li>
+<li><p><strong>point1</strong> (<em>array_like</em><em>, </em><em>shape</em><em> (</em><em>2</em><em>,</em><em>)</em>) – Second point of the segment.</p></li>
+<li><p><strong>point</strong> (<em>array_like</em><em>, </em><em>shape</em><em> (</em><em>2</em><em>,</em><em>)</em>) – Point to compute the symetric.</p></li>
+<li><p><strong>damp</strong> (<em>float</em>) – Damping factor for the symetric point computation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>psym</strong> – Symetric point of the input point with respect to the segment.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray, shape (2,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.geom.intersections.compute_symetric_point3d">
+<span class="sig-prename descclassname"><span class="pre">cylag.geom.intersections.</span></span><span class="sig-name descname"><span class="pre">compute_symetric_point3d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">damp</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.geom.intersections.compute_symetric_point3d" title="Link to this definition">¶</a></dt>
+<dd><p>Computes symetric psym of a point from a plane defined by (point0, point1, point2)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>point0</strong> (<em>array_like</em><em>, </em><em>shape</em><em> (</em><em>3</em><em>,</em><em>)</em>) – First point of the plane.</p></li>
+<li><p><strong>point1</strong> (<em>array_like</em><em>, </em><em>shape</em><em> (</em><em>3</em><em>,</em><em>)</em>) – Second point of the plane.</p></li>
+<li><p><strong>point2</strong> (<em>array_like</em><em>, </em><em>shape</em><em> (</em><em>3</em><em>,</em><em>)</em>) – Third point of the plane.</p></li>
+<li><p><strong>point</strong> (<em>array_like</em><em>, </em><em>shape</em><em> (</em><em>3</em><em>,</em><em>)</em>) – Point to compute the symetric.</p></li>
+<li><p><strong>damp</strong> (<em>float</em>) – Damping factor for the symetric point computation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>psym</strong> – Symetric point of the input point with respect to the plane.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray, shape (3,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.geom.intersections.intersec2d_get_intersection_point">
+<span class="sig-prename descclassname"><span class="pre">cylag.geom.intersections.</span></span><span class="sig-name descname"><span class="pre">intersec2d_get_intersection_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y4</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.geom.intersections.intersec2d_get_intersection_point" title="Link to this definition">¶</a></dt>
+<dd><p>Find intersection point of two segments</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x1</strong> (<em>float</em>) – Coordinates of the first point of the first segment.</p></li>
+<li><p><strong>y1</strong> (<em>float</em>) – Coordinates of the first point of the first segment.</p></li>
+<li><p><strong>x2</strong> (<em>float</em>) – Coordinates of the second point of the first segment.</p></li>
+<li><p><strong>y2</strong> (<em>float</em>) – Coordinates of the second point of the first segment.</p></li>
+<li><p><strong>x3</strong> (<em>float</em>) – Coordinates of the first point of the second segment.</p></li>
+<li><p><strong>y3</strong> (<em>float</em>) – Coordinates of the first point of the second segment.</p></li>
+<li><p><strong>x4</strong> (<em>float</em>) – Coordinates of the second point of the second segment.</p></li>
+<li><p><strong>y4</strong> (<em>float</em>) – Coordinates of the second point of the second segment.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>px, py</strong> – Coordinates of the intersection point.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.geom.intersections.intersec2d_segment_segment">
+<span class="sig-prename descclassname"><span class="pre">cylag.geom.intersections.</span></span><span class="sig-name descname"><span class="pre">intersec2d_segment_segment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seg_point0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seg_point1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.geom.intersections.intersec2d_segment_segment" title="Link to this definition">¶</a></dt>
+<dd><p>Find if two segments intersects (point0, point1) and a ray (seg_point0, seg_point1)</p>
+<p><a class="reference external" href="https://www.algotree.org/algorithms/computational_geometry/line_segment_intersection/">https://www.algotree.org/algorithms/computational_geometry/line_segment_intersection/</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>point0</strong> (<em>array_like</em><em>, </em><em>shape</em><em> (</em><em>2</em><em>,</em><em>)</em>) – First point of the first segment.</p></li>
+<li><p><strong>point1</strong> (<em>array_like</em><em>, </em><em>shape</em><em> (</em><em>2</em><em>,</em><em>)</em>) – Second point of the first segment.</p></li>
+<li><p><strong>seg_point0</strong> (<em>array_like</em><em>, </em><em>shape</em><em> (</em><em>2</em><em>,</em><em>)</em>) – First point of the second segment.</p></li>
+<li><p><strong>seg_point1</strong> (<em>array_like</em><em>, </em><em>shape</em><em> (</em><em>2</em><em>,</em><em>)</em>) – Second point of the second segment.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 = disjoint (no intersection)
+1 = intersect in unique point</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.geom.intersections.intersec3d_triangle_segment">
+<span class="sig-prename descclassname"><span class="pre">cylag.geom.intersections.</span></span><span class="sig-name descname"><span class="pre">intersec3d_triangle_segment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seg_point0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seg_point1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intersection_point</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.geom.intersections.intersec3d_triangle_segment" title="Link to this definition">¶</a></dt>
+<dd><p>Find intersection of 3D triangle (point0, point1, point2) and a segment (seg_point0, seg_point1)</p>
+<p>Implementation of
+<a class="reference external" href="http://geomalgorithms.com/a06-_intersect-2.html">http://geomalgorithms.com/a06-_intersect-2.html</a>
+<a class="reference external" href="http://geomalgorithms.com/a06-_intersect-2.html#intersect3D_RayTriangle%28%29">http://geomalgorithms.com/a06-_intersect-2.html#intersect3D_RayTriangle%28%29</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>point0</strong> (<em>array_like</em><em>, </em><em>shape</em><em> (</em><em>3</em><em>,</em><em>)</em>) – First point of the triangle.</p></li>
+<li><p><strong>point1</strong> (<em>array_like</em><em>, </em><em>shape</em><em> (</em><em>3</em><em>,</em><em>)</em>) – Second point of the triangle.</p></li>
+<li><p><strong>point2</strong> (<em>array_like</em><em>, </em><em>shape</em><em> (</em><em>3</em><em>,</em><em>)</em>) – Third point of the triangle.</p></li>
+<li><p><strong>seg_point0</strong> (<em>array_like</em><em>, </em><em>shape</em><em> (</em><em>3</em><em>,</em><em>)</em>) – First point of the segment.</p></li>
+<li><p><strong>seg_point1</strong> (<em>array_like</em><em>, </em><em>shape</em><em> (</em><em>3</em><em>,</em><em>)</em>) – Second point of the segment.</p></li>
+<li><p><strong>intersection_point</strong> (<em>array_like</em><em>, </em><em>shape</em><em> (</em><em>3</em><em>,</em><em>)</em>) – Intersection point of the triangle and the segment (if they intersect).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>-1 = triangle is degenerate (no intersection)</dt><dd><p>0 = disjoint (no intersection)
+1 = intersect in unique point
+2 = segment lies in triangle plane</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-cylag.geom.read_cli">
+<span id="cylag-geom-read-cli-module"></span><h2>cylag.geom.read_cli module<a class="headerlink" href="#module-cylag.geom.read_cli" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.geom.read_cli.read_cli">
+<span class="sig-prename descclassname"><span class="pre">cylag.geom.read_cli.</span></span><span class="sig-name descname"><span class="pre">read_cli</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertex_id_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">11</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.geom.read_cli.read_cli" title="Link to this definition">¶</a></dt>
+<dd><p>Read Telemac .cli boundary condition file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_name</strong> (<em>str</em>) – Path to the .cli file.</p></li>
+<li><p><strong>vertex_id_column</strong> (<em>int</em><em>, </em><em>optional</em>) – Column index for vertex IDs (default is 11).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>boundary_points</strong> (<em>ndarray, shape (m, 2)</em>) – Array containing vertex IDs and their corresponding boundary labels.</p></li>
+<li><p><strong>new_boundary_count</strong> (<em>int</em>) – Number of new boundaries found in the .cli file.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-cylag.geom.triangular_mesh">
+<span id="cylag-geom-triangular-mesh-module"></span><h2>cylag.geom.triangular_mesh module<a class="headerlink" href="#module-cylag.geom.triangular_mesh" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="cylag.geom.triangular_mesh.TriangularMesh">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cylag.geom.triangular_mesh.</span></span><span class="sig-name descname"><span class="pre">TriangularMesh</span></span><a class="headerlink" href="#cylag.geom.triangular_mesh.TriangularMesh" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>(</em><em>nv</em><em>,</em><em>) </em><em>array</em><em> of </em><em>float</em>) – Coordinates of grid points.</p></li>
+<li><p><strong>y</strong> (<em>(</em><em>nv</em><em>,</em><em>) </em><em>array</em><em> of </em><em>float</em>) – Coordinates of grid points.</p></li>
+<li><p><strong>triangles</strong> (<em>(</em><em>nt</em><em>, </em><em>3</em><em>) </em><em>array</em><em> of </em><em>int</em>) – For each triangle, the indices of the three points that make
+up the triangle, ordered in an anticlockwise manner.</p></li>
+<li><p><strong>nopen</strong> (<em>int</em>) – number of open boundaries (default: 0)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">nv,</span> <span class="pre">nt,</span> <span class="pre">ne,</span> <span class="pre">nvb</span></span></dt>
+<dd><p>Number of mesh vertices, triangles, edges, boundary points</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">x,</span> <span class="pre">y</span></span></dt>
+<dd><p>Coordinates of grid points.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(nv,) array of float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.geom.triangular_mesh.TriangularMesh.trivtx">
+<span class="sig-name descname"><span class="pre">trivtx</span></span><a class="headerlink" href="#cylag.geom.triangular_mesh.TriangularMesh.trivtx" title="Link to this definition">¶</a></dt>
+<dd><p>For each triangle, the indices of the three points that make
+up the triangle, ordered in an anticlockwise manner.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(nt, 3) array of int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.geom.triangular_mesh.TriangularMesh.edges">
+<span class="sig-name descname"><span class="pre">edges</span></span><a class="headerlink" href="#cylag.geom.triangular_mesh.TriangularMesh.edges" title="Link to this definition">¶</a></dt>
+<dd><p>For each edge, the indices of the two points that make
+up the edge, ordered in from min id to max id.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(ne, 2) array of int (default: None)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.geom.triangular_mesh.TriangularMesh.vertex_adjacency">
+<span class="sig-name descname"><span class="pre">vertex_adjacency</span></span><a class="headerlink" href="#cylag.geom.triangular_mesh.TriangularMesh.vertex_adjacency" title="Link to this definition">¶</a></dt>
+<dd><p>contains indices of neighboring triangles</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(nv, MAX_VERTEX_ADJACENCY) int (default: None)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.geom.triangular_mesh.TriangularMesh.triangle_adjacency">
+<span class="sig-name descname"><span class="pre">triangle_adjacency</span></span><a class="headerlink" href="#cylag.geom.triangular_mesh.TriangularMesh.triangle_adjacency" title="Link to this definition">¶</a></dt>
+<dd><p>DEPRECATED - not built by default (only for legacy HDF5 compatibility)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(nt, MAX_TRIANGLE_ADJACENCY) int (default: None)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.geom.triangular_mesh.TriangularMesh.triangle_neighbors">
+<span class="sig-name descname"><span class="pre">triangle_neighbors</span></span><a class="headerlink" href="#cylag.geom.triangular_mesh.TriangularMesh.triangle_neighbors" title="Link to this definition">¶</a></dt>
+<dd><p>DEPRECATED - not built by default (only for legacy HDF5 compatibility)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(nt, 3) int (default: None)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.geom.triangular_mesh.TriangularMesh.boundary_points">
+<span class="sig-name descname"><span class="pre">boundary_points</span></span><a class="headerlink" href="#cylag.geom.triangular_mesh.TriangularMesh.boundary_points" title="Link to this definition">¶</a></dt>
+<dd><p>contains (vertex id, boundary label) pairs</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(nvb, 2) int (default: None)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.geom.triangular_mesh.TriangularMesh.boundary_edges">
+<span class="sig-name descname"><span class="pre">boundary_edges</span></span><a class="headerlink" href="#cylag.geom.triangular_mesh.TriangularMesh.boundary_edges" title="Link to this definition">¶</a></dt>
+<dd><p>contains (vertex id 0, vertex id 1, boundary label) triplets</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(nvb, 3) int (default: None)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.geom.triangular_mesh.TriangularMesh.vertex_labels">
+<span class="sig-name descname"><span class="pre">vertex_labels</span></span><a class="headerlink" href="#cylag.geom.triangular_mesh.TriangularMesh.vertex_labels" title="Link to this definition">¶</a></dt>
+<dd><p>contains boundary labels for each vertex (INTERN_REF for internal vertices)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(nv,) int (default: None)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.geom.triangular_mesh.TriangularMesh.edges_labels">
+<span class="sig-name descname"><span class="pre">edges_labels</span></span><a class="headerlink" href="#cylag.geom.triangular_mesh.TriangularMesh.edges_labels" title="Link to this definition">¶</a></dt>
+<dd><p>contains boundary labels for each edge (INTERN_REF for internal edges)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(ne,) int (default: None)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.geom.triangular_mesh.TriangularMesh.signed_area">
+<span class="sig-name descname"><span class="pre">signed_area</span></span><a class="headerlink" href="#cylag.geom.triangular_mesh.TriangularMesh.signed_area" title="Link to this definition">¶</a></dt>
+<dd><p>contains signed area of each triangle</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(nt,) float (default: None)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">gradx,</span> <span class="pre">grady</span></span></dt>
+<dd><p>contains gradients of the linear basis functions for each triangle</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(nt, 3) float (default: None)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.geom.triangular_mesh.TriangularMesh.det">
+<span class="sig-name descname"><span class="pre">det</span></span><a class="headerlink" href="#cylag.geom.triangular_mesh.TriangularMesh.det" title="Link to this definition">¶</a></dt>
+<dd><p>contains determinants of the linear basis functions for each triangle</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(nt, 3) float (default: None)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.geom.triangular_mesh.TriangularMesh.triangle_centroids">
+<span class="sig-name descname"><span class="pre">triangle_centroids</span></span><a class="headerlink" href="#cylag.geom.triangular_mesh.TriangularMesh.triangle_centroids" title="Link to this definition">¶</a></dt>
+<dd><p>contains centroids of each triangle (used for KDTree)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(nt, 2) float (default: None)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">boundary_edges</span></span><a class="headerlink" href="#id0" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">boundary_points</span></span><a class="headerlink" href="#id1" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">det</span></span><a class="headerlink" href="#id2" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">edges</span></span><a class="headerlink" href="#id3" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">edges_labels</span></span><a class="headerlink" href="#id4" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.geom.triangular_mesh.TriangularMesh.edgetri_map">
+<span class="sig-name descname"><span class="pre">edgetri_map</span></span><a class="headerlink" href="#cylag.geom.triangular_mesh.TriangularMesh.edgetri_map" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylag.geom.triangular_mesh.TriangularMesh.from_hdf5">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_hdf5</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cylag_mesh_file.h5'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.geom.triangular_mesh.TriangularMesh.from_hdf5" title="Link to this definition">¶</a></dt>
+<dd><p>Create mesh from hdf5 cylag mesh file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_name</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the hdf5 file containing the mesh data (default: “cylag_mesh_file.h5”).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylag.geom.triangular_mesh.TriangularMesh.from_matplotlib">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_matplotlib</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tri</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary_points</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary_edges</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nopen</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.geom.triangular_mesh.TriangularMesh.from_matplotlib" title="Link to this definition">¶</a></dt>
+<dd><p>Create mesh from matplotlib triangulation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tri</strong> (<em>matplotlib.tri.Triangulation</em>) – Matplotlib triangulation object.</p></li>
+<li><p><strong>boundary_points</strong> (<em>(</em><em>nvb</em><em>, </em><em>2</em><em>) </em><em>int</em><em>, </em><em>optional</em>) – Contains (vertex id, boundary label) pairs. If not provided, will be built from edges.</p></li>
+<li><p><strong>boundary_edges</strong> (<em>(</em><em>nvb</em><em>, </em><em>3</em><em>) </em><em>int</em><em>, </em><em>optional</em>) – Contains (vertex id 0, vertex id 1, boundary label) triplets.
+If not provided, will be built from edges.</p></li>
+<li><p><strong>nopen</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of open boundaries (default: 0).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.geom.triangular_mesh.TriangularMesh.gradx">
+<span class="sig-name descname"><span class="pre">gradx</span></span><a class="headerlink" href="#cylag.geom.triangular_mesh.TriangularMesh.gradx" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.geom.triangular_mesh.TriangularMesh.grady">
+<span class="sig-name descname"><span class="pre">grady</span></span><a class="headerlink" href="#cylag.geom.triangular_mesh.TriangularMesh.grady" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.geom.triangular_mesh.TriangularMesh.kdtree">
+<span class="sig-name descname"><span class="pre">kdtree</span></span><a class="headerlink" href="#cylag.geom.triangular_mesh.TriangularMesh.kdtree" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.geom.triangular_mesh.TriangularMesh.ne">
+<span class="sig-name descname"><span class="pre">ne</span></span><a class="headerlink" href="#cylag.geom.triangular_mesh.TriangularMesh.ne" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.geom.triangular_mesh.TriangularMesh.nopen">
+<span class="sig-name descname"><span class="pre">nopen</span></span><a class="headerlink" href="#cylag.geom.triangular_mesh.TriangularMesh.nopen" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.geom.triangular_mesh.TriangularMesh.nt">
+<span class="sig-name descname"><span class="pre">nt</span></span><a class="headerlink" href="#cylag.geom.triangular_mesh.TriangularMesh.nt" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.geom.triangular_mesh.TriangularMesh.nv">
+<span class="sig-name descname"><span class="pre">nv</span></span><a class="headerlink" href="#cylag.geom.triangular_mesh.TriangularMesh.nv" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.geom.triangular_mesh.TriangularMesh.nvb">
+<span class="sig-name descname"><span class="pre">nvb</span></span><a class="headerlink" href="#cylag.geom.triangular_mesh.TriangularMesh.nvb" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylag.geom.triangular_mesh.TriangularMesh.save_mesh_hdf5">
+<span class="sig-name descname"><span class="pre">save_mesh_hdf5</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cylag_mesh_file.h5'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.geom.triangular_mesh.TriangularMesh.save_mesh_hdf5" title="Link to this definition">¶</a></dt>
+<dd><p>Save mesh in hdf5</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_name</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the hdf5 file to save the mesh data (default: “cylag_mesh_file.h5”).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">signed_area</span></span><a class="headerlink" href="#id5" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id6">
+<span class="sig-name descname"><span class="pre">triangle_adjacency</span></span><a class="headerlink" href="#id6" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id7">
+<span class="sig-name descname"><span class="pre">triangle_centroids</span></span><a class="headerlink" href="#id7" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id8">
+<span class="sig-name descname"><span class="pre">triangle_neighbors</span></span><a class="headerlink" href="#id8" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.geom.triangular_mesh.TriangularMesh.triangles">
+<span class="sig-name descname"><span class="pre">triangles</span></span><a class="headerlink" href="#cylag.geom.triangular_mesh.TriangularMesh.triangles" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.geom.triangular_mesh.TriangularMesh.triedge_map">
+<span class="sig-name descname"><span class="pre">triedge_map</span></span><a class="headerlink" href="#cylag.geom.triangular_mesh.TriangularMesh.triedge_map" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id9">
+<span class="sig-name descname"><span class="pre">vertex_adjacency</span></span><a class="headerlink" href="#id9" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id10">
+<span class="sig-name descname"><span class="pre">vertex_labels</span></span><a class="headerlink" href="#id10" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.geom.triangular_mesh.TriangularMesh.x">
+<span class="sig-name descname"><span class="pre">x</span></span><a class="headerlink" href="#cylag.geom.triangular_mesh.TriangularMesh.x" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.geom.triangular_mesh.TriangularMesh.y">
+<span class="sig-name descname"><span class="pre">y</span></span><a class="headerlink" href="#cylag.geom.triangular_mesh.TriangularMesh.y" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-cylag.geom.utils">
+<span id="cylag-geom-utils-module"></span><h2>cylag.geom.utils module<a class="headerlink" href="#module-cylag.geom.utils" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.geom.utils.polygon_area">
+<span class="sig-prename descclassname"><span class="pre">cylag.geom.utils.</span></span><span class="sig-name descname"><span class="pre">polygon_area</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.geom.utils.polygon_area" title="Link to this definition">¶</a></dt>
+<dd><p>Compute the area of a simple polygon</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>array_like</em><em>, </em><em>shape</em><em> (</em><em>n</em><em>,</em><em>)</em>) – x-coordinates of the polygon vertices.</p></li>
+<li><p><strong>y</strong> (<em>array_like</em><em>, </em><em>shape</em><em> (</em><em>n</em><em>,</em><em>)</em>) – y-coordinates of the polygon vertices.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>area</strong> – Area of the polygon.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>double</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-cylag.geom.xylocalizer">
+<span id="cylag-geom-xylocalizer-module"></span><h2>cylag.geom.xylocalizer module<a class="headerlink" href="#module-cylag.geom.xylocalizer" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.geom.xylocalizer.xy_localize">
+<span class="sig-prename descclassname"><span class="pre">cylag.geom.xylocalizer.</span></span><span class="sig-name descname"><span class="pre">xy_localize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">triangular_mesh</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p0x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p0y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.geom.xylocalizer.xy_localize" title="Link to this definition">¶</a></dt>
+<dd><p>Locate point in triangulation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>triangular_mesh</strong> (<em>cylag.TriangularMesh</em>)</p></li>
+<li><p><strong>k</strong> (<em>int</em>) – index of previous triangle containing point</p></li>
+<li><p><strong>p0x</strong> (<em>float</em>) – x coordinate of the previous position</p></li>
+<li><p><strong>p0y</strong> (<em>float</em>) – y coordinate of the previous position</p></li>
+<li><p><strong>x</strong> (<em>float</em>) – x coordinate of point to locate</p></li>
+<li><p><strong>y</strong> (<em>float</em>) – y coordinate of point to locate</p></li>
+<li><p><strong>method</strong> (<em>int</em><em>, </em><em>search method</em>) – if 0: search in all triangles (using KDTree)
+if 1: search in neighbors
+if 2: search from path
+if 3: search from path, then fallback to KDTree (optimized)</p></li>
+<li><p><strong>debug</strong> (<em>bint</em><em>, </em><em>debug printouts</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>new_k</strong> (<em>int</em>) – index of triangle containing point x,y</p></li>
+<li><p><strong>bnd_j</strong> (<em>int</em>) – index of boundary edge crossed if particle is out</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.geom.xylocalizer.xy_localize_point">
+<span class="sig-prename descclassname"><span class="pre">cylag.geom.xylocalizer.</span></span><span class="sig-name descname"><span class="pre">xy_localize_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">triangular_mesh</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.geom.xylocalizer.xy_localize_point" title="Link to this definition">¶</a></dt>
+<dd><p>Locate point in triangulation - loop over all mesh triangles</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>triangular_mesh</strong> (<em>cylag.TriangularMesh</em>)</p></li>
+<li><p><strong>x</strong> (<em>float</em><em>, </em><em>x coordinate</em><em> of </em><em>point to locate</em>)</p></li>
+<li><p><strong>y</strong> (<em>float</em><em>, </em><em>y coordinate</em><em> of </em><em>point to locate</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>new_k<span class="classifier">int</span></dt><dd><p>index of triangle containing point x,y if found, else -1</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.geom.xylocalizer.xy_localize_point_from_path">
+<span class="sig-prename descclassname"><span class="pre">cylag.geom.xylocalizer.</span></span><span class="sig-name descname"><span class="pre">xy_localize_point_from_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">triangular_mesh</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p0x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p0y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.geom.xylocalizer.xy_localize_point_from_path" title="Link to this definition">¶</a></dt>
+<dd><p>Locate point in triangulation - from particule path</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>triangular_mesh</strong> (<em>cylag.TriangularMesh</em>)</p></li>
+<li><p><strong>triangle_index</strong> (<em>int</em><em>, </em><em>index previous triangle containing point</em>)</p></li>
+<li><p><strong>p0x</strong> (<em>float</em><em>, </em><em>x coordinate</em><em> of </em><em>the previous position</em>)</p></li>
+<li><p><strong>p0y</strong> (<em>float</em><em>, </em><em>y coordinate</em><em> of </em><em>the previous position</em>)</p></li>
+<li><p><strong>x</strong> (<em>float</em><em>, </em><em>x coordinate</em><em> of </em><em>point to locate</em>)</p></li>
+<li><p><strong>y</strong> (<em>float</em><em>, </em><em>y coordinate</em><em> of </em><em>point to locate</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>new_k : int, index of triangle containing point x,y</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.geom.xylocalizer.xy_localize_point_in_neighbourhood">
+<span class="sig-prename descclassname"><span class="pre">cylag.geom.xylocalizer.</span></span><span class="sig-name descname"><span class="pre">xy_localize_point_in_neighbourhood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">triangular_mesh</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.geom.xylocalizer.xy_localize_point_in_neighbourhood" title="Link to this definition">¶</a></dt>
+<dd><p>Locate point in triangulation - looking in triangle neighbourhood</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>triangular_mesh</strong> (<em>cylag.TriangularMesh</em>)</p></li>
+<li><p><strong>k</strong> (<em>int</em><em>, </em><em>index previous triangle containing point</em>)</p></li>
+<li><p><strong>x</strong> (<em>float</em><em>, </em><em>x coordinate</em><em> of </em><em>point to locate</em>)</p></li>
+<li><p><strong>y</strong> (<em>float</em><em>, </em><em>y coordinate</em><em> of </em><em>point to locate</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>new_k<span class="classifier">int</span></dt><dd><p>index of triangle containing point x,y if found, else -1</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.geom.xylocalizer.xy_localize_point_kdtree">
+<span class="sig-prename descclassname"><span class="pre">cylag.geom.xylocalizer.</span></span><span class="sig-name descname"><span class="pre">xy_localize_point_kdtree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">triangular_mesh</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k_nearest</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.geom.xylocalizer.xy_localize_point_kdtree" title="Link to this definition">¶</a></dt>
+<dd><p>Locate point in triangulation using KDTree for efficient search.</p>
+<p>This is an optimized version of xy_localize_point that uses a KDTree
+to quickly find candidate triangles near the query point. This reduces
+the search from O(n) to O(log n + k) where k is the number of nearest
+triangles to check.</p>
+<p>The triangular_mesh must have a built KDTree (call build_kdtree() first).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>triangular_mesh</strong> (<em>cylag.TriangularMesh</em>) – Must have kdtree attribute initialized (call build_kdtree() first)</p></li>
+<li><p><strong>x</strong> (<em>float</em><em>, </em><em>x coordinate</em><em> of </em><em>point to locate</em>)</p></li>
+<li><p><strong>y</strong> (<em>float</em><em>, </em><em>y coordinate</em><em> of </em><em>point to locate</em>)</p></li>
+<li><p><strong>k_nearest</strong> (<em>int</em><em>, </em><em>number</em><em> of </em><em>nearest triangle centroids to check</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>new_k : int, index of triangle containing point x,y (-1 if not found)</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This method works as follows:
+1. Query KDTree for k_nearest triangle centroids closest to (x,y)
+2. Check if point is in any of those triangles
+3. If not found in k_nearest, progressively expand search
+4. Fall back to exhaustive search if still not found</p>
+<p>Performance: For meshes with thousands of triangles, this is typically
+10-100x faster than the exhaustive search in xy_localize_point.</p>
+</dd></dl>
+
+</section>
+<section id="module-cylag.geom.zlocalizer">
+<span id="cylag-geom-zlocalizer-module"></span><h2>cylag.geom.zlocalizer module<a class="headerlink" href="#module-cylag.geom.zlocalizer" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.geom.zlocalizer.c_compute_lower_index">
+<span class="sig-prename descclassname"><span class="pre">cylag.geom.zlocalizer.</span></span><span class="sig-name descname"><span class="pre">c_compute_lower_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_idx</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.geom.zlocalizer.c_compute_lower_index" title="Link to this definition">¶</a></dt>
+<dd><p>Search indices i such as array(i) &lt;= value</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>array</strong> (<em>array_like</em><em>, </em><em>shape</em><em> (</em><em>n</em><em>,</em><em>)</em>) – Array of values to search in.</p></li>
+<li><p><strong>value</strong> (<em>float</em>) – Value to locate in the array.</p></li>
+<li><p><strong>last_idx</strong> (<em>int</em><em>, </em><em>optional</em>) – Last index to start the search from (default is 0).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>index</strong> – Index i such that array[i] &lt;= value &lt; array[i+1].</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.geom.zlocalizer.c_compute_lower_layer_index">
+<span class="sig-prename descclassname"><span class="pre">cylag.geom.zlocalizer.</span></span><span class="sig-name descname"><span class="pre">c_compute_lower_layer_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nlayers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zb</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.geom.zlocalizer.c_compute_lower_layer_index" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.geom.zlocalizer.c_compute_lower_layer_index_array">
+<span class="sig-prename descclassname"><span class="pre">cylag.geom.zlocalizer.</span></span><span class="sig-name descname"><span class="pre">c_compute_lower_layer_index_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nlayers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zb</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.geom.zlocalizer.c_compute_lower_layer_index_array" title="Link to this definition">¶</a></dt>
+<dd><p>Search greatest layer such as z(layer) &lt; z</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nlayers</strong> (<em>int</em>) – Number of layers.</p></li>
+<li><p><strong>zs</strong> (<em>array_like</em><em>, </em><em>shape</em><em> (</em><em>n</em><em>,</em><em>)</em>) – Surface elevations.</p></li>
+<li><p><strong>zb</strong> (<em>array_like</em><em>, </em><em>shape</em><em> (</em><em>n</em><em>,</em><em>)</em>) – Bottom elevations.</p></li>
+<li><p><strong>z</strong> (<em>array_like</em><em>, </em><em>shape</em><em> (</em><em>n</em><em>,</em><em>)</em>) – Elevations to locate in layers.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>index</strong> – Indices of the lower layers such that z(layer) &lt; z.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray, shape (n,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.geom.zlocalizer.compute_lower_index">
+<span class="sig-prename descclassname"><span class="pre">cylag.geom.zlocalizer.</span></span><span class="sig-name descname"><span class="pre">compute_lower_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_idx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.geom.zlocalizer.compute_lower_index" title="Link to this definition">¶</a></dt>
+<dd><p>Search indices i such as array(i) &lt;= value</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>array</strong> (<em>array_like</em><em>, </em><em>shape</em><em> (</em><em>n</em><em>,</em><em>)</em>) – Array of values to search in.</p></li>
+<li><p><strong>value</strong> (<em>float</em>) – Value to locate in the array.</p></li>
+<li><p><strong>last_idx</strong> (<em>int</em><em>, </em><em>optional</em>) – Last index to start the search from (default is 0).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>index</strong> – Index i such that array[i] &lt;= value &lt; array[i+1].</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.geom.zlocalizer.compute_lower_layer_index">
+<span class="sig-prename descclassname"><span class="pre">cylag.geom.zlocalizer.</span></span><span class="sig-name descname"><span class="pre">compute_lower_layer_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nlayers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zb</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.geom.zlocalizer.compute_lower_layer_index" title="Link to this definition">¶</a></dt>
+<dd><p>Search greatest layer such as z(layer) &lt; z</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nlayers</strong> (<em>int</em>) – Number of layers.</p></li>
+<li><p><strong>zs</strong> (<em>float</em>) – Surface elevation.</p></li>
+<li><p><strong>zb</strong> (<em>float</em>) – Bottom elevation.</p></li>
+<li><p><strong>z</strong> (<em>float</em>) – Elevation to locate in layers.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>index</strong> – Index of the lower layer such that z(layer) &lt; z.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-cylag.geom">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-cylag.geom" title="Link to this heading">¶</a></h2>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/logo_cylag_sb.png" alt="Logo of CYLAG"/>
+            </a></p>
+<h3><a href="../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../get_started.html">Quick installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models.html">Mathematical models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../algo.html">Particle-mesh implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../setup.html">Setup, inputs and practical informations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html">Gallery of examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../good_practices.html">Good practices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev.html">Developer guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="cylag.html">cylag package</a></li>
+</ul>
+</li>
+</ul>
+
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="cylag.extra.html"
+                          title="previous chapter">cylag.extra package</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="cylag.io.html"
+                          title="next chapter">cylag.io package</a></p>
+  </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="cylag.io.html" title="cylag.io package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="cylag.extra.html" title="cylag.extra package"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">CYLAG 0.9 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >cylag</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="cylag.html" >cylag package</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">cylag.geom package</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2023, Fabien Souillé.
+    </div>
+  </body>
+</html>

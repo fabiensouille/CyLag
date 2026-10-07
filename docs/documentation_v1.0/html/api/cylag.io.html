@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>cylag.io package &#8212; CYLAG 0.9 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/classic.css?v=51dfc302" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=427e2fde" />
+    
+    <script src="../_static/documentation_options.js?v=049aceee"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="cylag.lsm package" href="cylag.lsm.html" />
+    <link rel="prev" title="cylag.geom package" href="cylag.geom.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="cylag.lsm.html" title="cylag.lsm package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="cylag.geom.html" title="cylag.geom package"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">CYLAG 0.9 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >cylag</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="cylag.html" accesskey="U">cylag package</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">cylag.io package</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="cylag-io-package">
+<h1>cylag.io package<a class="headerlink" href="#cylag-io-package" title="Link to this heading">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+</section>
+<section id="module-cylag.io.converter">
+<span id="cylag-io-converter-module"></span><h2>cylag.io.converter module<a class="headerlink" href="#module-cylag.io.converter" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.io.converter.convert_fset2d_from_slf_to_h5">
+<span class="sig-prename descclassname"><span class="pre">cylag.io.converter.</span></span><span class="sig-name descname"><span class="pre">convert_fset2d_from_slf_to_h5</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t2d_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bnd_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">main_var_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['FREE</span> <span class="pre">SURFACE',</span> <span class="pre">'VELOCITY</span> <span class="pre">U',</span> <span class="pre">'VELOCITY</span> <span class="pre">V']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optional_fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fset_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cylag_fset_file.h5'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mesh_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cylag_mesh_file.h5'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.io.converter.convert_fset2d_from_slf_to_h5" title="Link to this definition">¶</a></dt>
+<dd><p>Convert TELEMAC result file to h5 cylag result file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t2d_file</strong> (<em>str</em><em>, </em><em>file name</em><em> of </em><em>the telemac2d result file</em>)</p></li>
+<li><p><strong>bnd_file</strong> (<em>str</em><em>, </em><em>file name</em><em> of </em><em>the telemac2d cli file</em><em> (</em><em>default : None</em><em>)</em>)</p></li>
+<li><p><strong>main_var_names</strong> (<em>list</em><em> of </em><em>str</em><em>, </em><em>names</em><em> of </em><em>the main EulerianFieldSet variables</em>) – (i.e. elevation, velocity u, velocity v) in the telemac result file
+(default: [‘ELEVATION Z’, ‘VELOCITY U’, ‘VELOCITY V’, ‘VELOCITY W’])</p></li>
+<li><p><strong>optional_fields</strong> (<em>List</em><em> of </em><em>str</em><em>, </em><em>names</em><em> of </em><em>the optional_fields to load</em>) – (default : None)</p></li>
+<li><p><strong>Files</strong> (<em>Outputs</em>)</p></li>
+<li><p><strong>-------------</strong></p></li>
+<li><p><strong>fset_file</strong> (<em>str</em><em>, </em><em>file name</em><em> of </em><em>the cylag fset file</em>)</p></li>
+<li><p><strong>mesh_file</strong> (<em>str</em><em>, </em><em>file name</em><em> of </em><em>the cylag mesh file</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.io.converter.convert_fset3d_from_slf_to_h5">
+<span class="sig-prename descclassname"><span class="pre">cylag.io.converter.</span></span><span class="sig-name descname"><span class="pre">convert_fset3d_from_slf_to_h5</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t3d_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bnd_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">main_var_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['ELEVATION</span> <span class="pre">Z',</span> <span class="pre">'VELOCITY</span> <span class="pre">U',</span> <span class="pre">'VELOCITY</span> <span class="pre">V',</span> <span class="pre">'VELOCITY</span> <span class="pre">W']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optional_fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fset_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cylag_fset_file.h5'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mesh_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cylag_mesh_file.h5'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.io.converter.convert_fset3d_from_slf_to_h5" title="Link to this definition">¶</a></dt>
+<dd><p>Convert TELEMAC result file to h5 cylag result file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t2d_file</strong> (<em>str</em><em>, </em><em>file name</em><em> of </em><em>the telemac2d result file</em>)</p></li>
+<li><p><strong>bnd_file</strong> (<em>str</em><em>, </em><em>file name</em><em> of </em><em>the telemac2d cli file</em><em> (</em><em>default : None</em><em>)</em>)</p></li>
+<li><p><strong>main_var_names</strong> (<em>list</em><em> of </em><em>str</em><em>, </em><em>names</em><em> of </em><em>the main EulerianFieldSet variables</em>) – (i.e. elevation, velocity u, velocity v) in the telemac result file
+(default: [‘ELEVATION Z’, ‘VELOCITY U’, ‘VELOCITY V’, ‘VELOCITY W’])</p></li>
+<li><p><strong>optional_fields</strong> (<em>List</em><em> of </em><em>str</em><em>, </em><em>names</em><em> of </em><em>the optional_fields to load</em>) – (default : None)</p></li>
+<li><p><strong>Files</strong> (<em>Outputs</em>)</p></li>
+<li><p><strong>-------------</strong></p></li>
+<li><p><strong>fset_file</strong> (<em>str</em><em>, </em><em>file name</em><em> of </em><em>the cylag fset file</em>)</p></li>
+<li><p><strong>mesh_file</strong> (<em>str</em><em>, </em><em>file name</em><em> of </em><em>the cylag mesh file</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-cylag.io.parallel_tags">
+<span id="cylag-io-parallel-tags-module"></span><h2>cylag.io.parallel_tags module<a class="headerlink" href="#module-cylag.io.parallel_tags" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.io.parallel_tags.get_seq_from_par_tag">
+<span class="sig-prename descclassname"><span class="pre">cylag.io.parallel_tags.</span></span><span class="sig-name descname"><span class="pre">get_seq_from_par_tag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.io.parallel_tags.get_seq_from_par_tag" title="Link to this definition">¶</a></dt>
+<dd><p>Get sequential tag from parallel tag</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.io.parallel_tags.set_parallel_tag">
+<span class="sig-prename descclassname"><span class="pre">cylag.io.parallel_tags.</span></span><span class="sig-name descname"><span class="pre">set_parallel_tag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ptag</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.io.parallel_tags.set_parallel_tag" title="Link to this definition">¶</a></dt>
+<dd><p>Modify particle tags for parallel IO.</p>
+<p>The parallel tag encodes the original ID and the processor rank.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>size</strong> (<em>int</em>) – Number of ranks.</p></li>
+<li><p><strong>rank</strong> (<em>int</em>) – Rank number.</p></li>
+<li><p><strong>ptag</strong> (<em>int</em>) – Original particle tag.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Encoded parallel tag.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-cylag.io.particles_io">
+<span id="cylag-io-particles-io-module"></span><h2>cylag.io.particles_io module<a class="headerlink" href="#module-cylag.io.particles_io" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="cylag.io.particles_io.ParticlesIO">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cylag.io.particles_io.</span></span><span class="sig-name descname"><span class="pre">ParticlesIO</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">times</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">up</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">us</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ua</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">va</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wa</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fay</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">faz</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diameter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.io.particles_io.ParticlesIO" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Particles result class for post-processing purposes
+Rmk: use to load particles results of different format and export</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>(</strong><strong>array</strong><strong>(</strong><strong>ntime</strong><strong>)</strong><strong>)</strong> (<em>npart</em>)</p></li>
+<li><p><strong>(</strong><strong>array</strong><strong>(</strong><strong>ntime</strong><strong>)</strong><strong>)</strong></p></li>
+<li><p><strong>(</strong><strong>array</strong><strong>(</strong><strong>ntime</strong><strong>)</strong><strong>)</strong></p></li>
+<li><p><strong>(</strong><strong>List</strong><strong>[</strong><strong>0</strong> (<em>zp</em>)</p></li>
+<li><p><strong>(</strong><strong>List</strong><strong>[</strong><strong>0</strong></p></li>
+<li><p><strong>(</strong><strong>List</strong><strong>[</strong><strong>0</strong></p></li>
+<li><p><strong>(</strong><strong>List</strong><strong>[</strong><strong>0</strong></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.io.particles_io.ParticlesIO.ntimes">
+<span class="sig-name descname"><span class="pre">ntimes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.io.particles_io.ParticlesIO.ntimes" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>number of time steps</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.io.particles_io.ParticlesIO.times">
+<span class="sig-name descname"><span class="pre">times</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">array(ntime)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.io.particles_io.ParticlesIO.times" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>computation times</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.io.particles_io.ParticlesIO.iterations">
+<span class="sig-name descname"><span class="pre">iterations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">array(ntime)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.io.particles_io.ParticlesIO.iterations" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>computation iterations</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cylag.io.particles_io.ParticlesIO.npart">
+<span class="sig-name descname"><span class="pre">npart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">array(ntime)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.io.particles_io.ParticlesIO.npart" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>number of particles at each time step</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">tags</span> <span class="pre">(List[0</span></span></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ntime][0:npart]): particles tags</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">xp</span> <span class="pre">(List[0</span></span></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ntime][0:npart]): x coordinates of particles</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">yp</span> <span class="pre">(List[0</span></span></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ntime][0:npart]): y coordinates of particles</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">zp</span> <span class="pre">(List[0</span></span></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ntime][0:npart]): z coordinates of particles</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">up</span> <span class="pre">(List[0</span></span></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ntime][0:npart], optional): x velocity of particles</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">vp</span> <span class="pre">(List[0</span></span></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ntime][0:npart], optional): y velocity of particles</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">wp</span> <span class="pre">(List[0</span></span></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ntime][0:npart], optional): z velocity of particles</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">us</span> <span class="pre">(List[0</span></span></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ntime][0:npart], optional): x fluid velocity seen by particles</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">vs</span> <span class="pre">(List[0</span></span></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ntime][0:npart], optional): y fluid velocity seen by particles</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">ws</span> <span class="pre">(List[0</span></span></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ntime][0:npart], optional): z fluid velocity seen by particles</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">ua</span> <span class="pre">(List[0</span></span></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ntime][0:npart], optional): x additional velocity of particles</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">va</span> <span class="pre">(List[0</span></span></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ntime][0:npart], optional): y additional velocity of particles</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">wa</span> <span class="pre">(List[0</span></span></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ntime][0:npart], optional): z additional velocity of particles</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">fax</span> <span class="pre">(List[0</span></span></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ntime][0:npart], optional): x additional force of particles</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">fay</span> <span class="pre">(List[0</span></span></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ntime][0:npart], optional): y additional force of particles</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">faz</span> <span class="pre">(List[0</span></span></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ntime][0:npart], optional): z additional force of particles</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">density</span> <span class="pre">(List[0</span></span></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ntime][0:npart], optional): density estimate at particle positions</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">diameter</span> <span class="pre">(List[0</span></span></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ntime][0:npart], optional): particle diameter</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_trajectory(tag):</span> <span class="pre">get</span> <span class="pre">trajectory</span> <span class="pre">in</span> <span class="pre">time</span> <span class="pre">of</span> <span class="pre">tagged</span> <span class="pre">particle</span></span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_trajectories(tags):</span> <span class="pre">get</span> <span class="pre">multiple</span> <span class="pre">trajectories</span></span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">write(file_name,</span> <span class="pre">output_format):</span> <span class="pre">write</span> <span class="pre">cylag</span> <span class="pre">particle</span> <span class="pre">output</span> <span class="pre">file</span></span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">from_telemac3d(file_name):</span> <span class="pre">return</span> <span class="pre">ParticlesIO</span> <span class="pre">class</span> <span class="pre">from</span> <span class="pre">telemac3d</span> <span class="pre">result</span></span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylag.io.particles_io.ParticlesIO.compute_density">
+<span class="sig-name descname"><span class="pre">compute_density</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">virtual_mass</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kernel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.io.particles_io.ParticlesIO.compute_density" title="Link to this definition">¶</a></dt>
+<dd><p>Get density estimate at particle positions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>virtual_mass</strong> (<em>float</em><em>, </em><em>optional</em>) – Virtual mass of particles.</p></li>
+<li><p><strong>h</strong> (<em>float</em><em>, </em><em>optional</em>) – Smoothing length.</p></li>
+<li><p><strong>kernel</strong> (<em>int</em><em>, </em><em>optional</em>) – Smoothing kernel identifier.</p></li>
+<li><p><strong>dim</strong> (<em>int</em><em>, </em><em>optional</em>) – Dimension (2 or 3).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>density (List[0</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ntime][0:npart]): density estimate at particle positions</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylag.io.particles_io.ParticlesIO.compute_density_at_given_rec">
+<span class="sig-name descname"><span class="pre">compute_density_at_given_rec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">virtual_mass</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kernel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.io.particles_io.ParticlesIO.compute_density_at_given_rec" title="Link to this definition">¶</a></dt>
+<dd><p>Get density estimate at particle positions for a given record.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>i</strong> (<em>int</em><em>, </em><em>optional</em>) – Record index at which to compute density.</p></li>
+<li><p><strong>virtual_mass</strong> (<em>float</em><em>, </em><em>optional</em>) – Virtual mass of particles.</p></li>
+<li><p><strong>h</strong> (<em>float</em><em>, </em><em>optional</em>) – Smoothing length.</p></li>
+<li><p><strong>kernel</strong> (<em>int</em><em>, </em><em>optional</em>) – Smoothing kernel identifier.</p></li>
+<li><p><strong>dim</strong> (<em>int</em><em>, </em><em>optional</em>) – Dimension (2 or 3).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>density (List[0</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>npart]): density estimate at particle positions for the given record</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylag.io.particles_io.ParticlesIO.from_cylag_txt">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_cylag_txt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.io.particles_io.ParticlesIO.from_cylag_txt" title="Link to this definition">¶</a></dt>
+<dd><p>Initialize particles from cylag .txt file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>(</strong><strong>str</strong><strong>)</strong> (<em>file_name</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylag.io.particles_io.ParticlesIO.from_telemac3d">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_telemac3d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.io.particles_io.ParticlesIO.from_telemac3d" title="Link to this definition">¶</a></dt>
+<dd><p>Initialize particles from telemac3d .dat file (tecplot format)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>(</strong><strong>str</strong><strong>)</strong> (<em>file_name</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylag.io.particles_io.ParticlesIO.get_mean_trajectory">
+<span class="sig-name descname"><span class="pre">get_mean_trajectory</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cylag.io.particles_io.ParticlesIO.get_mean_trajectory" title="Link to this definition">¶</a></dt>
+<dd><p>Get the mean trajectory (3D: x, y, z)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>trajectory (array(ntime, 3))</strong></p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>mean particle trajectory (x, y, z) in time</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylag.io.particles_io.ParticlesIO.get_mean_trajectory_2d">
+<span class="sig-name descname"><span class="pre">get_mean_trajectory_2d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.io.particles_io.ParticlesIO.get_mean_trajectory_2d" title="Link to this definition">¶</a></dt>
+<dd><p>Get the mean trajectory (2D: x, y)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>(</strong><strong>float</strong> (<em>threshold</em>) – with z &gt; threshold are excluded from the mean computation</p></li>
+<li><p><strong>optional</strong><strong>)</strong> (<em>z threshold; particles</em>) – with z &gt; threshold are excluded from the mean computation</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>trajectory (array(ntime, 2))</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>mean particle trajectory (x, y) in time</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylag.io.particles_io.ParticlesIO.get_trajectories">
+<span class="sig-name descname"><span class="pre">get_trajectories</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tags</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.io.particles_io.ParticlesIO.get_trajectories" title="Link to this definition">¶</a></dt>
+<dd><p>Get particles trajectories in time from particule id list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>(</strong><strong>List</strong><strong>[</strong><strong>int</strong><strong>]</strong><strong>)</strong> (<em>tags</em>)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>trajectories (List[0</strong> – list of particle trajectories (x, y, z) in time</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>len(tags)][0:ntime][3]):</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylag.io.particles_io.ParticlesIO.get_trajectory">
+<span class="sig-name descname"><span class="pre">get_trajectory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.io.particles_io.ParticlesIO.get_trajectory" title="Link to this definition">¶</a></dt>
+<dd><p>Get particle trajectory in time from particule id</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>(</strong><strong>int</strong><strong>)</strong> (<em>tag</em>)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>trajectory (array(ntime, 3))</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>particle trajectory (x, y, z) in time</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cylag.io.particles_io.ParticlesIO.write_cylag_txt">
+<span class="sig-name descname"><span class="pre">write_cylag_txt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.io.particles_io.ParticlesIO.write_cylag_txt" title="Link to this definition">¶</a></dt>
+<dd><p>Write particle file in .txt format</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>(</strong><strong>str</strong><strong>)</strong> (<em>file_name</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-cylag.io.write_particles">
+<span id="cylag-io-write-particles-module"></span><h2>cylag.io.write_particles module<a class="headerlink" href="#module-cylag.io.write_particles" title="Link to this heading">¶</a></h2>
+<p>Write particles functions</p>
+<p>Date: 18-01-2023
+Author: FABIEN SOUILLE</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.io.write_particles.merge_results">
+<span class="sig-prename descclassname"><span class="pre">cylag.io.write_particles.</span></span><span class="sig-name descname"><span class="pre">merge_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputdir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'txt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.io.write_particles.merge_results" title="Link to this definition">¶</a></dt>
+<dd><p>Merge cylag result files after parallel run</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>size</strong> (<em>int</em><em>, </em><em>number</em><em> of </em><em>result files to merge</em><em> (</em><em>number</em><em> of </em><em>proc</em><em>)</em>)</p></li>
+<li><p><strong>outputdir</strong> (<em>str</em><em>, </em><em>output directory</em>)</p></li>
+<li><p><strong>file_name</strong> (<em>str</em><em>, </em><em>name</em><em> of </em><em>the result files</em><em> (</em><em>with '#' rank suffix</em><em>)</em>)</p></li>
+<li><p><strong>output_file_format</strong> (<em>str</em><em>, </em><em>format</em><em> of </em><em>particle result file</em><em> (</em><em>'txt'</em><em>, </em><em>'vtk'</em><em>, </em><em>'all'</em><em>)</em>)</p></li>
+<li><p><strong>debug</strong> (<em>bool</em><em>, </em><em>if True</em><em>, </em><em>do not remove temporary files</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.io.write_particles.merge_stranded_results">
+<span class="sig-prename descclassname"><span class="pre">cylag.io.write_particles.</span></span><span class="sig-name descname"><span class="pre">merge_stranded_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputdir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.io.write_particles.merge_stranded_results" title="Link to this definition">¶</a></dt>
+<dd><p>Merge stranded particle txt files after parallel run.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.io.write_particles.prepare_output">
+<span class="sig-prename descclassname"><span class="pre">cylag.io.write_particles.</span></span><span class="sig-name descname"><span class="pre">prepare_output</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputdir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file_format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.io.write_particles.prepare_output" title="Link to this definition">¶</a></dt>
+<dd><p>Prepare output files and repository</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>output_file_format</strong> (<em>str</em><em>, </em><em>format</em><em> of </em><em>particle result file</em>)</p></li>
+<li><p><strong>output_file_name</strong> (<em>str</em><em>, </em><em>name</em><em> of </em><em>particle result file</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.io.write_particles.write_particles">
+<span class="sig-prename descclassname"><span class="pre">cylag.io.write_particles.</span></span><span class="sig-name descname"><span class="pre">write_particles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">particle_set</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iteration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.io.write_particles.write_particles" title="Link to this definition">¶</a></dt>
+<dd><p>Write lagrangian particles</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>particle_set</strong> (<em>cylag.LagrangianParticleSet</em>)</p></li>
+<li><p><strong>iteration</strong> (<em>int</em><em>, </em><em>lagrangian time iteration</em>)</p></li>
+<li><p><strong>params</strong> (<em>dict</em><em>, </em><em>lagrangian algo parameters</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.io.write_particles.write_stranded_particles_txt_2d">
+<span class="sig-prename descclassname"><span class="pre">cylag.io.write_particles.</span></span><span class="sig-name descname"><span class="pre">write_stranded_particles_txt_2d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputdir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stranded_positions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stranded_count</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.io.write_particles.write_stranded_particles_txt_2d" title="Link to this definition">¶</a></dt>
+<dd><p>Write stranded particles output file after simulation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>size</strong> (<em>int</em>) – Number of MPI ranks.</p></li>
+<li><p><strong>rank</strong> (<em>int</em>) – Current MPI rank.</p></li>
+<li><p><strong>outputdir</strong> (<em>str</em>) – Output directory.</p></li>
+<li><p><strong>file_name</strong> (<em>str</em>) – Base file name for stranded particle output.</p></li>
+<li><p><strong>stranded_tags</strong> (<em>int</em><em>[</em><em>:</em><em>]</em>) – Stranded particle tag buffer.</p></li>
+<li><p><strong>stranded_positions</strong> (<em>double</em><em>[</em><em>:</em><em>,</em><em>:</em><em>]</em>) – Stranded particle position buffer.</p></li>
+<li><p><strong>stranded_count</strong> (<em>int</em>) – Number of stranded particles recorded.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-cylag.io.write_statistics">
+<span id="cylag-io-write-statistics-module"></span><h2>cylag.io.write_statistics module<a class="headerlink" href="#module-cylag.io.write_statistics" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.io.write_statistics.merge_secstats_results">
+<span class="sig-prename descclassname"><span class="pre">cylag.io.write_statistics.</span></span><span class="sig-name descname"><span class="pre">merge_secstats_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputdir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nsec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.io.write_statistics.merge_secstats_results" title="Link to this definition">¶</a></dt>
+<dd><p>Merge boundary statistics result files after parallel run</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>size</strong> (<em>int</em><em>, </em><em>number</em><em> of </em><em>MPI processes</em>)</p></li>
+<li><p><strong>outputdir</strong> (<em>str</em><em>, </em><em>output directory</em>)</p></li>
+<li><p><strong>file_name</strong> (<em>str</em><em>, </em><em>base file name with '#' for rank number</em>)</p></li>
+<li><p><strong>nsec</strong> (<em>int</em><em>, </em><em>number</em><em> of </em><em>sections</em>)</p></li>
+<li><p><strong>debug</strong> (<em>bool</em><em>, </em><em>if True</em><em>, </em><em>do not remove temporary files</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.io.write_statistics.prepare_secstats_output">
+<span class="sig-prename descclassname"><span class="pre">cylag.io.write_statistics.</span></span><span class="sig-name descname"><span class="pre">prepare_secstats_output</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bnd_statistics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nopen</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'particles'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bnd_file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'bnd_stats'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cs_statistics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ncsec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cs_file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cs_stats'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.io.write_statistics.prepare_secstats_output" title="Link to this definition">¶</a></dt>
+<dd><p>Prepare control section and bnd statistics files</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.io.write_statistics.write_secstats">
+<span class="sig-prename descclassname"><span class="pre">cylag.io.write_statistics.</span></span><span class="sig-name descname"><span class="pre">write_secstats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stats</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nsec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputdir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bnd_file_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.io.write_statistics.write_secstats" title="Link to this definition">¶</a></dt>
+<dd><p>Write statistics on 2D control section or horizontal boundary condition</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.io.write_statistics.write_secstats_buffer">
+<span class="sig-prename descclassname"><span class="pre">cylag.io.write_statistics.</span></span><span class="sig-name descname"><span class="pre">write_secstats_buffer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">times</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nsteps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nsec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputdir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bnd_file_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.io.write_statistics.write_secstats_buffer" title="Link to this definition">¶</a></dt>
+<dd><p>Write buffered statistics on 2D control section or horizontal boundary condition.</p>
+<p>Writes all buffered time steps at once, opening each file only once
+to avoid repeated file I/O overhead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>times</strong> (<em>double</em><em>[</em><em>:</em><em>]</em>) – Array of times for each buffered step</p></li>
+<li><p><strong>data</strong> (<em>int</em><em>[</em><em>:</em><em>,</em><em>:</em><em>]</em>) – Array of shape (nsteps, nsec) with statistics per step and section</p></li>
+<li><p><strong>nsteps</strong> (<em>int</em>) – Number of buffered time steps to write</p></li>
+<li><p><strong>nsec</strong> (<em>int</em>) – Number of sections</p></li>
+<li><p><strong>outputdir</strong> (<em>str</em>) – Output directory</p></li>
+<li><p><strong>bnd_file_name</strong> (<em>str</em>) – Base file name for output</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-cylag.io.writer_txt">
+<span id="cylag-io-writer-txt-module"></span><h2>cylag.io.writer_txt module<a class="headerlink" href="#module-cylag.io.writer_txt" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.io.writer_txt.write_txt_2d">
+<span class="sig-prename descclassname"><span class="pre">cylag.io.writer_txt.</span></span><span class="sig-name descname"><span class="pre">write_txt_2d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iteration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputdir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.io.writer_txt.write_txt_2d" title="Link to this definition">¶</a></dt>
+<dd><p>Write lagrangian particles to txt (2D version)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pset</strong> (<em>cylag.LagrangianParticleSet</em>)</p></li>
+<li><p><strong>time</strong> (<em>flaot</em><em>, </em><em>simulation time</em>)</p></li>
+<li><p><strong>(</strong><strong>int</strong><strong>)</strong> (<em>iteration</em>)</p></li>
+<li><p><strong>(</strong><strong>str</strong><strong>)</strong> (<em>file_name</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.io.writer_txt.write_txt_3d">
+<span class="sig-prename descclassname"><span class="pre">cylag.io.writer_txt.</span></span><span class="sig-name descname"><span class="pre">write_txt_3d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iteration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputdir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.io.writer_txt.write_txt_3d" title="Link to this definition">¶</a></dt>
+<dd><p>Write lagrangian particles to txt (3D version)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pset</strong> (<em>cylag.LagrangianParticleSet</em>)</p></li>
+<li><p><strong>time</strong> (<em>flaot</em><em>, </em><em>simulation time</em>)</p></li>
+<li><p><strong>(</strong><strong>int</strong><strong>)</strong> (<em>iteration</em>)</p></li>
+<li><p><strong>(</strong><strong>str</strong><strong>)</strong> (<em>file_name</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-cylag.io.writer_vtk">
+<span id="cylag-io-writer-vtk-module"></span><h2>cylag.io.writer_vtk module<a class="headerlink" href="#module-cylag.io.writer_vtk" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.io.writer_vtk.write_vtk_2d">
+<span class="sig-prename descclassname"><span class="pre">cylag.io.writer_vtk.</span></span><span class="sig-name descname"><span class="pre">write_vtk_2d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iteration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputdir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.io.writer_vtk.write_vtk_2d" title="Link to this definition">¶</a></dt>
+<dd><p>Write lagrangian particles to vtk (2D version)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pset</strong> (<em>cylag.LagrangianParticleSet</em>)</p></li>
+<li><p><strong>time</strong> (<em>float</em>) – simulation time</p></li>
+<li><p><strong>iteration</strong> (<em>int</em>) – iteration</p></li>
+<li><p><strong>file_name</strong> (<em>str</em>) – output file name</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cylag.io.writer_vtk.write_vtk_3d">
+<span class="sig-prename descclassname"><span class="pre">cylag.io.writer_vtk.</span></span><span class="sig-name descname"><span class="pre">write_vtk_3d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iteration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputdir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cylag.io.writer_vtk.write_vtk_3d" title="Link to this definition">¶</a></dt>
+<dd><p>Write lagrangian particles to vtk (3D version)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pset</strong> (<em>cylag.LagrangianParticleSet</em>)</p></li>
+<li><p><strong>time</strong> (<em>float</em>) – simulation time</p></li>
+<li><p><strong>iteration</strong> (<em>int</em>) – iteration</p></li>
+<li><p><strong>file_name</strong> (<em>str</em>) – output file name</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-cylag.io">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-cylag.io" title="Link to this heading">¶</a></h2>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/logo_cylag_sb.png" alt="Logo of CYLAG"/>
+            </a></p>
+<h3><a href="../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../get_started.html">Quick installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../models.html">Mathematical models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../algo.html">Particle-mesh implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../setup.html">Setup, inputs and practical informations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../auto_examples/index.html">Gallery of examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../good_practices.html">Good practices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev.html">Developer guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="cylag.html">cylag package</a></li>
+</ul>
+</li>
+</ul>
+
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="cylag.geom.html"
+                          title="previous chapter">cylag.geom package</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="cylag.lsm.html"
+                          title="next chapter">cylag.lsm package</a></p>
+  </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="cylag.lsm.html" title="cylag.lsm package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="cylag.geom.html" title="cylag.geom package"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">CYLAG 0.9 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >cylag</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="cylag.html" >cylag package</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">cylag.io package</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2023, Fabien Souillé.
+    </div>
+  </body>
+</html>

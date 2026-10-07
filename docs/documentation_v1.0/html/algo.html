@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Particle-mesh implementation &#8212; CYLAG 0.9 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/classic.css?v=51dfc302" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=427e2fde" />
+    
+    <script src="_static/documentation_options.js?v=049aceee"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Setup, inputs and practical informations" href="setup.html" />
+    <link rel="prev" title="Mathematical models" href="models.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="setup.html" title="Setup, inputs and practical informations"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="models.html" title="Mathematical models"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CYLAG 0.9 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Particle-mesh implementation</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="particle-mesh-implementation">
+<span id="algo"></span><h1>Particle-mesh implementation<a class="headerlink" href="#particle-mesh-implementation" title="Link to this heading">¶</a></h1>
+<section id="general-overview-of-the-algorithm">
+<h2>General overview of the algorithm<a class="headerlink" href="#general-overview-of-the-algorithm" title="Link to this heading">¶</a></h2>
+<p>CyLag’s hybrid Eulerian-Lagrangian implementation relies on an Eulerian solver, whose results are computed on a 2D triangular mesh or a 3D mesh (triangular prismatic elements).
+CyLag’s Lagrangian solver then computes the motion of particles that are embedded in the computational domain
+using Lagrangian Stochastic Models (LSMs) described in section <a class="reference internal" href="models.html#models"><span class="std std-ref">Mathematical models</span></a>.</p>
+<p>The time loop associated with CyLag’s Lagrangian solvers can be executed independently from the Eulerian solver in <strong>offline</strong> mode.
+The offline mode implies that only one-way coupling can be achieved. More importantly, it requires the Eulerian results
+to be saved with a sufficiently high frequency in order to avoid errors induced by poor time resolution.
+These drawbacks can be avoided by using the Lagrangian solver in the same time loop as the Eulerian solver, which is called
+<strong>online</strong> mode. This mode is available through the use of both CyLag and TELEMAC Python APIs.</p>
+<figure class="align-center" id="id1">
+<span id="fig-solver"></span><a class="reference internal image-reference" href="_images/solver.png"><img alt="_images/solver.png" src="_images/solver.png" style="width: 600px;" />
+</a>
+<figcaption>
+<p><span class="caption-text"><em>Figure 1: Flowchart of the main time loop of CyLag with the OFFLINE mode (left) or ONLINE mode (right). Step (1) and (6) are optional and are executed only at chosen time steps.</em></span><a class="headerlink" href="#id1" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>Solving Lagrangian Stochastic Models (LSMs) relies on several successive
+steps, which are illustrated in Figure 1.
+Particles are first added within the domain, and then the mean fields (such as the fluid velocity) are interpolated at the location of the particles.
+The particle equations (LSMs) are solved using appropriate time schemes, and the particle state vector is updated.
+After the update, the particles are localized, and boundary conditions are applied if any boundary edge (2D) or surface (3D) has been crossed.
+Boundary conditions include rebounds on the walls or outlet boundary conditions.
+Finally, the particle state vectors are written to output files.
+In the following, the algorithms implemented for interpolation, particle search, and boundary conditions are described.</p>
+<figure class="align-center" id="id2">
+<span id="fig-part-mesh"></span><a class="reference internal image-reference" href="_images/part_mesh.png"><img alt="_images/part_mesh.png" src="_images/part_mesh.png" style="width: 350px;" />
+</a>
+<figcaption>
+<p><span class="caption-text"><em>Figure 2: Particle position update and trajectory separation illustration. The green line indicates the fluid material path line whereas the red line indicates the particle trajectory.</em></span><a class="headerlink" href="#id2" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="interpolation">
+<h2>Interpolation<a class="headerlink" href="#interpolation" title="Link to this heading">¶</a></h2>
+<p><strong>1. Time interpolation</strong></p>
+<p>When using CyLag in offline mode, the mean fields required for the Lagrangian solver are not available at the same times
+if the time step of the Lagrangian solver is different from the Eulerian solver.
+In this case, linear time interpolation is carried out to compute the mean fields at the
+Lagrangian time <img class="math" src="_images/math/69c0b6d6ec9f0d9556cd04c888f961941ef2b339.png" alt="t^n"/> from the closest Eulerian times <img class="math" src="_images/math/6c2aa3a3667f2917e83b6494155994ba75848dc5.png" alt="t^k"/> and <img class="math" src="_images/math/e50d794d2746e1d2abcbf93f57258af464b60a89.png" alt="t^{k+1}"/> such that</p>
+<div class="math">
+<p><img src="_images/math/8fb573265513bbe9eb585f38e91c25af1936d7ba.png" alt="\mathcal{F}(t^k \leq t^n&lt;t^{k+1}, \bold{x}) = \alpha \mathcal{F}(t^{k}, \bold{x}) + (1-\alpha) \mathcal{F}(t^{k+1}, \bold{x}),"/></p>
+</div><p>where <img class="math" src="_images/math/3557ee364c927ecad5b2d34d5b04772450cb2897.png" alt="\mathcal{F}(t^n, \bold{x})"/> is the Eulerian mean field evaluated at Lagrangian time step <img class="math" src="_images/math/69c0b6d6ec9f0d9556cd04c888f961941ef2b339.png" alt="t^n"/>,
+and where <img class="math" src="_images/math/cb8644eaf52b980b8b9305d6b3901ced72fb8ec1.png" alt="\alpha = \dfrac{t^{k+1} - t^n}{t^{k+1} - t^k}"/>.</p>
+<p><strong>2. Spatial interpolation</strong></p>
+<p>Eulerian mean fields interpolation at the particle position is done via linear interpolation by default
+as presented in Figure 3.
+In 3D, the results files are assumed to contain only triangular prismatic elements, which result from an extrusion of a 2D triangular mesh
+(TELEMAC-3D result files).</p>
+<figure class="align-center" id="id3">
+<span id="fig-interp"></span><a class="reference internal image-reference" href="_images/interpolation.png"><img alt="_images/interpolation.png" src="_images/interpolation.png" style="width: 600px;" />
+</a>
+<figcaption>
+<p><span class="caption-text"><em>Figure 3: Interpolation of the fluid mean velocity field at the particle’s location in 2D (left) and 3D (right). Indices i, k, j are the nodes of the 2D triangular mesh while l and l+1 are the indices of the 3D mesh layers.</em></span><a class="headerlink" href="#id3" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="search-algorithm">
+<h2>Search algorithm<a class="headerlink" href="#search-algorithm" title="Link to this heading">¶</a></h2>
+<p>Once particle positions are updated, their location in the mesh (triangle and surrounding layers) needs to be updated
+in order to interpolate at the next time step and to apply boundary conditions if the particles are crossing boundary edges (2D) or surfaces (3D).</p>
+<p><strong>1. Horizontal search</strong></p>
+<p>Several search algorithms have been implemented in CyLag:</p>
+<ul class="simple">
+<li><p><strong>KDTree</strong>: Search all triangles (using a KDTree)</p>
+<ul>
+<li><p>Used for initialization</p></li>
+<li><p>O(log nt + k) complexity</p></li>
+</ul>
+</li>
+<li><p><strong>Neighborhood Search</strong>: Search neighboring triangles</p>
+<ul>
+<li><p>Uses triangle adjacency tables</p></li>
+<li><p>O(1) if particle hasn’t moved far</p></li>
+</ul>
+</li>
+<li><p><strong>Path Following</strong>: Trace a segment from the old to the new position</p>
+<ul>
+<li><p>Finds intersections with mesh edges</p></li>
+<li><p>Efficient for moderate displacements</p></li>
+<li><p>Returns boundary edge if particle exits</p></li>
+</ul>
+</li>
+<li><p><strong>Hierarchical</strong>: Path → KDTree</p></li>
+</ul>
+<p>By default, the hierarchical search is used in CyLag.
+First, we carry out a Path Following search, and if the particle is not found, we use a KDTree search as a fallback.</p>
+<p>The recursive edge-intersection and edge-to-triangle mapping algorithm (see Figure 4) consists of starting from the previous known position <img class="math" src="_images/math/5002d1679b1a02578d2934cf8eef683f45173d68.png" alt="\bold{x}_p^n"/> and the associated triangle <img class="math" src="_images/math/db063ac3b718da47702b1dbb3c52d3feac13333b.png" alt="T_i"/>.
+The edge of the triangle <img class="math" src="_images/math/db063ac3b718da47702b1dbb3c52d3feac13333b.png" alt="T_i"/> that is intersected by the segment <img class="math" src="_images/math/1cc230abeb189dc6c5e76f8f273fd49c4f99bfdc.png" alt="[\bold{x}_p^n, \bold{x}_p^{n+1}]"/> is
+determined in order to search in the neighboring triangle <img class="math" src="_images/math/c28aabdbbb5685177db207ad2367c8cd9e3f31d7.png" alt="T_j"/>. If the position <img class="math" src="_images/math/e57f64edd4c1f62441c36b6e059663300250eeb0.png" alt="\bold{x}_p^{n+1}"/> is not found in <img class="math" src="_images/math/c28aabdbbb5685177db207ad2367c8cd9e3f31d7.png" alt="T_j"/>,
+we start again from <img class="math" src="_images/math/c28aabdbbb5685177db207ad2367c8cd9e3f31d7.png" alt="T_j"/> and eliminate the previous intersected edge from the intersection search.
+If the point <img class="math" src="_images/math/e57f64edd4c1f62441c36b6e059663300250eeb0.png" alt="\bold{x}_p^{n+1}"/> lies in the neighboring triangles of <img class="math" src="_images/math/db063ac3b718da47702b1dbb3c52d3feac13333b.png" alt="T_i"/>, the maximum cost of the algorithm is only three intersections and one point-in-triangle test.
+Note that the optimized search algorithm requires the previous position to be known; the particles are therefore localized using KDTree search for initialization.</p>
+<figure class="align-center" id="id4">
+<span id="fig-localisation"></span><a class="reference internal image-reference" href="_images/localisation.png"><img alt="_images/localisation.png" src="_images/localisation.png" style="width: 550px;" />
+</a>
+<figcaption>
+<p><span class="caption-text"><em>Figure 4: Illustration of the 2D optimized search algorithm (left) and vertical localization algorithm (right). Purple rectangles indicate successive intersections and Tj the triangles in which the new particle position is searched. In this example, four points in triangle tests are performed until the position is found.</em></span><a class="headerlink" href="#id4" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<p><strong>2. Vertical search (for 3D only)</strong></p>
+<p>For 3D applications, horizontal localization is unchanged, while vertical localization is achieved by interpolation of the free surface and bottom at the particle location and assuming
+a regular vertical layer spacing. The algorithm could be adapted to irregular vertical discretization as long as an analytical formula can be provided for the layer spacing and if the layer spacing does not vary in space.</p>
+</section>
+<section id="boundary-conditions">
+<h2>Boundary conditions<a class="headerlink" href="#boundary-conditions" title="Link to this heading">¶</a></h2>
+<p>Different boundary conditions are applied depending on the type of boundary edge (or surface) that a particle goes through.
+We distinguish three main types of boundary conditions.</p>
+<ul class="simple">
+<li><p><strong>Open inlet boundary</strong>: particles are entering the domain through an open inflow boundary condition.</p></li>
+<li><p><strong>Open outlet boundary</strong>: particles are leaving the domain and are removed from the pool of active particles.</p></li>
+<li><p><strong>Wall boundary (rebound)</strong>: particles interact with a wall, which can be a lateral wall, the bottom, or the free surface.</p></li>
+</ul>
+<p><strong>1. Rebound boundary conditions</strong></p>
+<p>Wall boundary conditions are very important in order for the particles to stay inside the computational domain
+and maintain the well-mixed condition.
+Two types of rebound can be considered, as illustrated in Figure 5. The most straightforward is the specular rebound, which corresponds to the rebound of a spherical
+particle on a planar surface.
+The second option is the diffuse rebound, for which the direction of the particle velocity vector after the rebound is no longer deterministic but rather follows a
+PDF that describes the dispersion of the trajectories due to surface roughness.
+The choice between specular and diffuse rebound is made through the parameter <code class="docutils literal notranslate"><span class="pre">param:boundary_conditions_type</span></code> (1 for specular, 2 for diffuse).</p>
+<figure class="align-center" id="id5">
+<span id="fig-rebound"></span><a class="reference internal image-reference" href="_images/rebound.png"><img alt="_images/rebound.png" src="_images/rebound.png" style="width: 450px;" />
+</a>
+<figcaption>
+<p><span class="caption-text"><em>Figure 5: Specular rebound (left) and diffuse rebound (right).</em></span><a class="headerlink" href="#id5" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<p><em>1.1 Specular rebound</em></p>
+<p>The computation of specular rebounds is based on intersections and symmetric point computations.
+In 2D, it only involves segment intersection and reflection, while in 3D, it requires segment-face intersection and surface reflection, which are computationally more demanding.
+The rebound algorithm implemented in CyLag is compatible with multiple reflections to avoid stuck particles in complex geometries.
+An example is given in Figure 6 for 2D planar reflections.
+A maximum number of rebounds is allowed in order to avoid excessive cost due to stuck particles (<code class="docutils literal notranslate"><span class="pre">param:max_wall_rebounds</span></code>, set to 4 by default). Stuck particles can occur in very shallow 3D models when wetting and drying are present in the model.
+Also, another simplified algorithm is proposed for such cases, in which only 2D reflections are computed on the side of the 3D mesh.
+Besides, a damping coefficient is added to model the energy loss due to the collision (<code class="docutils literal notranslate"><span class="pre">param:rebound_damping_coef</span></code>), in which case the velocity of the particle is reduced after the rebound. The default damping is set to 0.5, i.e. particles lose half of their kinetic energy in collisions.
+Additionally, when particles reach the free surface or the bottom, the reflection distance is limited to half the water depth to avoid a very high number of reflections in drying areas where the water depth is close to zero.</p>
+<figure class="align-center" id="id6">
+<a class="reference internal image-reference" href="_images/rebound2.png"><img alt="_images/rebound2.png" src="_images/rebound2.png" style="width: 700px;" />
+</a>
+<figcaption>
+<p><span class="caption-text"><em>Figure 6: 2D illustration of specular rebound boundary condition without damping (left), with damping (center) and example of multiple rebounds (right). The red dotted line represents the real trajectory of the particle after rebound while the green dotted line represents the trajectory without rebound.</em></span><a class="headerlink" href="#id6" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<p><em>1.2 Diffuse rebound</em></p>
+<p>Following the classic stochastic rough-wall approach (Sommerfeld, 1992), the true geometric wall is kept for repositioning the particle,
+but the local wall normal used for the velocity reflection is randomly perturbed by an angle <img class="math" src="_images/math/8a87f04e7d7cca18343c084cceca5237fae62491.png" alt="\theta"/> sampled around 0 with std-dev
+<code class="docutils literal notranslate"><span class="pre">param:wall_roughness_angle</span></code> (in degree), drawn via the RNG function. This simulates microscopic surface roughness causing quasi-random scattering instead of a perfect mirror bounce,
+while still conserving speed/energy consistently with the existing damping scheme.</p>
+<p><strong>2. Stranding</strong></p>
+<p>When particles reach a wall boundary that corresponds to a coastline, the particles could stay on the shore.
+To take that into account, a stranding probability is included in CyLag (see <code class="docutils literal notranslate"><span class="pre">param:stranding_probability</span></code>).
+When a particle rebound is triggered, the stranding probability is applied; if stranded, the particle is deleted from the active pool of particles.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/logo_cylag_sb.png" alt="Logo of CYLAG"/>
+            </a></p>
+<h3><a href="index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="get_started.html">Quick installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Mathematical models</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Particle-mesh implementation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#general-overview-of-the-algorithm">General overview of the algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#interpolation">Interpolation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#search-algorithm">Search algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#boundary-conditions">Boundary conditions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">Setup, inputs and practical informations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html">Gallery of examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="good_practices.html">Good practices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev.html">Developer guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/modules.html">API</a></li>
+</ul>
+
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="models.html"
+                          title="previous chapter">Mathematical models</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="setup.html"
+                          title="next chapter">Setup, inputs and practical informations</a></p>
+  </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="setup.html" title="Setup, inputs and practical informations"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="models.html" title="Mathematical models"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">CYLAG 0.9 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Particle-mesh implementation</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2023, Fabien Souillé.
+    </div>
+  </body>
+</html>

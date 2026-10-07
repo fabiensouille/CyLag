@@ -1,0 +1,61 @@
+cylag.modules package
+=====================
+
+Submodules
+----------
+
+cylag.modules.algae module
+--------------------------
+
+.. automodule:: cylag.modules.algae
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+cylag.modules.custom\_particle\_set module
+------------------------------------------
+
+.. automodule:: cylag.modules.custom_particle_set
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+cylag.modules.fish module
+-------------------------
+
+.. automodule:: cylag.modules.fish
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+cylag.modules.jellyfish module
+------------------------------
+
+.. automodule:: cylag.modules.jellyfish
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+cylag.modules.macrophyte module
+-------------------------------
+
+.. automodule:: cylag.modules.macrophyte
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+cylag.modules.oil\_slick module
+-------------------------------
+
+.. automodule:: cylag.modules.oil_slick
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: cylag.modules
+   :members:
+   :undoc-members:
+   :show-inheritance:

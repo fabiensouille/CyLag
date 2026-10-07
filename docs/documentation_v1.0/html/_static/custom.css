@@ -1,0 +1,15 @@
+/* Table header */
+table.docutils thead th,
+table thead th {
+    background-color: #4A4A4A;
+    color: white;
+}
+
+/* custom abmonitions */
+.admonition.warning {
+    background-color: #fff4e5;
+    border-left: 1px solid #f0ad4e;
+    border-top: 1px solid #f0ad4e;
+    border-bottom: 1px solid #f0ad4e;
+    border-right: 1px solid #f0ad4e;
+}

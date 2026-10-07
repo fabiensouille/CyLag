@@ -1,0 +1,64 @@
+
+
+.. _sphx_glr_auto_examples_vnv_15_jellyfish:
+
+Jellyfish module
+----------------
+
+This example illustrate the module dedicated to the modeling of Jellyfish.
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we illustrate the drag force formula used for Jellyfish.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_15_jellyfish/images/thumb/sphx_glr_vnv_jellyfish_drag_force_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_15_jellyfish_vnv_jellyfish_drag_force.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Jellyfish drag force</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example we compute the advection-diffusion of Jellyfish in a coastal  environment with the LSM-2 model.">
+
+.. only:: html
+
+  .. image:: /auto_examples/vnv_15_jellyfish/images/thumb/sphx_glr_vnv_jellyfish_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_vnv_15_jellyfish_vnv_jellyfish.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Jellyfish</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /auto_examples/vnv_15_jellyfish/vnv_jellyfish_drag_force
+   /auto_examples/vnv_15_jellyfish/vnv_jellyfish
+
