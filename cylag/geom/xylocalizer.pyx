@@ -415,10 +415,12 @@ cpdef (int, int) xy_localize_point_from_path(\
                 # search in neighbor triangle
                 new_k = point_in_tri(\
                     meshx, meshy, triangles, k_niegh, x, y)
-                if new_k ==-1:
-                    # if not found resets k for next loop
-                    k = k_niegh
-                    intersected_edge = j
+                if new_k != -1:
+                    return new_k, -1
+                # not found: continue the path from the neighbor triangle
+                k = k_niegh
+                intersected_edge = j
+                break
 
         # if no intersections, check if still in initial triangle
         if intersects==0:

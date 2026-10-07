@@ -147,6 +147,13 @@ cdef class Solver:
             raise ValueError("EulerianFieldSet has only one time step,\
                               use frozen_eulerian_fields=True")
 
+        # set initial record from initial time and reset time-derivative state
+        if self.field_set.frozen_hydro == False:
+            self.field_set.record = c_compute_lower_index(\
+                self.field_set.times, self.parameters.initial_time, 0)
+        self.field_set._interp_done = False
+        self.field_set._prev_valid = False
+
         # check additional velocity/force compatibility with lsm
         if self.particle_set.additional_velocity and\
            (self.parameters.model==2 or self.parameters.model==3):
@@ -178,6 +185,10 @@ cdef class Solver:
         # initialize lsm2 and lsm3 coefficients
         if self.parameters.model==2 or self.parameters.model==3:
             self.particle_set._initialize_model_coefficients()
+
+        # fields at initial time are needed to initialize particle states
+        if self.field_set.frozen_hydro == False:
+            self.field_set._time_interpolation(self.parameters.initial_time)
 
         # initialize particle state
         # loop on active particles
@@ -260,8 +271,8 @@ cdef class Solver:
             self.particle_set.delete_single(i)
             print("WARNING: Particle {} is ouside triangulation".format(i))
 
-        # vertical localization
-        if self.particle_set.dim==3:
+        # vertical localization (skipped if particle was just deleted)
+        if self.particle_set.dim==3 and self.particle_set.inactive[i]==0:
 
             # get zs and zb from field_set
             zs = self.field_set._interpolate_field_2d(

@@ -6,7 +6,7 @@ Presentation
 
 **CyLag** is a high-performance Cython-based framework for simulating Lagrangian particle transport and dispersion in fluid flows, with a particular focus on free-surface hydrodynamic applications.
 
-- **Version**: 0.9
+- **Version**: 1.0
 - **Author**: Fabien Souillé (EDF R&D, LNHE)
 - **First release date**: 2023
 - **Language**: Cython_

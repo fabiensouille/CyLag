@@ -214,13 +214,13 @@ Complete list of available parameters in ``cylag_dico.py``:
   - 0 : user defined (zero if not specified),
   - 1 : interpolated from mean fluid velocity;
 
-- ``rng_method``: random number generator method (default: 1)
+- ``rng_method``: random number generator method (default: 2)
 
   - 1 : rectangular approximation;
   - 2 : Ziggurat method (default);
   - 3 : Marsaglia’s polar method.
 
-- ``lsm3_edge_opt``: edge-case treatment of the LSM-3 direct integrator (``time_scheme=5``) (default: 1)
+- ``lsm3_edge_opt``: edge-case treatment of the LSM-3 direct integrator (``time_scheme=5``) (default: 2)
 
   - 1 : normalized Taylor series (accurate for tiny steps and :math:`\mathcal{A}_1 = 1/T_L`);
   - 2 : closed-form coefficients with clipping: the degenerate denominator :math:`\mathcal{A}_1 - 1/T_L` is clipped, 

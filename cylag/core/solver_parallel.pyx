@@ -44,7 +44,7 @@ from ..io.write_statistics import prepare_secstats_output, merge_secstats_result
 from ..io.write_statistics cimport write_secstats, write_secstats_buffer
 from ..boundary_conditions.compute_bc cimport compute_boundary_condition
 from ..extra.control_shapes cimport ControlSection
-from ..lsm.random_utils cimport random_gaussian_pair, random_gaussian_ziggurat
+from ..lsm.random_utils cimport random_gaussian_pair, random_gaussian_ziggurat, pcg32_advance
 
 cdef class SolverParallel:
     """
@@ -109,6 +109,10 @@ cdef class SolverParallel:
 
         self.size = self.comm.Get_size()
         self.rank = self.comm.Get_rank()
+
+        # All ranks start from the same PCG32 state: jump each rank to its own sub-stream
+        if self.size > 1:
+            pcg32_advance(<unsigned long long>self.rank << 48)
 
         # ~~~~~~~~~~~~~~~~~~~~~~~~~~
         # Parallel load distribution
@@ -227,6 +231,8 @@ cdef class SolverParallel:
         if self.field_set.frozen_hydro == False:
             self.field_set.record = c_compute_lower_index(\
                 self.field_set.times, self.parameters.initial_time, 0)
+        self.field_set._interp_done = False
+        self.field_set._prev_valid = False
 
         # check behavior model compatibility with lsm
         if self.rank==0:
@@ -262,6 +268,10 @@ cdef class SolverParallel:
         if self.parameters.model==2 or self.parameters.model==3:
             self.particle_set._initialize_model_coefficients()
 
+        # fields at initial time are needed to initialize particle states
+        if self.field_set.frozen_hydro == False:
+            self.field_set._time_interpolation(self.parameters.initial_time)
+
         # initialize particle state
         # loop on active particles
         for i in range(self.particle_set.npart):
@@ -281,7 +291,7 @@ cdef class SolverParallel:
                 self.parameters.output_file_name,
                 self.parameters.model)
 
-        if self.parameters.stranding_output and self.size > 1:
+        if self.parameters.stranding_output:
             self.parameters.stranding_output_file_name += "#{}".format(self.rank)
 
         if self.parameters.bnd_statistics==1 or \
@@ -347,8 +357,8 @@ cdef class SolverParallel:
             self.particle_set.delete_single(i)
             print("WARNING: Particle {} is ouside triangulation".format(i))
 
-        # vertical localization
-        if self.particle_set.dim==3:
+        # vertical localization (skipped if particle was just deleted)
+        if self.particle_set.dim==3 and self.particle_set.inactive[i]==0:
 
             # get zs and zb from field_set
             zs = self.field_set._interpolate_field_2d(

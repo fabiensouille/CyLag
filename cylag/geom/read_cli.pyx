@@ -68,6 +68,8 @@ def read_cli(file_name, vertex_id_column=11):
             break
 
         line_l = line.split()
+        if not line_l:
+            continue
 
         # boundary points labels
         if int(line_l[0])==2 and int(line_l[1])==2 and int(line_l[2])==2:
@@ -90,6 +92,7 @@ def read_cli(file_name, vertex_id_column=11):
     nb = boundary_points.shape[0]
     if boundary_points[0, 1] != BND_WALL_REF and boundary_points[nb-1, 1] != BND_WALL_REF:
         last_bnd_value = boundary_points[nb-1, 1]
-        boundary_points=np.where(boundary_points==last_bnd_value, boundary_points[0, 1], boundary_points)
+        mask = boundary_points[:, 1] == last_bnd_value
+        boundary_points[mask, 1] = boundary_points[0, 1]
 
     return boundary_points, new_boundary_count

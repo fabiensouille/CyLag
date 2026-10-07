@@ -61,6 +61,10 @@ cdef class EulerianFieldSet:
     cdef public double _cached_f2
     cdef public bint _cache_valid
 
+    # Previous-step fields (tmp_*0) are valid for finite-difference time derivatives
+    cdef public bint _interp_done
+    cdef public bint _prev_valid
+
     cpdef void _init_tmp(EulerianFieldSet self)
     cpdef void _cache_interp_factors(EulerianFieldSet self, int k, double x, double y)
     cpdef bint _use_cached_factors(EulerianFieldSet self, int k, double x, double y)

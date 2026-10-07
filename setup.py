@@ -229,7 +229,7 @@ class CleanCommand(Command):
 # ~~~~~
 setup(
     name="cylag",
-    version='0.9',
+    version='1.0',
     packages=find_packages(include=[\
         "cylag",
         "cylag.core",

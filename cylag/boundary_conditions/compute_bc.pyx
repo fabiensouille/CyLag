@@ -30,7 +30,7 @@ from ..geom.utils cimport normal2u
 from ..geom.xylocalizer cimport xy_localize
 from ..geom.intersections cimport compute_symetric_point2d
 from ..geom.zlocalizer cimport c_compute_lower_layer_index
-from ..lsm.random_utils cimport generate_random_single
+from ..lsm.random_utils cimport generate_random_single, random_uniform
 
 cpdef void compute_boundary_condition(\
         SimuTime simutime,
@@ -98,7 +98,7 @@ cpdef void compute_boundary_condition(\
         # strand_condition == 0 : particle is kept (we compute rebound)
         # strand_condition == 1 : particle is stranded (we delete and skip rebound)
         if edges_labels[bnd_j] == BND_WALL_REF and strand > 0.:
-            strand_condition = np.random.choice([0, 1], p=[1-strand, strand])
+            strand_condition = random_uniform() < strand
         else:
             strand_condition = 0
 
@@ -140,7 +140,7 @@ cpdef void compute_boundary_condition(\
             bnd_jj = bnd_j # last crossed bnd edge
             rebound_count = 0
 
-            while pset.tri[i]==PART_LOC_O and rebound_count <= max_rebounds:
+            while pset.tri[i]==PART_LOC_O and rebound_count < max_rebounds:
 
                 if debug:
                     print(" ~~~> computing rebound of particle {}".format(i))
@@ -182,6 +182,14 @@ cpdef void compute_boundary_condition(\
                 if debug:
                     print("tri after rebound:", pset.tri[i])
                     print("last bnd edge crossed:", bnd_jj)
+
+                # rebounded particle crossed an open boundary: it leaves the domain
+                if pset.tri[i]==PART_LOC_O and bnd_jj!=-1 and\
+                   edges_labels[bnd_jj]>=BND_OPEN_REF:
+                    if parameters.bnd_statistics:
+                        bnd_stats[edges_labels[bnd_jj]-1] += 1
+                    pset.delete_single(i)
+                    break
 
                 # compute particle velocity after rebound
                 if parameters.model==0 or parameters.model>=2:
@@ -253,6 +261,14 @@ cpdef void compute_boundary_condition(\
                     if debug:
                         print("Failed to localize particle after rebound ")
                     break
+
+            # vertical relocalization in the new triangle after the rebound
+            if pset.dim==3 and pset.tri[i]!=PART_LOC_O:
+                pset.lowerlayer[i] = fset.z_localize(\
+                    pset.tri[i],
+                    pset.position[i, 0],
+                    pset.position[i, 1],
+                    pset.position[i, 2])
 
         # Open boundary condition
         # ------------------------

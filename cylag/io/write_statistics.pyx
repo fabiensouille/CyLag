@@ -35,13 +35,8 @@ def prepare_secstats_output(\
     if bnd_statistics:
         for i in range(1, nopen+1):
             fileout = os.path.join(outputdir, bnd_file_name+'_{}.txt'.format(i))
-            # check if file exists
-            if os.path.isfile(fileout):
-                os.system("rm {}".format(fileout))
-            else:
-                os.system("touch {}".format(fileout))
-            # write Header
-            f = open(fileout, 'a')
+            # write Header (overwrites any pre-existing file)
+            f = open(fileout, 'w')
             f.write('cylag boundary statistics file\n')
             f.write('Variables: Time, Npart')
             f.write('\n')
@@ -51,13 +46,8 @@ def prepare_secstats_output(\
     if cs_statistics:
         for i in range(1, ncsec+1):
             fileout = os.path.join(outputdir, cs_file_name+'_{}.txt'.format(i))
-            # check if file exists
-            if os.path.isfile(fileout):
-                os.system("rm {}".format(fileout))
-            else:
-                os.system("touch {}".format(fileout))
-            # write Header
-            f = open(fileout, 'a')
+            # write Header (overwrites any pre-existing file)
+            f = open(fileout, 'w')
             f.write('cylag control section file\n')
             f.write('Variables: Time, Npart')
             f.write('\n')
@@ -174,4 +164,5 @@ def merge_secstats_results(size, outputdir, file_name, nsec, debug=False):
             for k in range(size):
                 filek = os.path.join(outputdir,\
                     fileref+'#{}'.format(k) + '_{}.txt'.format(i))
-                os.system("rm {}".format(filek))
+                if os.path.exists(filek):
+                    os.remove(filek)

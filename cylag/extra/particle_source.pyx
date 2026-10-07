@@ -306,7 +306,7 @@ cdef class ParticleSourceFromField:
                         x0 = fset.triangular_mesh.x[k]
                         y0 = fset.triangular_mesh.y[k]
                         for j in range(npart_new):
-                            postmp_r = r0*random_uniform()
+                            postmp_r = r0*sqrt(random_uniform())
                             postmp_a = 2.*np.pi*random_uniform()
                             postmp[j, 0] = x0 + postmp_r*np.cos(postmp_a)
                             postmp[j, 1] = y0 + postmp_r*np.sin(postmp_a)

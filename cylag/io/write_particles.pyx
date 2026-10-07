@@ -7,6 +7,7 @@ Author: FABIEN SOUILLE
 """
 import os
 import glob
+import numpy as np
 from ..core.parameters cimport Parameters
 from ..core.lagrangian_particle_set cimport LagrangianParticleSet
 from .writer_vtk import write_vtk_2d, write_vtk_3d
@@ -31,13 +32,8 @@ def prepare_output(pset, outputdir, output_file_format, output_file_name, model=
     # Prepare txt output file
     if output_file_format == 'txt' or output_file_format == 'all':
         fileout = os.path.join(outputdir, output_file_name+'.txt')
-        # check if file exists
-        if os.path.isfile(fileout):
-            os.system("rm {}".format(fileout))
-        else:
-            os.system("touch {}".format(fileout))
-        # write Header
-        f = open(fileout, 'a')
+        # write Header (overwrites any pre-existing file)
+        f = open(fileout, 'w')
         f.write('cylag particles result file\n')
         f.write('Variables: Tags, Xp, Yp, Zp, Up, Vp, Wp, ')
         if model>=2:
@@ -145,9 +141,12 @@ def _merge_txt_results(size, outputdir, file_name, debug=False):
         f.write('Ua, Va, Wa, ')
     if part_list[0].fax is not None:
         f.write('Fax, Fay, Faz, ')
-    has_diameter = len(part_list[0].diameter) > 0 and part_list[0].diameter[0].sum() != 0.
+    has_diameter = any(np.any(np.asarray(d) != 0.) for p in part_list for d in p.diameter)
+    has_depth = any(np.any(np.asarray(d) != 0.) for p in part_list for d in p.depth)
     if has_diameter:
-        f.write('Diameter, ')
+        f.write('dp, ')
+    if has_depth:
+        f.write('depth, ')
     f.write('\n')
     f.close()
 
@@ -163,7 +162,6 @@ def _merge_txt_results(size, outputdir, file_name, debug=False):
             npart_totp += part.npart[i]
         f.write("Npart = {:16d}\n".format(npart_totp))
 
-        has_diameter = len(part_list[0].diameter) > 0 and part_list[0].diameter[0].sum() != 0.
         for part in part_list:
             for j in range(part.npart[i]):
                 f.write('{:16d}, '.format(part.tags[i][j]))
@@ -187,6 +185,8 @@ def _merge_txt_results(size, outputdir, file_name, debug=False):
                     f.write('{:.8e}, '.format(part.faz[i][j]))
                 if has_diameter:
                     f.write('{:.8e}, '.format(part.diameter[i][j]))
+                if has_depth:
+                    f.write('{:.8e}, '.format(part.depth[i][j]))
                 f.write('\n')
 
         f.close()

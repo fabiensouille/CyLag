@@ -36,6 +36,22 @@ cpdef void pcg32_seed(uint64_t seed, uint64_t stream):
     _pcg32_state.state += seed
     _pcg32_next()
 
+cpdef void pcg32_advance(uint64_t delta):
+    """Jump the global PCG32 stream ahead by delta steps in O(log delta)."""
+    global _pcg32_state
+    cdef uint64_t acc_mult = 1
+    cdef uint64_t acc_plus = 0
+    cdef uint64_t cur_mult = 6364136223846793005ULL
+    cdef uint64_t cur_plus = _pcg32_state.inc
+    while delta > 0:
+        if delta & 1:
+            acc_mult *= cur_mult
+            acc_plus = acc_plus*cur_mult + cur_plus
+        cur_plus = (cur_mult + 1)*cur_plus
+        cur_mult *= cur_mult
+        delta >>= 1
+    _pcg32_state.state = acc_mult*_pcg32_state.state + acc_plus
+
 cpdef inline double random_uniform():
     """Generate a uniform random number in [0, 1).
     

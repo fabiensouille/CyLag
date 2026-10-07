@@ -105,7 +105,7 @@ cpdef init_positions_2d(poly, poly_area=None,
     del polygon
     return positions
 
-cpdef init_positions_3d(poly, poly_area=1.,
+cpdef init_positions_3d(poly, poly_area=None,
         xy_method=0, grid_res=np.array([5, 5, 1]), xy_npart=25, xy_density=25.,
         z_method=0, z_npart=1, z_density=1., zmin=0., zmax=1.,):
     """
@@ -161,7 +161,7 @@ cpdef init_positions_3d(poly, poly_area=1.,
 
     # compute polygon area if not provided
     if poly_area==None:
-        poly_area = polygon_area(poly)
+        poly_area = polygon_area(poly[:, 0], poly[:, 1])
 
     # define grid res
     if xy_method==0:

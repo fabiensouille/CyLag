@@ -15,7 +15,7 @@ import os
 project = 'CYLAG'
 copyright = '2023, Fabien Souillé'
 author = 'fabien souille'
-release = '0.9'
+release = '1.0'
 
 # -- Import test -------------------------------------------------------------
 try:

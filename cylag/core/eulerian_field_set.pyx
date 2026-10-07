@@ -24,7 +24,7 @@ import matplotlib.tri as mtri
 from ..geom.zlocalizer cimport c_compute_lower_index, c_compute_lower_layer_index
 from ..geom.read_cli import read_cli
 from ..geom.triangular_mesh cimport TriangularMesh
-from ..core.constants cimport PART_LOC_A, PART_LOC_B, EPSILON, KAPPA, GRAV, CMU
+from ..core.constants cimport PART_LOC_A, PART_LOC_B, PART_LOC_O, EPSILON, KAPPA, GRAV, CMU
 from libc.math cimport fabs, fmax, fmin, log, sqrt, exp
 
 cdef class EulerianFieldSet:
@@ -250,6 +250,8 @@ cdef class EulerianFieldSet:
         self._cached_f1 = 0.0
         self._cached_f2 = 0.0
         self._cache_valid = False
+        self._interp_done = False
+        self._prev_valid = False
 
         self._init_tmp()
 
@@ -535,11 +537,13 @@ cdef class EulerianFieldSet:
             # Opt Fields
             nopt = f['nopt'][:][0]
             if nopt != 0:
-                # check if opt fields names are provided by user else create default names
+                # names saved in the file, unless provided by the user
                 if optional_fields is None:
-                    optional_fields = ["opt_field_{}".format(i) for i in range(nopt)]
-                else:
-                    optional_fields = optional_fields
+                    if 'opt_fields_names' in f:
+                        optional_fields = [n.decode('utf-8') if isinstance(n, bytes) else str(n)
+                                           for n in f['opt_fields_names'][:]]
+                    else:
+                        optional_fields = ["opt_field_{}".format(i) for i in range(nopt)]
                 opt_fields = f['opt_fields'][:]
             else:
                 optional_fields = None
@@ -594,6 +598,9 @@ cdef class EulerianFieldSet:
             f.create_dataset('nopt', data=np.array([self.nopt]))
             if self.nopt != 0:
                 f.create_dataset('opt_fields', data=np.array(self.opt_fields))
+                f.create_dataset('opt_fields_names',
+                    data=[str(n).encode('utf-8') for n in self.opt_fields_names],
+                    dtype=h5py.string_dtype())
         f.close()
 
     def get_mtri_triangulation(self):
@@ -892,6 +899,10 @@ cdef class EulerianFieldSet:
             self._tmp_v0[:] = self._tmp_velocity_y[:]
             self._tmp_w0[:] = self._tmp_velocity_z[:]
 
+            # previous fields are only meaningful from the second interpolation on
+            self._prev_valid = self._interp_done
+            self._interp_done = True
+
             # time interp factor                
             self._set_record(time, 1)
             rec = self.record
@@ -1131,6 +1142,10 @@ cdef class EulerianFieldSet:
             double[:,:] gradx = self.triangular_mesh.gradx
             double[:,:] grady = self.triangular_mesh.grady
             int[:,:] triangles = self.triangular_mesh.triangles
+
+        # point outside the triangulation: no vertical localization
+        if k == -1:
+            return PART_LOC_O
 
         # precompute interpolation factors
         i0 = triangles[k, 0]
@@ -1438,8 +1453,8 @@ cdef class EulerianFieldSet:
         dvdx = v[i0]*gradx[k, 0] + v[i1]*gradx[k, 1] + v[i2]*gradx[k, 2]
         dvdy = v[i0]*grady[k, 0] + v[i1]*grady[k, 1] + v[i2]*grady[k, 2]
 
-        # Eulerian time derivative, unavailable at initial time or if frozen hydro
-        if self.frozen_hydro==0 and self.record>0:
+        # Eulerian time derivative, unavailable at first interpolation or if frozen hydro
+        if self.frozen_hydro==0 and self._prev_valid:
             f0 = det[k, 0] + x*gradx[k, 0] + y*grady[k, 0]
             f1 = det[k, 1] + x*gradx[k, 1] + y*grady[k, 1]
             f2 = det[k, 2] + x*gradx[k, 2] + y*grady[k, 2]
@@ -1548,7 +1563,7 @@ cdef class EulerianFieldSet:
             gradx, grady, s, dz, zlx, zly, zux, zuy)
 
         # Eulerian time derivative, unavailable at initial time or if frozen hydro
-        if self.frozen_hydro==0 and self.record>0:
+        if self.frozen_hydro==0 and self._prev_valid:
             dudt = (un - _prism_value_gradient(\
                 u0, jl, ju, i0, i1, i2, k, f0, f1, f2,\
                 gradx, grady, s, dz, zlx, zly, zux, zuy)[0])/dt
@@ -1604,8 +1619,8 @@ cdef class EulerianFieldSet:
         if k == -1:
             raise ValueError("Failed interpolation (6), point not in triangulation")
 
-        # cannot compute acceleration at initial time or if frozen hydro
-        if self.frozen_hydro==1 or self.record==0:
+        # cannot compute acceleration at first interpolation or if frozen hydro
+        if self.frozen_hydro==1 or not self._prev_valid:
             dzsdt_on_points = 0.
 
         else:

@@ -330,14 +330,14 @@ cdef class TriangularMesh:
                 if dynindex[i] < MAX_VERTEX_ADJACENCY:
                     vertex_adjacency[i, dynindex[i]] = k
                 dynindex[i] += 1
-                if dynindex[i] >= MAX_VERTEX_ADJACENCY:
+                if dynindex[i] > MAX_VERTEX_ADJACENCY:
                     overflow_detected = True
 
         # If overflow detected, provide detailed diagnostics
         if overflow_detected:
             dynindex_np = np.asarray(dynindex)
             max_connectivity = int(np.max(dynindex_np))
-            overflow_vertices = np.where(dynindex_np >= MAX_VERTEX_ADJACENCY)[0]
+            overflow_vertices = np.where(dynindex_np > MAX_VERTEX_ADJACENCY)[0]
             n_overflow = len(overflow_vertices)
             
             # Build detailed error message
@@ -577,8 +577,8 @@ cdef class TriangularMesh:
             xb, yb = meshx[v1], meshy[v1]
             xc, yc = meshx[v2], meshy[v2]
 
-            # Compute triangle area.
-            self.signed_area[k] = compute_triangle_area(xa, ya, xb, yb, xc, yc)
+            # Compute signed triangle area (positive if counter-clockwise).
+            self.signed_area[k] = 0.5*((xb-xa)*(yc-ya) - (yb-ya)*(xc-xa))
             
             # Check for degenerate triangles (prevent NaN propagation)
             if abs(self.signed_area[k]) < EPSILON:

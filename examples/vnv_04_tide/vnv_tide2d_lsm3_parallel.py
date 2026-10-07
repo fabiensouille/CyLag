@@ -1,0 +1,156 @@
+# -*- coding: utf-8 -*-
+"""
+Tide - LSM-3 advection-diffusion (parallel)
+===============================================================================
+
+In this example we compute the advection-diffusion of particles in a coastal 
+environment with the LSM-3 model.
+
+to run this script in parallel:
+
+.. code-block:: bash
+
+    mpirun -n 4 python vnv_tide2d_lsm2_parallel.py
+
+"""
+import cylag
+import os
+import sys
+import numpy as np
+import matplotlib.pylab as plt
+
+#sphinx_gallery_thumbnail_number = 1
+
+################################################################################
+#
+# Define EulerianFieldSet
+# -----------------------------------------------------------------------------
+#
+file_name = os.path.join('data', 'r2d_tide-jmj_type.slf')
+bnd_file = os.path.join('data', 'geo_tide.cli')
+fset = cylag.EulerianFieldSet.from_telemac2d(
+    file_name, 
+    bnd_file=bnd_file,
+    optional_fields=['TURBULENT ENERG.', 'DISSIPATION'])
+
+################################################################################
+#
+# Define LagrangianParticleSet
+# -----------------------------------------------------------------------------
+#
+circ = cylag.circle(x0=198000., y0=147000., r=1500., n=360)
+ini_position = cylag.init_positions_2d(poly=circ, grid_res=(100, 100))
+
+npart = np.shape(ini_position)[0]
+
+pset = cylag.LagrangianParticleSet(\
+    ini_position, 
+    dim=2, 
+    particle_density=1020., 
+    particle_diameter=0.01,
+    drag_coefficient_model=1,
+    added_mass_force=True,
+    added_mass_coef=0.5)
+
+################################################################################
+#
+# Set general parameters
+# -----------------------------------------------------------------------------
+# 
+parameters = {
+    'initial_time': 3600.,
+    'final_time': 13*3600.,
+    'time_step': 10.,
+    'model': 3,
+    'time_scheme': 5,
+    'frozen_eulerian_fields': False,
+    'particle_velocity_init': 1,
+    'diffusion_model': 2,
+    'water_density': 1020.,
+    'listing': True,
+    'listing_printout_period': 100,
+    'output_file': True,
+    'output_printout_period': 100,
+    'output_file_format': 'txt',
+    'output_rep': 'resu_06',
+    'output_file_name': 'particles_2d',
+    }
+
+################################################################################
+#
+# Run cylag
+# -----------------------------------------------------------------------------
+#
+cylag_solver = cylag.SolverParallel(fset, pset, parameters)
+
+# get rank for printouts
+rank = cylag_solver.comm.Get_rank()
+if rank==0:
+    print("Final time in t2d result file : ", np.asarray(fset.times)[-1])
+    print('Initial number of particles = ', npart)
+
+cylag_solver.solve()
+
+################################################################################
+#
+# Post-processing
+# -----------------------------------------------------------------------------
+#
+if rank==0:
+    ################################################################################
+    #
+    # Load particles :
+    part = cylag.ParticlesIO.from_cylag_txt('resu_06/particles_2d.txt')
+
+    # recorded times :
+    print("list of recorded times =", part.times)
+    print("number of records = ", len(part.times))
+
+    rec = len(part.times) - 1
+    time = part.times[rec]
+
+    ################################################################################
+    #
+    # Field set from telemac results :
+    file_name = os.path.join('data', 'r2d_tide-jmj_type.slf')
+    bnd_file = os.path.join('data', 'geo_tide.cli')
+    fset = cylag.EulerianFieldSet.from_telemac2d(file_name, bnd_file=bnd_file)
+    tri = fset.get_mtri_triangulation()
+
+    # get velocity at final time
+    ux = fset.get_field(1, time)
+    uy = fset.get_field(2, time)
+    velocity = np.sqrt(ux**2 + uy**2)
+
+    ################################################################################
+    #
+    # Plot result :
+    cylag.set_rcparams()
+    fig, ax = plt.subplots(1, 1, figsize=(8.5, 7))
+    ax.set_aspect('equal')
+
+    # plot mesh and velocity
+    levels = np.linspace(0., np.max(velocity)+0.1, 20)
+    cs = ax.tricontourf(tri, velocity, levels=levels, cmap='RdBu_r', alpha=0.80)
+    fig.colorbar(cs, ax=ax, label="$U_f$ (m/s)")
+    ax.triplot(tri, lw=0.1, c='k')
+    img = ax.quiver(tri.x, tri.y, ux, uy, velocity, cmap='RdBu_r')
+
+    # plot positions
+    ax.plot(part.xp[rec][:], part.yp[rec][:], c='k', lw=0., marker='o', markersize=1., label="$x_p(t_f)$")
+
+    plt.xlabel("$x$ (m)")
+    plt.ylabel("$y$ (m)")
+    plt.legend()
+    plt.savefig('figs/cylag_tide_lsm3_par.png', dpi=300, format="png")
+    plt.show()
+
+    ################################################################################
+    #
+    # Clean:
+    del fset
+    del pset
+    del parameters
+    del cylag_solver
+    del part
+    del rec

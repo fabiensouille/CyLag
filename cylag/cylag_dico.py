@@ -27,9 +27,6 @@ CYLAG_DEFAULT_PARAMETERS = {
     'diffusion_lsm2_option': 1,
     'diffusion_lsm3_tl_horizontal': 1.,
     'diffusion_lsm3_tl_vertical': 1.,
-    'pseudo_3d_velocity_profile': 1,
-    'pseudo_3d_friction_model': 1,
-    'pseudo_3d_friction_coefficient': 40.,
     # BOUNDARY_CONDITIONS:
     'boundary_conditions': True,
     'boundary_conditions_type': 1,

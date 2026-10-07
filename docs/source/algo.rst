@@ -157,7 +157,7 @@ The computation of specular rebounds is based on intersections and symmetric poi
 In 2D, it only involves segment intersection and reflection, while in 3D, it requires segment-face intersection and surface reflection, which are computationally more demanding.
 The rebound algorithm implemented in CyLag is compatible with multiple reflections to avoid stuck particles in complex geometries.
 An example is given in Figure 6 for 2D planar reflections.
-A maximum number of rebounds is allowed in order to avoid excessive cost due to stuck particles (``param:max_wall_rebounds``, set to 10 by default). Stuck particles can occur in very shallow 3D models when wetting and drying are present in the model.
+A maximum number of rebounds is allowed in order to avoid excessive cost due to stuck particles (``param:max_wall_rebounds``, set to 4 by default). Stuck particles can occur in very shallow 3D models when wetting and drying are present in the model.
 Also, another simplified algorithm is proposed for such cases, in which only 2D reflections are computed on the side of the 3D mesh.
 Besides, a damping coefficient is added to model the energy loss due to the collision (``param:rebound_damping_coef``), in which case the velocity of the particle is reduced after the rebound. The default damping is set to 0.5, i.e. particles lose half of their kinetic energy in collisions.
 Additionally, when particles reach the free surface or the bottom, the reflection distance is limited to half the water depth to avoid a very high number of reflections in drying areas where the water depth is close to zero.

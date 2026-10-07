@@ -217,9 +217,12 @@ class ParticlesIO():
                 xmean += xp_i[j]
                 ymean += yp_i[j]
                 zmean += zp_i[j]
-            xmean /= nj
-            ymean /= nj
-            zmean /= nj            
+            if nj > 0:
+                xmean /= nj
+                ymean /= nj
+                zmean /= nj
+            else:
+                xmean = ymean = zmean = float('nan')
             trajectory.append([xmean, ymean, zmean])
         return np.asarray(trajectory)
 
@@ -387,18 +390,13 @@ class ParticlesIO():
 
         # Prepare output dir
         outputdir = os.path.join("particles")
-        if not os.path.exists(outputdir):
-            os.system("mkdir {}".format(outputdir))
+        os.makedirs(outputdir, exist_ok=True)
 
         # Prepare txt output file
         fileout = os.path.join('particles', file_name+'.txt')
-        if os.path.isfile(fileout):
-            os.system("rm {}".format(fileout))
-        else:
-            os.system("touch {}".format(fileout))
 
-        # write Header
-        f = open(fileout, 'a')
+        # write Header (overwrites any pre-existing file)
+        f = open(fileout, 'w')
         f.write('cylag particles result file\n')
         f.write('Variables: Tags, Xp, Yp, Zp, Up, Vp, Wp, ')
         if self.us is not None:
@@ -414,6 +412,7 @@ class ParticlesIO():
         if has_depth:
             f.write('depth, ')
         f.write('\n')
+        f.close()
 
         for i, time in enumerate(self.times):
             # write time

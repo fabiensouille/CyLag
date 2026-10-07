@@ -418,7 +418,7 @@ The *added mass* and *pressure gradient* forces can be deactivated (``pset:added
   & \phi_1 = (24 Re_p^{-1})^{10} + (21 Re_p^{-0.67})^{10} +(4 Re_p^{-0.33})^{10} + 0.4^{10}  \\
   & \phi_2 = \dfrac{1}{(0.148 Re_p^{0.11})^{-10} + 0.5^{-10}}\\
   & \phi_3 = (1.57 \times 10^8 Re_p^{-1.625})^{10} \\
-  & \phi_4 = \dfrac{1}{(6 \times 10^{-7} Re_p^{2.63})^{-10} + 0.2^{-10}}
+  & \phi_4 = \dfrac{1}{(6 \times 10^{-17} Re_p^{2.63})^{-10} + 0.2^{-10}}
   \end{aligned}`
 
 .. note::

@@ -50,7 +50,7 @@ cdef class Parameters:
         Particle velocity initialization method.
     rng_method : int
         Method for generating random numbers 
-        (0 for fast rectangular, 1 for Box-Muller (pair) and Ziggurat (single)).
+        (1 for rectangular approximation, 2 for Ziggurat (default), 3 for Marsaglia polar).
     water_density : float
         Density of water.
     diffusion_model : int
@@ -69,8 +69,8 @@ cdef class Parameters:
         Lagrangian time scale for vertical LSM3 constant diffusion.
     lsm3_edge_opt : int
         Edge-case treatment of the LSM3 direct integrator: 
-        1 for normalized Taylor series (default),
-        2 for closed-form coefficients with clipping.
+        1 for normalized Taylor series,
+        2 for closed-form coefficients with clipping (default).
     boundary_conditions : bool
         Whether boundary conditions are applied.
     boundary_conditions_type : int

@@ -145,3 +145,7 @@ cpdef int c_compute_lower_index(double[:] array, double value, int last_idx):
     for i in range(last_idx, ni-1):
         if value >= array[i] and value < array[i+1]:
             return i
+    # value at (or round-off beyond) the last time: use the last interval
+    if ni > 1 and value >= array[ni-1]:
+        return ni-2
+    return 0

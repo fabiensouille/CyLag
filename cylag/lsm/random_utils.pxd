@@ -1,6 +1,7 @@
 from libc.stdint cimport uint64_t
 
 cpdef void pcg32_seed(uint64_t seed, uint64_t stream)
+cpdef void pcg32_advance(uint64_t delta)
 cpdef double random_uniform()
 cpdef double random_gaussian()
 cpdef double random_gaussian_ziggurat()
